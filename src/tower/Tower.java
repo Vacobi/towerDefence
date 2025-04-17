@@ -22,8 +22,6 @@ public class Tower {
     private TowerCharacteristicsValues characteristicValues;
     private final int levelsUpgradeCount;
 
-    private List<TowerListener> listeners;
-
     public Tower(TowerGeographicalCharacteristics towerGeographicalCharacteristics,
                  TowerShootingCharacteristics towerShootingCharacteristics,
                  TowerUpgradablePart towerUpgradablePart) {
@@ -36,7 +34,6 @@ public class Tower {
         initializeCharacteristics(towerUpgradablePart.initialCharacteristicValues());
 
         characteristicLevels = new HashMap<>();
-        listeners = new ArrayList<>();
     }
 
     private void initializeCharacteristics(TowerCharacteristicsValues initialCharacteristicValues) {
@@ -101,14 +98,6 @@ public class Tower {
     }
 
     //--/////////////////////////////////////////////////////////////////////////
-
-    public void addListener(TowerListener listener) {
-        listeners.add(listener);
-    }
-
-    public void removeListener(TowerListener listener) {
-        listeners.remove(listener);
-    }
 
     public void setCell(Cell cell) {
         if (this.cell != null) {
