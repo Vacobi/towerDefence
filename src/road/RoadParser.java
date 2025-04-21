@@ -1,7 +1,10 @@
 package road;
 
+import core.AbstractCell;
+import core.RoadCell;
 import exception.FileNotDetectedException;
 import exception.WrongFileFormat;
+import utils.CoordinatesConverter;
 import utils.Direction;
 import utils.Position;
 
@@ -12,12 +15,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RoadParser {
-    public static List<RoadSegment> extractRoadSegments(String path) {
-        List<RoadSegment> road = new ArrayList<>();
+    private final List<RoadSegment> roadSegments;
+    private final List<RoadCell> roadCells;
+
+    public RoadParser(String path) {
+        List<RoadSegment> roadSegments = new ArrayList<>();
+        List<RoadCell> roadCells = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             br.lines().forEach(line -> {
-                road.add(extractRoadSegment(line));
+                RoadFileLine rfl = new RoadFileLine(line);
+                roadSegments.add(extractRoadSegment(rfl));
+                roadCells.add(extractRoadCell(rfl));
             });
         } catch (FileNotDetectedException e) {
             throw new FileNotDetectedException("Ошибка: файл не найден - " + path);
@@ -25,26 +34,29 @@ public class RoadParser {
             throw new RuntimeException("Input exception: " + e.getMessage());
         }
 
-        return road;
+        this.roadSegments = roadSegments;
+        this.roadCells = roadCells;
     }
 
-    private static RoadSegment extractRoadSegment(String line) {
-        final int PARTS_IN_STRING = 4;
+    protected static RoadSegment extractRoadSegment(RoadFileLine line) {
+        Position start = new Position(line.x, line.y);
+        int lengthOfSegment = CoordinatesConverter.lengthOfSegment(line.cellsCount, line.direction);
+        return new RoadSegment(start, line.direction, lengthOfSegment);
+    }
 
-        String[] parts = line.split("\\s+");
-        if (parts.length != PARTS_IN_STRING) {
-            throw new WrongFileFormat("4 elements (Num, Num, Num, Direction)", line);
-        }
+    protected static RoadCell extractRoadCell(RoadFileLine line) {
+        return new RoadCell(new Position(line.x, line.y));
+    }
 
-        try {
-            Position position = new Position(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
-            Direction direction = Direction.valueOf(parts[2]);
-            int length = Integer.parseInt(parts[3]);
-            return new RoadSegment(position, direction, length);
-        } catch (NumberFormatException e) {
-            throw new WrongFileFormat("Num, Num, Num, Direction", line);
-        } catch (IllegalArgumentException e) {
-            throw new WrongFileFormat("Direction", parts[2]);
-        }
+    public List<RoadSegment> getRoadSegments() {
+        return roadSegments;
+    }
+
+    public List<RoadCell> getRoadCells() {
+        return roadCells;
+    }
+
+    public Road getRoad() {
+        return new Road(roadSegments, roadCells);
     }
 }
