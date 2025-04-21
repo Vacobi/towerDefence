@@ -4,20 +4,15 @@ import exception.CellAlreadyHasTower;
 import tower.Tower;
 import utils.Position;
 
-public class Cell {
-    private final Position position;
+public class Cell extends AbstractCell {
     private Tower tower;
 
     public Cell(Position position) {
-        this.position = position;
+        super(position);
     }
 
     public Cell(Position position, Tower tower) {
-        this.position = position;
-    }
-
-    public Position position() {
-        return position;
+        super(position);
     }
 
     public Tower getTower() {
