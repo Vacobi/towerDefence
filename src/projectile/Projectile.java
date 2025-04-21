@@ -11,7 +11,9 @@ public abstract class Projectile extends CollisionObject {
     private boolean active;
     private Position position;
 
-    public Projectile(Hitbox hitbox, int damage, Position startPosition, Field field) {
+    private final ProjectileBehavior projectileBehavior;
+
+    public Projectile(Hitbox hitbox, int damage, Position startPosition, ProjectileBehavior behavior, Field field) {
         super(hitbox);
 
         if (damage < 0) {
@@ -21,12 +23,15 @@ public abstract class Projectile extends CollisionObject {
 
         this.active = true;
         this.position = startPosition;
+        this.projectileBehavior = behavior;
         this.field = field;
     }
 
     public abstract void update(long currentTick);
 
-    protected abstract void applyEffect(long currentTick);
+    protected void applyEffect(long currentTick) {
+        projectileBehavior.applyEffect(currentTick);
+    }
 
     public boolean active() {
         return active;
@@ -51,5 +56,9 @@ public abstract class Projectile extends CollisionObject {
 
     protected Field getField() {
         return field;
+    }
+
+    protected ProjectileBehavior getBehavior() {
+        return projectileBehavior;
     }
 }
