@@ -13,11 +13,19 @@ public class HitOneTargetBehavior implements ProjectileBehavior {
     @Override
     public void applyEffect(long currentTick) {
         for (Monster monster : projectile.getField().getWave().getAliveMonsters()) {
-            if (projectile.collidesWith(monster)) {
-                monster.applyDamage(projectile.getDamage());
-                projectile.deactivate();
+            if (hitMonster(monster)) {
                 return;
             }
         }
+    }
+
+    protected boolean hitMonster(Monster monster) {
+        if (projectile.collidesWith(monster)) {
+            monster.applyDamage(projectile.getDamage());
+            projectile.deactivate();
+            return true;
+        }
+
+        return false;
     }
 }
