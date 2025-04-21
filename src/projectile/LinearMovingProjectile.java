@@ -3,12 +3,16 @@ package projectile;
 import collision.Hitbox;
 import core.Field;
 import monster.Monster;
-import utils.Direction;
 import utils.Position;
 
+@Deprecated
 public class LinearMovingProjectile extends MovingProjectile {
-    public LinearMovingProjectile(int speed, int maxDistance, Direction direction, Hitbox hitbox, int damage, Position startPosition, Field field) {
-        super(speed, maxDistance, direction, hitbox, damage, startPosition, field);
+//    public LinearMovingProjectile(int speed, int maxDistance, Direction direction, Hitbox hitbox, int damage, Position startPosition, Field field) {
+//        super(new LinearMovingProjectileStrategy(this, speed, maxDistance, direction), hitbox, damage, startPosition, field);
+//    }
+
+    public LinearMovingProjectile(MovingProjectileStrategy strategy, Hitbox hitbox, int damage, Position startPosition, Field field) {
+        super(strategy, hitbox, damage, startPosition, field);
     }
 
     @Override
@@ -20,29 +24,5 @@ public class LinearMovingProjectile extends MovingProjectile {
                 return;
             }
         }
-    }
-
-    @Override
-    protected void move(long currentTick) {
-        int moveDistance = (int)(currentTick - lastMoveTime()) * speed() / 10;
-
-        move(currentTick, moveDistance);
-    }
-
-    protected void move(long moveTime, int moveDistance) {
-        if (totalTraveledDistance() >= maxDistance()) {
-            deactivate();
-        }
-
-        if (!active()) {
-            return;
-        }
-
-        int distanceToMove = Math.min(moveDistance, maxDistance() - totalTraveledDistance());
-
-        Position positionAfterMove = position().move(direction(), distanceToMove);
-        setPosition(positionAfterMove);
-        setLastMoveTime(moveTime);
-        setTotalTraveledDistance(totalTraveledDistance() + distanceToMove);
     }
 }
