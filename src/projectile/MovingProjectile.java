@@ -6,7 +6,7 @@ import monster.Monster;
 import utils.Position;
 
 
-public abstract class MovingProjectile extends Projectile {
+public class MovingProjectile extends Projectile {
     private final MovingProjectileStrategy strategy;
 
     public MovingProjectile(MovingProjectileStrategy strategy, Hitbox hitbox, int damage, Position startPosition, Field field) {
