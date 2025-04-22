@@ -19,39 +19,45 @@ class RoadParserTest {
     @Nested
     class ExtractRoadCell {
         @Test
-        void extractRoadCell() {
-            String line = "1 3 2 NORTH";
+        void extractOneRoadCell() {
+            String line = "1 3 1 NORTH";
+
+            List<RoadCell> expectedRoadCells = List.of(
+                    new RoadCell(new Position(1, 3))
+            );
+
             RoadFileLine rfl = new RoadFileLine(line);
+            List<RoadCell> actualRoadCells = RoadParser.extractRoadCell(rfl);
 
-            RoadCell expectedRoadCell = new RoadCell(new Position(1, 3));
-
-            RoadCell actualRoadCell = RoadParser.extractRoadCell(rfl);
-
-            assertEquals(expectedRoadCell.position(), actualRoadCell.position());
+            assertListsRoadCellsEquals(expectedRoadCells, actualRoadCells);
         }
 
         @Test
         void extractRoadCellWithZeroCoordinates() {
-            String line = "0 0 2 NORTH";
+            String line = "0 0 1 NORTH";
+
+            List<RoadCell> expectedRoadCells = List.of(
+                    new RoadCell(new Position(0, 0))
+            );
+
             RoadFileLine rfl = new RoadFileLine(line);
+            List<RoadCell> actualRoadCells = RoadParser.extractRoadCell(rfl);
 
-            RoadCell expectedRoadCell = new RoadCell(new Position(0, 0));
-
-            RoadCell actualRoadCell = RoadParser.extractRoadCell(rfl);
-
-            assertEquals(expectedRoadCell.position(), actualRoadCell.position());
+            assertListsRoadCellsEquals(expectedRoadCells, actualRoadCells);
         }
 
         @Test
         void extractRoadCellWithNegativeCoordinates() {
-            String line = "-1 -3 2 NORTH";
+            String line = "-1 -3 1 NORTH";
+
+            List<RoadCell> expectedRoadCells = List.of(
+                    new RoadCell(new Position(-1, -3))
+            );
+
             RoadFileLine rfl = new RoadFileLine(line);
+            List<RoadCell> actualRoadCells = RoadParser.extractRoadCell(rfl);
 
-            RoadCell expectedRoadCell = new RoadCell(new Position(-1, -3));
-
-            RoadCell actualRoadCell = RoadParser.extractRoadCell(rfl);
-
-            assertEquals(expectedRoadCell.position(), actualRoadCell.position());
+            assertListsRoadCellsEquals(expectedRoadCells, actualRoadCells);
         }
     }
 
