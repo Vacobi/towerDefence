@@ -1,8 +1,10 @@
 package projectile;
 
 import core.Field;
+import core.Wave;
 import factory.MonsterFactory;
 import factory.ProjectileFactory;
+import factory.WaveFactory;
 import monster.Monster;
 import monster.MovingMonsterStrategy;
 import monster.PlainRoadMoving;
@@ -13,6 +15,9 @@ import utils.Position;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -25,6 +30,7 @@ class HitOneTargetBehaviorTest {
     private final MonsterFactory monsterFactory = new MonsterFactory();
     private final Position monsterPosition = new Position(100, 100);
     private final MovingMonsterStrategy strategy = new PlainRoadMoving(monsterPosition, field, 10);
+    private final int monsterFullHealth = 100;
 
     private final ProjectileFactory projectileFactory = new ProjectileFactory();
 
@@ -76,6 +82,156 @@ class HitOneTargetBehaviorTest {
 
             assertEquals(expectedHealth, actualHealth);
             assertFalse(projectile.active());
+        }
+    }
+
+    @Nested
+    class ApplyEffectTest {
+        WaveFactory waveFactory = new WaveFactory();
+
+        @Test
+        void onlyOneMonsterAndCollision() throws InterruptedException {
+            Queue<Monster> monsterQueue = new LinkedList<>();
+            monsterQueue.add(monsterFactory.createMonster(strategy));
+            int monstersCount = monsterQueue.size();
+            Wave wave = waveFactory.createWave(1, monsterQueue, 1, field);
+            for (int i = 0; i < monstersCount; i++) {
+                Thread.sleep(1);
+                wave.spawnMonsters(System.currentTimeMillis());
+            }
+            field.setWave(wave);
+            Projectile projectile = projectileFactory.createMovingProjectile(monsterPosition, Direction.NORTH, field);
+            HitOneTargetBehavior behavior = (HitOneTargetBehavior) projectile.getBehavior();
+
+
+            int expectedDamagedMonstersCount = 1;
+            int expectedHealthAfterHit = monsterFullHealth - projectile.getDamage();
+
+
+            behavior.applyEffect(System.currentTimeMillis());
+            AtomicInteger actualDamagedMonsters = new AtomicInteger();
+
+
+            wave.getAliveMonsters().forEach((Monster m) -> {
+                if (m.getHealth() != monsterFullHealth) {
+                    actualDamagedMonsters.getAndIncrement();
+                    assertEquals(expectedHealthAfterHit, m.getHealth());
+                }
+            });
+            assertEquals(expectedDamagedMonstersCount, actualDamagedMonsters.get());
+            assertFalse(projectile.active());
+        }
+
+        @Test
+        void severalMonstersAndCollisionWithEach() throws InterruptedException {
+            Queue<Monster> monsterQueue = new LinkedList<>();
+            monsterQueue.add(monsterFactory.createMonster(strategy));
+            monsterQueue.add(monsterFactory.createMonster(strategy));
+            monsterQueue.add(monsterFactory.createMonster(strategy));
+            monsterQueue.add(monsterFactory.createMonster(strategy));
+            int monstersCount = monsterQueue.size();
+            Wave wave = waveFactory.createWave(1, monsterQueue, 1, field);
+            for (int i = 0; i < monstersCount; i++) {
+                Thread.sleep(1);
+                wave.spawnMonsters(System.currentTimeMillis());
+            }
+            field.setWave(wave);
+            Projectile projectile = projectileFactory.createMovingProjectile(monsterPosition, Direction.NORTH, field);
+            HitOneTargetBehavior behavior = (HitOneTargetBehavior) projectile.getBehavior();
+
+
+            int expectedDamagedMonstersCount = 1;
+            int expectedHealthAfterHit = monsterFullHealth - projectile.getDamage();
+
+
+            behavior.applyEffect(System.currentTimeMillis());
+            AtomicInteger actualDamagedMonsters = new AtomicInteger();
+
+
+            wave.getAliveMonsters().forEach((Monster m) -> {
+                if (m.getHealth() != monsterFullHealth) {
+                    actualDamagedMonsters.getAndIncrement();
+                    assertEquals(expectedHealthAfterHit, m.getHealth());
+                }
+            });
+            assertEquals(expectedDamagedMonstersCount, actualDamagedMonsters.get());
+            assertFalse(projectile.active());
+        }
+
+        @Test
+        void severalMonstersAndCollisionWithOne() throws InterruptedException {
+            Position positionWithoutCollision = new Position(1000,  1000);
+            MovingMonsterStrategy strategyWithoutCollision = new PlainRoadMoving(positionWithoutCollision, field, 10);
+            Monster collisionedMonster = monsterFactory.createMonster(strategy);
+            Queue<Monster> monsterQueue = new LinkedList<>();
+            monsterQueue.add(monsterFactory.createMonster(strategyWithoutCollision));
+            monsterQueue.add(monsterFactory.createMonster(strategyWithoutCollision));
+            monsterQueue.add(collisionedMonster);
+            monsterQueue.add(monsterFactory.createMonster(strategyWithoutCollision));
+            int monstersCount = monsterQueue.size();
+            Wave wave = waveFactory.createWave(1, monsterQueue, 1, field);
+            for (int i = 0; i < monstersCount; i++) {
+                Thread.sleep(2);
+                wave.spawnMonsters(System.currentTimeMillis());
+            }
+            field.setWave(wave);
+            Projectile projectile = projectileFactory.createMovingProjectile(monsterPosition, Direction.NORTH, field);
+            HitOneTargetBehavior behavior = (HitOneTargetBehavior) projectile.getBehavior();
+
+
+            int expectedDamagedMonstersCount = 1;
+            int expectedHealthAfterHit = monsterFullHealth - projectile.getDamage();
+
+
+            behavior.applyEffect(System.currentTimeMillis());
+            AtomicInteger actualDamagedMonsters = new AtomicInteger();
+
+
+            wave.getAliveMonsters().forEach((Monster m) -> {
+                if (m.getHealth() != monsterFullHealth) {
+                    actualDamagedMonsters.getAndIncrement();
+                    assertEquals(expectedHealthAfterHit, m.getHealth());
+                }
+            });
+            assertEquals(expectedDamagedMonstersCount, actualDamagedMonsters.get());
+            assertEquals(expectedHealthAfterHit, collisionedMonster.getHealth());
+            assertFalse(projectile.active());
+        }
+
+        @Test
+        void severalMonstersAndNoCollision() throws InterruptedException {
+            Position positionWithoutCollision = new Position(1000,  1000);
+            MovingMonsterStrategy strategyWithoutCollision = new PlainRoadMoving(positionWithoutCollision, field, 10);
+            Queue<Monster> monsterQueue = new LinkedList<>();
+            monsterQueue.add(monsterFactory.createMonster(strategyWithoutCollision));
+            monsterQueue.add(monsterFactory.createMonster(strategyWithoutCollision));
+            monsterQueue.add(monsterFactory.createMonster(strategyWithoutCollision));
+            monsterQueue.add(monsterFactory.createMonster(strategyWithoutCollision));
+            int monstersCount = monsterQueue.size();
+            Wave wave = waveFactory.createWave(1, monsterQueue, 1, field);
+            for (int i = 0; i < monstersCount; i++) {
+                Thread.sleep(2);
+                wave.spawnMonsters(System.currentTimeMillis());
+            }
+            field.setWave(wave);
+            Projectile projectile = projectileFactory.createMovingProjectile(monsterPosition, Direction.NORTH, field);
+            HitOneTargetBehavior behavior = (HitOneTargetBehavior) projectile.getBehavior();
+
+
+            int expectedDamagedMonstersCount = 0;
+
+
+            behavior.applyEffect(System.currentTimeMillis());
+            AtomicInteger actualDamagedMonsters = new AtomicInteger();
+
+
+            wave.getAliveMonsters().forEach((Monster m) -> {
+                if (m.getHealth() != monsterFullHealth) {
+                    actualDamagedMonsters.getAndIncrement();
+                }
+            });
+            assertEquals(expectedDamagedMonstersCount, actualDamagedMonsters.get());
+            assertTrue(projectile.active());
         }
     }
 }
