@@ -28,4 +28,23 @@ public class WaveFactory {
         Wave wave = new Wave(monstersToSpawn, defaultDelay / number, number);
         return wave;
     }
+
+    public Wave createWave(int number, int monstersCount, Field field) {
+        MovingMonsterStrategy strategy = new PlainRoadMoving(field, 20 * (number - number / 2));
+
+        Queue<Monster> monstersToSpawn = monsterFactory.createMonsters(monstersCount, strategy);
+
+        Wave wave = new Wave(monstersToSpawn, defaultDelay / number, number);
+        return wave;
+    }
+
+    public Wave createWave(int number, Queue<Monster> monsters, Field field) {
+        Wave wave = new Wave(monsters, defaultDelay / number, number);
+        return wave;
+    }
+
+    public Wave createWave(int number, Queue<Monster> monsters, long delay, Field field) {
+        Wave wave = new Wave(monsters, delay, number);
+        return wave;
+    }
 }
