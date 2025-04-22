@@ -9,16 +9,24 @@ import java.util.Queue;
 
 public class MonsterFactory {
 
-    private final Hitbox defaultHitbox;
+    private final int defaultHitboxWidth;
+    private final int defaultHitboxHeight;
     private final int defaultHealth;
 
     public MonsterFactory() {
-        defaultHitbox = new Hitbox(0, 0, 1, 1, 0);
+        defaultHitboxWidth = 10;
+        defaultHitboxHeight = 10;
         defaultHealth = 100;
     }
 
     public Monster createMonster(MovingMonsterStrategy strategy) {
-        return new Monster(defaultHitbox, strategy, defaultHealth);
+        Hitbox hitbox = new Hitbox(
+                strategy.currentPosition().getX() - defaultHitboxWidth / 2,
+                strategy.currentPosition().getY() + defaultHitboxHeight / 2,
+                defaultHitboxWidth,
+                defaultHitboxHeight,
+                0);
+        return new Monster(hitbox, strategy, defaultHealth);
     }
 
     public Queue<Monster> createMonsters(int count, MovingMonsterStrategy strategy) {
