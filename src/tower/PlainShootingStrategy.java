@@ -1,7 +1,6 @@
 package tower;
 
 import core.Field;
-import factory.LinearMovingProjectileFactory;
 import factory.ProjectileFactory;
 import projectile.Projectile;
 import utils.Direction;
@@ -30,7 +29,7 @@ public class PlainShootingStrategy implements ShootingStrategy{
         this.shotDirections = shotDirections;
         this.field = field;
 
-        projectileFactory = new LinearMovingProjectileFactory();
+        projectileFactory = new ProjectileFactory();
         lastShootTime = System.currentTimeMillis();
     }
 
@@ -44,7 +43,7 @@ public class PlainShootingStrategy implements ShootingStrategy{
         Set<Projectile> projectiles = new HashSet<>();
         Position startPosition = position;
         shotDirections.forEach((Direction direction) -> {
-            projectiles.add(projectileFactory.createProjectile(startPosition, direction, field));
+            projectiles.add(projectileFactory.createMovingProjectile(startPosition, direction, field));
         });
 
         return projectiles;
