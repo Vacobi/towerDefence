@@ -39,9 +39,11 @@ public class Field {
     }
 
     public void setWave(Wave wave) {
-        if (this.wave != null) {
-            this.wave = wave;
+        if (wave == null) {
+            throw new IllegalArgumentException("Wave can not be null");
         }
+
+        this.wave = wave;
     }
 
     public Wave getWave() {
