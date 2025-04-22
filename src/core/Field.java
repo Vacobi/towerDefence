@@ -24,6 +24,14 @@ public class Field {
         wave = null;
     }
 
+    public Field(String path) {
+        cells = new HashSet<>();
+        road = new Road(path);
+        towers = new TowersContainer(this);
+        projectiles = new ProjectilesContainer(this);
+        wave = null;
+    }
+
     public void updateEntitiesLoop(UpdateFieldLoopController updateFieldLoopController) {
         while (!wave.hasEnded() && updateFieldLoopController.shouldContinue()) {
             long currentTick = System.currentTimeMillis();
