@@ -3,6 +3,7 @@ package monster;
 import collision.CollisionObject;
 import collision.Hitbox;
 import events.MonsterListener;
+import utils.Position;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,5 +59,13 @@ public class Monster extends CollisionObject {
         for(MonsterListener listener : listeners) {
             listener.onMonsterReachedEnd(this);
         }
+    }
+
+    public Position getPosition() {
+        return strategy.currentPosition();
+    }
+
+    public int getHealth() {
+        return health;
     }
 }
