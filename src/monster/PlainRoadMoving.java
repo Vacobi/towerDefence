@@ -9,7 +9,7 @@ import java.util.Optional;
 public class PlainRoadMoving extends MovingMonsterStrategy{
 
     public PlainRoadMoving(Field field, int speed) {
-        super(field, speed);
+        super(field.getRoad().getNextRoadSegment(null).get().getStart(), field, speed);
     }
 
     @Override
