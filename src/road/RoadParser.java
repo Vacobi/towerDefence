@@ -1,11 +1,8 @@
 package road;
 
-import core.AbstractCell;
 import core.RoadCell;
 import exception.FileNotDetectedException;
-import exception.WrongFileFormat;
 import utils.CoordinatesConverter;
-import utils.Direction;
 import utils.Position;
 
 import java.io.BufferedReader;
