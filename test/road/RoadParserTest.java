@@ -206,6 +206,64 @@ class RoadParserTest {
 
             assertRoadsEquals(expectedRoad, parser.getRoad());
         }
+
+        @Test
+        void roadContainsOneSegmentsSeveralCells() {
+            Path path = Paths.get("test", "road", "resources", "one_road_segment_several_road_cells.txt")
+                    .toAbsolutePath()
+                    .normalize();
+
+            List<RoadSegment> expectedRoadSegment = new ArrayList<>();
+            expectedRoadSegment.add(new RoadSegment(new Position(0, 2), Direction.EAST, CoordinatesConverter.lengthOfSegment(3, Direction.EAST)));
+
+            List<RoadCell> expectedRoadCells = new ArrayList<>();
+            expectedRoadCells.add(new RoadCell(new Position(0, 2)));
+            expectedRoadCells.add(new RoadCell(new Position(1, 2)));
+            expectedRoadCells.add(new RoadCell(new Position(2, 2)));
+
+
+            Road expectedRoad = new Road(expectedRoadSegment, expectedRoadCells);
+
+
+            RoadParser parser = new RoadParser(path.toString());
+
+
+            assertRoadsEquals(expectedRoad, parser.getRoad());
+        }
+
+        @Test
+        void roadContainsSeveralSegments() {
+            Path path = Paths.get("test", "road", "resources", "several_segments.txt")
+                    .toAbsolutePath()
+                    .normalize();
+
+            List<RoadSegment> expectedRoadSegment = new ArrayList<>();
+            expectedRoadSegment.add(new RoadSegment(new Position(0, 2), Direction.EAST, CoordinatesConverter.lengthOfSegment(1, Direction.EAST)));
+            expectedRoadSegment.add(new RoadSegment(new Position(1, 2), Direction.NORTH, CoordinatesConverter.lengthOfSegment(4, Direction.NORTH)));
+            expectedRoadSegment.add(new RoadSegment(new Position(1, 6), Direction.EAST, CoordinatesConverter.lengthOfSegment(2, Direction.EAST)));
+            expectedRoadSegment.add(new RoadSegment(new Position(3, 6), Direction.SOUTH, CoordinatesConverter.lengthOfSegment(3, Direction.SOUTH)));
+
+            List<RoadCell> expectedRoadCells = new ArrayList<>();
+            expectedRoadCells.add(new RoadCell(new Position(0, 2)));
+            expectedRoadCells.add(new RoadCell(new Position(1, 2)));
+            expectedRoadCells.add(new RoadCell(new Position(1, 3)));
+            expectedRoadCells.add(new RoadCell(new Position(1, 4)));
+            expectedRoadCells.add(new RoadCell(new Position(1, 5)));
+            expectedRoadCells.add(new RoadCell(new Position(1, 6)));
+            expectedRoadCells.add(new RoadCell(new Position(2, 6)));
+            expectedRoadCells.add(new RoadCell(new Position(3, 6)));
+            expectedRoadCells.add(new RoadCell(new Position(3, 5)));
+            expectedRoadCells.add(new RoadCell(new Position(3, 4)));
+
+
+            Road expectedRoad = new Road(expectedRoadSegment, expectedRoadCells);
+
+
+            RoadParser parser = new RoadParser(path.toString());
+
+
+            assertRoadsEquals(expectedRoad, parser.getRoad());
+        }
     }
 
     void assertRoadSegmentsEquals(RoadSegment expected, RoadSegment actual) {
