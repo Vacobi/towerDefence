@@ -3,6 +3,7 @@ package monster;
 import core.Field;
 import road.RoadSegment;
 import utils.Direction;
+import utils.Position;
 
 import java.util.Optional;
 
@@ -10,6 +11,10 @@ public class PlainRoadMoving extends MovingMonsterStrategy{
 
     public PlainRoadMoving(Field field, int speed) {
         super(field.getRoad().getNextRoadSegment(null).get().getStart(), field, speed);
+    }
+
+    public PlainRoadMoving(Position position, Field field, int speed) {
+        super(position, field, speed);
     }
 
     @Override
