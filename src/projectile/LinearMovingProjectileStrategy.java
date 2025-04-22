@@ -35,6 +35,14 @@ public class LinearMovingProjectileStrategy implements MovingProjectileStrategy{
         this.totalTraveledDistance = 0;
     }
 
+    public void setProjectile(MovingProjectile projectile) {
+        if (this.projectile != null) {
+            throw new IllegalStateException("Projectile already set");
+        }
+
+        this.projectile = projectile;
+    }
+
     @Override
     public void move(long currentTick) {
         int moveDistance = (int)(currentTick - lastMoveTime) * speed / 10;
