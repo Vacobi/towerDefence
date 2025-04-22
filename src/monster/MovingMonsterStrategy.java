@@ -14,14 +14,14 @@ public abstract class MovingMonsterStrategy {
     private final int speed;
     private boolean reachedEnd;
 
-    public MovingMonsterStrategy(Field field, int speed) {
+    public MovingMonsterStrategy(Position initialPosition, Field field, int speed) {
+        this.currentPosition = initialPosition;
         this.speed = speed;
         this.field = field;
 
         lastMovingTime = System.currentTimeMillis();
         currentRoadSegment = null;
         traveledInCurrentSegment = 0;
-        currentPosition = null;
         reachedEnd = false;
     }
 
