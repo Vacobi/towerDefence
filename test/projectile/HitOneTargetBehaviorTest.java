@@ -11,10 +11,17 @@ import org.junit.jupiter.api.Test;
 import utils.Direction;
 import utils.Position;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class HitOneTargetBehaviorTest {
-    private final Field field = new Field();
+    private final Path path = Paths.get("test", "road", "resources", "one_road_segment_one_road_cell.txt")
+            .toAbsolutePath()
+            .normalize();
+    private final Field field = new Field(path.toString());
+
     private final MonsterFactory monsterFactory = new MonsterFactory();
     private final Position monsterPosition = new Position(100, 100);
     private final MovingMonsterStrategy strategy = new PlainRoadMoving(monsterPosition, field, 10);
