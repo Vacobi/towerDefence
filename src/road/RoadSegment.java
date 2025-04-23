@@ -27,6 +27,6 @@ public class RoadSegment {
     }
 
     public boolean reachedEnd(int moved) {
-        return length >= moved;
+        return moved >= length;
     }
 }
