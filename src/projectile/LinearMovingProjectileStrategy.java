@@ -12,6 +12,7 @@ public class LinearMovingProjectileStrategy implements MovingProjectileStrategy{
     private final Direction direction;
 
     private MovingProjectile projectile;
+    private final int MILLIS_TO_SECONDS_COEFF = 1_000;
 
     public LinearMovingProjectileStrategy(MovingProjectile projectile, int speed, int maxDistance, Direction direction) {
         this.projectile = projectile;
@@ -45,7 +46,7 @@ public class LinearMovingProjectileStrategy implements MovingProjectileStrategy{
 
     @Override
     public void move(long currentTick) {
-        int moveDistance = (int)(currentTick - lastMoveTime) * speed / 10;
+        int moveDistance = (int) ((currentTick - lastMoveTime) / MILLIS_TO_SECONDS_COEFF) * speed;
 
         move(currentTick, moveDistance);
     }
