@@ -11,10 +11,12 @@ public class PlainRoadMoving extends MovingMonsterStrategy{
 
     public PlainRoadMoving(Field field, int speed) {
         super(field.getRoad().getNextRoadSegment(null).get().getStart(), field, speed);
+        switchRoadSegmentIfNecessary();
     }
 
     public PlainRoadMoving(Position position, Field field, int speed) {
         super(position, field, speed);
+        switchRoadSegmentIfNecessary();
     }
 
     @Override
