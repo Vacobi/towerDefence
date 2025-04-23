@@ -67,4 +67,12 @@ public class LinearMovingProjectileStrategy implements MovingProjectileStrategy{
         lastMoveTime = moveTime;
         totalTraveledDistance += distanceToMove;
     }
+
+    protected long getLastMoveTime() {
+        return lastMoveTime;
+    }
+
+    protected int getTotalTraveledDistance() {
+        return totalTraveledDistance;
+    }
 }
