@@ -1,0 +1,100 @@
+package core;
+
+import events.WaveListener;
+import factory.MonsterFactory;
+import factory.WaveFactory;
+import monster.Monster;
+import monster.MovingMonsterStrategy;
+import monster.PlainRoadMoving;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import utils.Position;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.LinkedList;
+import java.util.Queue;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class WaveTest implements WaveListener {
+    private final Path path = Paths.get("test", "road", "resources", "one_road_segment_one_road_cell.txt")
+            .toAbsolutePath()
+            .normalize();
+    private final Field field = new Field(path.toString());
+
+    private final MonsterFactory monsterFactory = new MonsterFactory();
+    private final Position monsterPosition = new Position(100, 100);
+    private final MovingMonsterStrategy strategy = new PlainRoadMoving(monsterPosition, field, 10);
+    private final int monsterFullHealth = 100;
+
+    private final WaveFactory waveFactory = new WaveFactory();
+
+    int monsterDeaths;
+    int monsterReachedEnd;
+    @BeforeEach
+    void tearDown() {
+        monsterDeaths = 0;
+        monsterReachedEnd = 0;
+    }
+
+    @Test
+    void monsterDieWaveEnd() throws InterruptedException {
+        Queue<Monster> monsterQueue = new LinkedList<>();
+        Monster monster = monsterFactory.createMonster(strategy);
+        monsterQueue.add(monster);
+        int monstersCount = monsterQueue.size();
+        Wave wave = waveFactory.createWave(1, monsterQueue, 1, field);
+        wave.addListener(this);
+        for (int i = 0; i < monstersCount; i++) {
+            Thread.sleep(1);
+            wave.spawnMonsters(System.currentTimeMillis());
+        }
+        field.setWave(wave);
+
+        int expectedAliveMonsters = monstersCount - 1;
+
+        monster.applyDamage(monsterFullHealth);
+        int actualAliveMonsters = wave.getAliveMonsters().size();
+
+        assertEquals(expectedAliveMonsters, actualAliveMonsters);
+        assertEquals(1, monsterDeaths);
+        assertEquals(0, monsterReachedEnd);
+        assertTrue(wave.hasEnded());
+    }
+
+    @Test
+    void monsterReachedEndWaveEnd() throws InterruptedException {
+        Queue<Monster> monsterQueue = new LinkedList<>();
+        Monster monster = monsterFactory.createMonster(strategy);
+        monsterQueue.add(monster);
+        int monstersCount = monsterQueue.size();
+        Wave wave = waveFactory.createWave(1, monsterQueue, 1, field);
+        wave.addListener(this);
+        for (int i = 0; i < monstersCount; i++) {
+            Thread.sleep(1);
+            wave.spawnMonsters(System.currentTimeMillis());
+        }
+        field.setWave(wave);
+
+        int expectedAliveMonsters = monstersCount - 1;
+
+        monster.move(System.currentTimeMillis() * 2);
+        int actualAliveMonsters = wave.getAliveMonsters().size();
+
+        assertEquals(expectedAliveMonsters, actualAliveMonsters);
+        assertEquals(0, monsterDeaths);
+        assertEquals(1, monsterReachedEnd);
+        assertTrue(wave.hasEnded());
+    }
+
+    @Override
+    public void onMonsterDeath(Monster monster) {
+        monsterDeaths++;
+    }
+
+    @Override
+    public void onMonsterReachedEnd(Monster monster) {
+        monsterReachedEnd++;
+    }
+}
