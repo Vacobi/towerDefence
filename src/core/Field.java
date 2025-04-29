@@ -8,6 +8,8 @@ import tower.Tower;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Field {
     private final Set<Cell> cells;
@@ -15,6 +17,9 @@ public class Field {
     private final TowersContainer towers;
     private final ProjectilesContainer projectiles;
     private Wave wave;
+    private Timer updateTimer;
+    private static final int UPDATE_RATE = 25;
+    private static final int UPDATE_PERIOD_MS = 1000 / UPDATE_RATE;
 
     public Field() {
         cells = new HashSet<>();
@@ -32,14 +37,29 @@ public class Field {
         wave = null;
     }
 
-    public void updateEntitiesLoop(UpdateFieldLoopController updateFieldLoopController) {
-        while (!wave.hasEnded() && updateFieldLoopController.shouldContinue()) {
-            long currentTick = System.currentTimeMillis();
-            wave.updateMonsters(currentTick);
-            wave.spawnMonsters(currentTick);
-            updateProjectiles(currentTick);
-            towersShoot(currentTick);
-        }
+    public void updateEntitiesLoop(UpdateFieldController controller) {
+        updateTimer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                if (wave.hasEnded() || !controller.shouldContinue()) {
+                    stopUpdates();
+                    return;
+                }
+
+                long currentTick = System.currentTimeMillis();
+                wave.updateMonsters(currentTick);
+                wave.spawnMonsters(currentTick);
+
+                updateProjectiles(currentTick);
+                towersShoot(currentTick);
+            }
+        }, 0, UPDATE_PERIOD_MS);
+    }
+
+    public void stopUpdates() {
+        updateTimer.cancel();
+        updateTimer.purge();
+        updateTimer = new Timer("FieldUpdateTimer", true);
     }
 
     public Road getRoad() {
