@@ -10,7 +10,7 @@ import utils.GameState;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Game implements WaveListener, UpdateFieldLoopController {
+public class Game implements WaveListener, UpdateFieldController {
     private GameState gameState;
     private Wave wave;
     private final Field field;

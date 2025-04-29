@@ -1,5 +1,5 @@
 package core;
 
-public interface UpdateFieldLoopController {
+public interface UpdateFieldController {
     boolean shouldContinue();
 }
