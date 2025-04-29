@@ -58,14 +58,14 @@ public class Field {
         return wave;
     }
 
-    public void towersShoot(long currentTick) {
+    protected void towersShoot(long currentTick) {
         towers.forEach((Tower tower) -> {
             Set<Projectile> shots = tower.shoot(currentTick);
             projectiles.addProjectiles(shots);
         });
     }
 
-    public void updateProjectiles(long currentTick) {
+    protected void updateProjectiles(long currentTick) {
         projectiles.forEach((Projectile projectile) -> {
             projectile.update(currentTick);
         });
