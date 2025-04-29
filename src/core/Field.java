@@ -37,7 +37,7 @@ public class Field {
         wave = null;
     }
 
-    public void updateEntitiesLoop(UpdateFieldController controller) {
+    public void startUpdates(UpdateFieldController controller) {
         updateTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {

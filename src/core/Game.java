@@ -53,7 +53,7 @@ public class Game implements WaveListener, UpdateFieldController {
         freezePlayer();
 
         this.gameState = GameState.WAVE_IN_PROGRESS;
-        field.updateEntitiesLoop(this);
+        field.startUpdates(this);
 
         processEndOfWave();
     }
