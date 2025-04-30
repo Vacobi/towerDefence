@@ -2,10 +2,11 @@ package projectile;
 
 import collision.Hitbox;
 import core.Field;
+import utils.Direction;
 import utils.Position;
 
 
-public class MovingProjectile extends Projectile {
+public class MovingProjectile extends DirectionalProjectile {
     private final MovingProjectileStrategy strategy;
 
     public MovingProjectile(MovingProjectileStrategy strategy, Hitbox hitbox, int damage, Position startPosition, ProjectileBehavior behavior, Field field) {
@@ -19,5 +20,10 @@ public class MovingProjectile extends Projectile {
         strategy.move(currentTick);
 
         applyEffect(currentTick);
+    }
+
+    @Override
+    public MovingProjectile clone(Position position, Direction direction) {
+        return new MovingProjectile(strategy.clone(direction), getHitbox(), getDamage(), position, getBehavior(), getField());
     }
 }
