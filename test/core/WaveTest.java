@@ -14,6 +14,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -79,7 +80,7 @@ class WaveTest implements WaveListener {
 
         int expectedAliveMonsters = monstersCount - 1;
 
-        monster.move(System.currentTimeMillis() * 2);
+        monster.move(System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(1));
         int actualAliveMonsters = wave.getAliveMonsters().size();
 
         assertEquals(expectedAliveMonsters, actualAliveMonsters);
