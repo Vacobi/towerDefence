@@ -26,10 +26,6 @@ public class Road {
         this.roadCells = roadParser.getRoadCells();
     }
 
-    public List<RoadSegment> getRoad() {
-        return road;
-    }
-
     public Optional<RoadSegment> getNextRoadSegment(RoadSegment roadSegment) {
         int indexOfCurrent = road.indexOf(roadSegment);
         if (indexOfCurrent == road.size() - 1) {
