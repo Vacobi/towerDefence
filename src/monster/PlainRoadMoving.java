@@ -29,13 +29,17 @@ public class PlainRoadMoving extends MovingMonsterStrategy{
 
         int delta = (int)(currentTick - lastMovingTime());
         int leftTravelOnThisTick = speed() * (delta / MILLIS_TO_SECONDS_COEFF);
+
         while (leftTravelOnThisTick > 0 && !monsterReachedEnd()) {
             Direction movingDirection = currentRoadSegment().getDirection();
+
             int leftInThisRoadSegment = currentRoadSegment().getLength() - traveledInCurrentSegment();
             int traveledDistance = Math.min(leftTravelOnThisTick, leftInThisRoadSegment);
+
             setCurrentPosition(currentPosition().move(movingDirection, traveledDistance));
             setTraveledInCurrentSegment(traveledInCurrentSegment() + traveledDistance);
             switchRoadSegmentIfNecessary();
+
             leftTravelOnThisTick -= traveledDistance;
         }
 
