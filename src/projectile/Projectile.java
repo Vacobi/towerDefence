@@ -25,6 +25,8 @@ public abstract class Projectile extends CollisionObject {
         this.position = startPosition;
         this.projectileBehavior = behavior;
         this.field = field;
+
+        updateHitboxPosition(startPosition);
     }
 
     public abstract void update(long currentTick);
