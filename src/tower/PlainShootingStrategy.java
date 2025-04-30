@@ -43,7 +43,7 @@ public class PlainShootingStrategy implements ShootingStrategy{
         Set<Projectile> projectiles = new HashSet<>();
         Position startPosition = position;
         shotDirections.forEach((Direction direction) -> {
-            projectiles.add(projectileFactory.createMovingProjectile(startPosition, direction, field));
+            projectiles.add(projectileFactory.createLinearMovingHitOneTargetProjectile(startPosition, direction, field));
         });
 
         return projectiles;

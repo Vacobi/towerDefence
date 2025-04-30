@@ -21,7 +21,7 @@ public class ProjectileFactory {
         defaultHeight = 10;
     }
 
-    public MovingProjectile createMovingProjectile(Position position, Direction direction, Field field) {
+    public MovingProjectile createLinearMovingHitOneTargetProjectile(Position position, Direction direction, Field field) {
         LinearMovingProjectileStrategy movingStrategy = new LinearMovingProjectileStrategy(null, defaultSpeed, defaultMaxDistance, direction);
         HitOneTargetBehavior behavior = new HitOneTargetBehavior();
 

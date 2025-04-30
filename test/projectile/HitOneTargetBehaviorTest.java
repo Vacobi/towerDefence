@@ -40,7 +40,7 @@ class HitOneTargetBehaviorTest {
         @Test
         void collidesWithMonster() {
             Monster monster = monsterFactory.createMonster(strategy);
-            Projectile projectile = projectileFactory.createMovingProjectile(monster.getPosition(), Direction.NORTH, field);
+            Projectile projectile = projectileFactory.createLinearMovingHitOneTargetProjectile(monster.getPosition(), Direction.NORTH, field);
             HitOneTargetBehavior behavior = (HitOneTargetBehavior) projectile.getBehavior();
 
             int expectedHealth = monster.getHealth() - projectile.getDamage();
@@ -56,7 +56,7 @@ class HitOneTargetBehaviorTest {
         void notCollidesWithMonster() {
             MovingMonsterStrategy notCollidingStrategy = new PlainRoadMoving(new Position(0, 0), field, 10);
             Monster monster = monsterFactory.createMonster(notCollidingStrategy);
-            Projectile projectile = projectileFactory.createMovingProjectile(new Position(100, 100), Direction.NORTH, field);
+            Projectile projectile = projectileFactory.createLinearMovingHitOneTargetProjectile(new Position(100, 100), Direction.NORTH, field);
             HitOneTargetBehavior behavior = (HitOneTargetBehavior) projectile.getBehavior();
 
             int expectedHealth = monster.getHealth();
@@ -71,7 +71,7 @@ class HitOneTargetBehaviorTest {
         @Test
         void monsterDies() {
             Monster monster = monsterFactory.createMonster(strategy);
-            Projectile projectile = projectileFactory.createMovingProjectile(monster.getPosition(), Direction.NORTH, field);
+            Projectile projectile = projectileFactory.createLinearMovingHitOneTargetProjectile(monster.getPosition(), Direction.NORTH, field);
             HitOneTargetBehavior behavior = (HitOneTargetBehavior) projectile.getBehavior();
 
             int expectedHealth = 0;
@@ -100,7 +100,7 @@ class HitOneTargetBehaviorTest {
                 wave.spawnMonsters(System.currentTimeMillis());
             }
             field.setWave(wave);
-            Projectile projectile = projectileFactory.createMovingProjectile(monsterPosition, Direction.NORTH, field);
+            Projectile projectile = projectileFactory.createLinearMovingHitOneTargetProjectile(monsterPosition, Direction.NORTH, field);
             HitOneTargetBehavior behavior = (HitOneTargetBehavior) projectile.getBehavior();
 
 
@@ -136,7 +136,7 @@ class HitOneTargetBehaviorTest {
                 wave.spawnMonsters(System.currentTimeMillis());
             }
             field.setWave(wave);
-            Projectile projectile = projectileFactory.createMovingProjectile(monsterPosition, Direction.NORTH, field);
+            Projectile projectile = projectileFactory.createLinearMovingHitOneTargetProjectile(monsterPosition, Direction.NORTH, field);
             HitOneTargetBehavior behavior = (HitOneTargetBehavior) projectile.getBehavior();
 
 
@@ -175,7 +175,7 @@ class HitOneTargetBehaviorTest {
                 wave.spawnMonsters(System.currentTimeMillis());
             }
             field.setWave(wave);
-            Projectile projectile = projectileFactory.createMovingProjectile(monsterPosition, Direction.NORTH, field);
+            Projectile projectile = projectileFactory.createLinearMovingHitOneTargetProjectile(monsterPosition, Direction.NORTH, field);
             HitOneTargetBehavior behavior = (HitOneTargetBehavior) projectile.getBehavior();
 
 
@@ -214,7 +214,7 @@ class HitOneTargetBehaviorTest {
                 wave.spawnMonsters(System.currentTimeMillis());
             }
             field.setWave(wave);
-            Projectile projectile = projectileFactory.createMovingProjectile(monsterPosition, Direction.NORTH, field);
+            Projectile projectile = projectileFactory.createLinearMovingHitOneTargetProjectile(monsterPosition, Direction.NORTH, field);
             HitOneTargetBehavior behavior = (HitOneTargetBehavior) projectile.getBehavior();
 
 

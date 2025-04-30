@@ -29,7 +29,7 @@ class LinearMovingProjectileStrategyTest {
     @Test
     void movePartOfDistance() {
         Direction direction = Direction.NORTH;
-        MovingProjectile projectile = projectileFactory.createMovingProjectile(position, direction, field);
+        MovingProjectile projectile = projectileFactory.createLinearMovingHitOneTargetProjectile(position, direction, field);
         LinearMovingProjectileStrategy strategy = new LinearMovingProjectileStrategy(projectile, projectileSpeed, projectileMaxDistance, direction);
         long tick = strategy.getLastMoveTime() + TimeUnit.SECONDS.toMillis(2);
 
