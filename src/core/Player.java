@@ -24,11 +24,19 @@ public class Player {
 
     public boolean placeTower(Class<? extends Tower> tower, Cell cell) {
         BuildingResponse response = builder.buildTower(tower, cell, bankAccount.gold);
+        if (frozen) {
+            return false;
+        }
+
         bankAccount.setGold(response.change());
         return response.built();
     }
 
     public boolean upgradeTower(Tower tower, TowerUpgradableCharacteristic towerUpgrade) {
+        if (frozen) {
+            return false;
+        }
+
         BuildingResponse response = builder.upgradeTower(tower,towerUpgrade, bankAccount.gold);
         bankAccount.setGold(response.change());
         return response.built();
