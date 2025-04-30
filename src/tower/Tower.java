@@ -2,7 +2,6 @@ package tower;
 
 import core.Cell;
 import core.Field;
-import events.TowerListener;
 import exception.TowerAlreadySetOnCell;
 import projectile.Projectile;
 import tower.utils.TowerGeographicalCharacteristics;
