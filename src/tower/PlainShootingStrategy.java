@@ -1,7 +1,6 @@
 package tower;
 
-import core.Field;
-import factory.ProjectileFactory;
+import projectile.DirectionalProjectile;
 import projectile.Projectile;
 import utils.Direction;
 import utils.Position;
@@ -14,17 +13,15 @@ public class PlainShootingStrategy implements ShootingStrategy{
 
     private Long lastShootTime;
     private long shootingDelay;
-    private Position position;
-    private List<Direction> shotDirections;
-    private final Field field;
+    private final Position position;
+    private final List<Direction> shotDirections;
 
     private final DirectionalProjectile projectile;
 
     public PlainShootingStrategy(DirectionalProjectile projectile,
                                  long shootingDelay,
                                  Position position,
-                                 List<Direction> shotDirections,
-                                 Field field) {
+                                 List<Direction> shotDirections) {
         this.shootingDelay = shootingDelay;
         this.position = position;
         this.shotDirections = shotDirections;
