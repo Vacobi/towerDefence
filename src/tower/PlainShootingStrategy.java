@@ -18,19 +18,19 @@ public class PlainShootingStrategy implements ShootingStrategy{
     private List<Direction> shotDirections;
     private final Field field;
 
-    private final ProjectileFactory projectileFactory;
+    private final DirectionalProjectile projectile;
 
-    public PlainShootingStrategy(long shootingDelay,
+    public PlainShootingStrategy(DirectionalProjectile projectile,
+                                 long shootingDelay,
                                  Position position,
                                  List<Direction> shotDirections,
                                  Field field) {
         this.shootingDelay = shootingDelay;
         this.position = position;
         this.shotDirections = shotDirections;
-        this.field = field;
 
-        projectileFactory = new ProjectileFactory();
-        lastShootTime = System.currentTimeMillis();
+        this.projectile = projectile;
+        lastShootTime = System.currentTimeMillis() - shootingDelay;
     }
 
     @Override
@@ -41,9 +41,8 @@ public class PlainShootingStrategy implements ShootingStrategy{
         }
 
         Set<Projectile> projectiles = new HashSet<>();
-        Position startPosition = position;
         shotDirections.forEach((Direction direction) -> {
-            projectiles.add(projectileFactory.createLinearMovingHitOneTargetProjectile(startPosition, direction, field));
+            projectiles.add(projectile.clone(position, direction));
         });
 
         return projectiles;
