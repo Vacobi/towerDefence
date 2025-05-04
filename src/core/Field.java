@@ -5,11 +5,14 @@ import projectile.ProjectilesContainer;
 import road.Road;
 import tower.TowersContainer;
 import tower.Tower;
+import utils.Position;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Field {
     private final Set<Cell> cells;
@@ -21,20 +24,41 @@ public class Field {
     private static final int UPDATE_RATE = 25;
     private static final int UPDATE_PERIOD_MS = 1000 / UPDATE_RATE;
 
+    private static final int WIDTH = 50;
+    private static final int HEIGHT = 50;
+
     public Field() {
-        cells = new HashSet<>();
         road = new Road();
+        cells = new HashSet<>();
+        initializeCells();
+
         towers = new TowersContainer(this);
         projectiles = new ProjectilesContainer(this);
         wave = null;
     }
 
     public Field(String path) {
-        cells = new HashSet<>();
         road = new Road(path);
+        cells = new HashSet<>();
+        initializeCells();
+
         towers = new TowersContainer(this);
         projectiles = new ProjectilesContainer(this);
         wave = null;
+    }
+
+    private void initializeCells() {
+        Set<Position> roadPositions = new HashSet<>();
+        road.getRoadCells().forEach(cell -> roadPositions.add(cell.position()));
+
+        for (int i = 0; i < WIDTH; i++) {
+            for (int j = 0; j < HEIGHT; j++) {
+                Position pos = new Position(i, j);
+                if (!roadPositions.contains(pos)) {
+                    cells.add(new Cell(pos));
+                }
+            }
+        }
     }
 
     public void startUpdates(UpdateFieldController controller) {
