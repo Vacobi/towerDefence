@@ -63,4 +63,6 @@ public abstract class Projectile extends CollisionObject {
     protected ProjectileBehavior getBehavior() {
         return projectileBehavior;
     }
+
+    public abstract Projectile clone(int damage, int range);
 }

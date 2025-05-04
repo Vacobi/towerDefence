@@ -51,6 +51,21 @@ public class LinearMovingProjectileStrategy implements MovingProjectileStrategy{
         move(currentTick, moveDistance);
     }
 
+    @Override
+    public MovingProjectileStrategy clone(int range) {
+        return new LinearMovingProjectileStrategy(projectile, speed, range, direction);
+    }
+
+    @Override
+    public MovingProjectileStrategy clone() {
+        return new LinearMovingProjectileStrategy(projectile, speed, maxDistance, direction);
+    }
+
+    @Override
+    public MovingProjectileStrategy clone(Direction direction) {
+        return new LinearMovingProjectileStrategy(projectile, speed, maxDistance, direction);
+    }
+
     protected void move(long moveTime, int moveDistance) {
         if (totalTraveledDistance >= maxDistance) {
             projectile.deactivate();

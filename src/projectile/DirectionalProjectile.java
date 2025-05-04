@@ -10,5 +10,5 @@ public abstract class DirectionalProjectile extends Projectile {
         super(hitbox, damage, startPosition, behavior, field);
     }
 
-    public abstract Projectile clone(Position position, Direction direction);
+    public abstract DirectionalProjectile clone(Position position, Direction direction);
 }

@@ -23,7 +23,26 @@ public class MovingProjectile extends DirectionalProjectile {
     }
 
     @Override
+    public MovingProjectile clone(int damage, int range) {
+        return new MovingProjectile(
+                strategy.clone(range),
+                getHitbox(),
+                damage,
+                position(),
+                getBehavior(),
+                getField()
+        );
+    }
+
+    @Override
     public MovingProjectile clone(Position position, Direction direction) {
-        return new MovingProjectile(strategy.clone(direction), getHitbox(), getDamage(), position, getBehavior(), getField());
+        return new MovingProjectile(
+                strategy.clone(direction),
+                getHitbox(),
+                getDamage(),
+                position,
+                getBehavior(),
+                getField()
+        );
     }
 }
