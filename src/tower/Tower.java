@@ -2,53 +2,65 @@ package tower;
 
 import core.Cell;
 import core.Field;
-import exception.TowerAlreadySetOnCell;
 import projectile.Projectile;
-import tower.utils.TowerGeographicalCharacteristics;
-import tower.utils.TowerShootingCharacteristics;
-import tower.utils.TowerUpgradablePart;
+import utils.Direction;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-public class Tower {
+public class Tower<T extends Projectile> {
 
-    private Cell cell;
+    private final Cell cell;
     private final Field field;
 
-    private final ShootingStrategy shootingStrategy;
+    private final ShootingStrategy<T> shootingStrategy;
+    private final List<Direction> shotDirections;
+    private T typicalProjectile;
 
     private final Map<TowerUpgradableCharacteristic, Integer> characteristicLevels;
-    private TowerCharacteristicsValues characteristicValues;
+    private final TowerCharacteristicsValues characteristicValues;
+
     private final int levelsUpgradeCount;
 
-    public Tower(TowerGeographicalCharacteristics towerGeographicalCharacteristics,
-                 TowerShootingCharacteristics towerShootingCharacteristics,
-                 TowerUpgradablePart towerUpgradablePart) {
-        this.cell = towerGeographicalCharacteristics.cell();
-        this.field = towerGeographicalCharacteristics.field();
+    public Tower(
+            Cell cell,
+            Field field,
+            ShootingStrategy<T> shootingStrategy,
+            List<Direction> shotDirections,
+            int levelsUpgradeCount,
+            TowerCharacteristicsValues characteristicValues,
+            T typicalProjectile
+    ) {
+        this.cell = cell;
+        this.field = field;
 
-        this.shootingStrategy = towerShootingCharacteristics.shootingStrategy();
+        this.shootingStrategy = shootingStrategy;
+        this.shotDirections = shotDirections;
+        this.typicalProjectile = typicalProjectile;
 
-        levelsUpgradeCount = towerUpgradablePart.levelsCount();
-        initializeCharacteristics(towerUpgradablePart.initialCharacteristicValues());
+        this.levelsUpgradeCount = levelsUpgradeCount;
+        this.characteristicLevels = new HashMap<>();
+        initializeCharacteristicLevels();
 
-        characteristicLevels = new HashMap<>();
+        this.characteristicValues = characteristicValues;
     }
 
-    private void initializeCharacteristics(TowerCharacteristicsValues initialCharacteristicValues) {
-        characteristicValues = new TowerCharacteristicsValues();
-
+    protected void initializeCharacteristicLevels() {
         for (TowerUpgradableCharacteristic characteristic : TowerUpgradableCharacteristic.values()) {
             characteristicLevels.put(characteristic, 1);
         }
+    }
 
-        characteristicValues = initialCharacteristicValues;
+    public List<T> shoot(long currentTick) {
+        return shootingStrategy.shoot(currentTick);
     }
 
     public void upgrade(TowerUpgradableCharacteristic characteristic) {
         if (!characteristicLevels.containsKey(characteristic)) {
             throw new IllegalArgumentException("Unknown characteristic " + characteristic + " for this tower");
         }
+
         if (characteristicLevels.get(characteristic) >= levelsUpgradeCount) {
             throw new IllegalArgumentException("Tower characteristic " + characteristic + "  is already max level");
         }
@@ -71,15 +83,17 @@ public class Tower {
     }
 
     private void upgradeDamage() {
-        characteristicValues.setDamage(characteristicValues.getDamage() * 1.5);
+        characteristicValues.setDamage((int) (characteristicValues.getDamage() * 1.5));
+        this.typicalProjectile = (T) typicalProjectile.clone(characteristicValues.getDamage(), characteristicValues.getRange());
     }
 
     private void upgradeRange() {
-        characteristicValues.setRange(characteristicValues.getRange() * 1.5);
+        characteristicValues.setRange((int) (characteristicValues.getRange() * 1.5));
+        this.typicalProjectile = (T) typicalProjectile.clone(characteristicValues.getDamage(), characteristicValues.getRange());
     }
 
     private void upgradeShootingDelay() {
-        long reduced = characteristicValues.shootingDelay() / 2;
+        long reduced = (long) (characteristicValues.shootingDelay() / 1.5);
 
         characteristicValues.setShootingDelay(reduced);
     }
@@ -92,35 +106,37 @@ public class Tower {
         return characteristicLevels.get(characteristic) < levelsUpgradeCount;
     }
 
-    public Set<Projectile> shoot(long currentTick) {
-        return shootingStrategy.shoot(currentTick);
-    }
-
     //--/////////////////////////////////////////////////////////////////////////
 
-    public void setCell(Cell cell) {
-        if (this.cell != null) {
-            throw new TowerAlreadySetOnCell(this);
-        }
+    public ShootingStrategy<T> getStrategy() {
+        return shootingStrategy;
+    }
 
-        this.cell = cell;
+    public Cell getCell() {
+        return cell;
     }
 
     public Field getField() {
-        return this.field;
+        return field;
+    }
+
+    public Map<TowerUpgradableCharacteristic, Integer> getCharacteristicLevels() {
+        return characteristicLevels;
     }
 
     public int getLevelsUpgradeCount() {
         return levelsUpgradeCount;
     }
 
-    public TowerCharacteristicsValues getCharacteristicValues() {
+    public TowerCharacteristicsValues characteristicValues() {
         return characteristicValues;
     }
 
-    public int levelOfCharacteristic(TowerUpgradableCharacteristic characteristic) {
-        return characteristicLevels.get(characteristic);
+    public List<Direction> getShotDirections() {
+        return shotDirections;
     }
 
-    //--/////////////////////////////////////////////////////////////////////////
+    public T getTypicalProjectile() {
+        return typicalProjectile;
+    }
 }
