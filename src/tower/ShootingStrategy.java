@@ -2,8 +2,8 @@ package tower;
 
 import projectile.Projectile;
 
-import java.util.Set;
+import java.util.List;
 
-public interface ShootingStrategy {
-    Set<Projectile> shoot(long currentTick);
+public interface ShootingStrategy<T extends Projectile> {
+    List<T> shoot(long currentTick);
 }
