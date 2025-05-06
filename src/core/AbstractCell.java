@@ -1,5 +1,6 @@
 package core;
 
+import utils.CoordinatesConverter;
 import utils.Position;
 
 public abstract class AbstractCell {
@@ -11,6 +12,13 @@ public abstract class AbstractCell {
 
     public Position position() {
         return position;
+    }
+
+    public Position getGlobalPosition() {
+        return new Position(
+                CoordinatesConverter.xToGlobalCoordinate(position.getX()),
+                CoordinatesConverter.yToGlobalCoordinate(position.getY())
+        );
     }
 
     public abstract boolean canPlaceTower();
