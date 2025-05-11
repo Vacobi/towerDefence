@@ -2,17 +2,15 @@ package projectile;
 
 import core.Field;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Consumer;
 
 public class ProjectilesContainer implements Iterable<Projectile> {
-    private final Set<Projectile> projectiles;
+    private final List<Projectile> projectiles;
     private final Field field;
 
     public ProjectilesContainer(Field field) {
-        projectiles = new HashSet<>();
+        projectiles = new LinkedList<>();
 
         this.field = field;
     }
@@ -21,7 +19,7 @@ public class ProjectilesContainer implements Iterable<Projectile> {
         projectiles.add(projectile);
     }
 
-    public void addProjectiles(Set<Projectile> projectiles) {
+    public void addProjectiles(List<Projectile> projectiles) {
         this.projectiles.addAll(projectiles);
     }
 

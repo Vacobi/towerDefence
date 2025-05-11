@@ -7,12 +7,7 @@ import tower.TowersContainer;
 import tower.Tower;
 import utils.Position;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+import java.util.*;
 
 public class Field {
     private final Set<Cell> cells;
@@ -104,7 +99,7 @@ public class Field {
 
     protected void towersShoot(long currentTick) {
         towers.forEach((Tower tower) -> {
-            Set<Projectile> shots = tower.shoot(currentTick);
+            List<Projectile> shots = tower.shoot(currentTick);
             projectiles.addProjectiles(shots);
         });
     }
