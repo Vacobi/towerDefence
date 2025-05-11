@@ -71,11 +71,27 @@ public class Monster extends CollisionObject {
         }
     }
 
+    public boolean stillInWave() {
+        return isAlive() && !hasReachedEnd();
+    }
+
+    public boolean hasReachedEnd() {
+        return strategy.monsterReachedEnd();
+    }
+
+    public boolean isAlive() {
+        return health > 0;
+    }
+
     public Position getPosition() {
         return strategy.currentPosition();
     }
 
     public int getHealth() {
         return health;
+    }
+
+    public boolean alive() {
+        return health > 0;
     }
 }
