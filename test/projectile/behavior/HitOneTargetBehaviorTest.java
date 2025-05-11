@@ -30,7 +30,11 @@ class HitOneTargetBehaviorTest {
 
     private final MonsterFactory monsterFactory = new MonsterFactory();
     private final Position monsterPosition = new Position(100, 100);
-    private final MovingMonsterStrategy strategy = new PlainRoadMoving(monsterPosition, field, 10);
+    private final MovingMonsterStrategy strategy = new PlainRoadMoving(
+            monsterPosition,
+            field,
+            10
+    );
     private final int monsterFullHealth = 100;
 
     private final ProjectileFactory projectileFactory = new ProjectileFactory();
