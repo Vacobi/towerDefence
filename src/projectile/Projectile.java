@@ -1,37 +1,56 @@
 package projectile;
 
 import collision.CollisionObject;
-import collision.Hitbox;
+import collision.HitboxParameters;
 import core.Field;
+import projectile.behavior.ProjectileBehavior;
+import utils.CoordinatesConverter;
 import utils.Position;
 
 public abstract class Projectile extends CollisionObject {
     private final int damage;
+    private final int distance;
+
     private final Field field;
-    private boolean active;
     private Position position;
+
+    private boolean active;
 
     private final ProjectileBehavior projectileBehavior;
 
-    public Projectile(Hitbox hitbox, int damage, Position startPosition, ProjectileBehavior behavior, Field field) {
-        super(hitbox);
+    public Projectile(
+            HitboxParameters parameters,
+            int damage,
+            int distance,
+            Position startPosition,
+            ProjectileBehavior behavior,
+            Field field
+    ) {
+        super(CoordinatesConverter.centerToLeftTop(startPosition, parameters.width(), parameters.height()), parameters);
 
         if (damage < 0) {
             throw new IllegalArgumentException("Damage cannot be negative");
         }
         this.damage = damage;
 
-        this.active = true;
-        this.position = startPosition;
-        this.projectileBehavior = behavior;
-        this.field = field;
+        if (distance <= 0) {
+            throw new IllegalArgumentException("Max distance must be greater than 0");
+        }
+        this.distance = distance;
 
-        updateHitboxPosition(startPosition);
+        this.active = true;
+
+        this.projectileBehavior = behavior;
+
+        this.field = field;
+        this.position = startPosition;
     }
 
-    public abstract void update(long currentTick);
+    public void update(long currentTick) {
+        if (!active) {
+            throw new IllegalStateException("Projectile is not active");
+        }
 
-    protected void applyEffect(long currentTick) {
         projectileBehavior.applyEffect(currentTick);
     }
 
@@ -40,7 +59,7 @@ public abstract class Projectile extends CollisionObject {
     }
 
     // - ///////////////////////////////////////////////
-    protected void setPosition(Position position) {
+    public void setPosition(Position position) {
         this.position = position;
     }
 
@@ -48,20 +67,24 @@ public abstract class Projectile extends CollisionObject {
         return position;
     }
 
-    protected void deactivate() {
+    public void deactivate() {
         active = false;
     }
 
-    protected int getDamage() {
+    public int getDamage() {
         return damage;
     }
 
-    protected Field getField() {
+    public Field getField() {
         return field;
     }
 
-    protected ProjectileBehavior getBehavior() {
+    public ProjectileBehavior getBehavior() {
         return projectileBehavior;
+    }
+
+    public int getDistance() {
+        return distance;
     }
 
     public abstract Projectile clone(int damage, int range);
