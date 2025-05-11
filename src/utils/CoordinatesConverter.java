@@ -4,6 +4,10 @@ public class CoordinatesConverter {
     private static final int CellPositionToGlobalPositionCoeffX = 30;
     private static final int CellPositionToGlobalPositionCoeffY = 30;
 
+    public static Position centerToLeftTop (Position center, int width, int height) {
+        return new Position(center.getX() - width / 2, center.getY() + height / 2);
+    }
+
     public static int xToGlobalCoordinate(int x) {
         return x * CellPositionToGlobalPositionCoeffX;
     }
