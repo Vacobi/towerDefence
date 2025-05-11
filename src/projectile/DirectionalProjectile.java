@@ -1,14 +1,32 @@
 package projectile;
 
-import collision.Hitbox;
+import collision.HitboxParameters;
 import core.Field;
+import projectile.behavior.ProjectileBehavior;
 import utils.Direction;
 import utils.Position;
 
+
 public abstract class DirectionalProjectile extends Projectile {
-    public DirectionalProjectile(Hitbox hitbox, int damage, Position startPosition, ProjectileBehavior behavior, Field field) {
-        super(hitbox, damage, startPosition, behavior, field);
+    private Direction direction;
+
+    public DirectionalProjectile(
+            HitboxParameters parameters,
+            int damage,
+            int distance,
+            Position startPosition,
+            ProjectileBehavior behavior,
+            Field field,
+            Direction direction
+    ) {
+        super(parameters, damage, distance, startPosition, behavior, field);
+
+        this.direction = direction;
     }
 
     public abstract DirectionalProjectile clone(Position position, Direction direction);
+
+    public Direction getDirection() {
+        return direction;
+    }
 }
