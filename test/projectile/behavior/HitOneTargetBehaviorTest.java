@@ -10,6 +10,7 @@ import monster.MovingMonsterStrategy;
 import monster.PlainRoadMoving;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import projectile.Projectile;
 import utils.Direction;
 import utils.Position;
 
