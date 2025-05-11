@@ -8,6 +8,7 @@ import utils.Direction;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class Tower<T extends Projectile> {
 
@@ -19,7 +20,8 @@ public class Tower<T extends Projectile> {
     private T typicalProjectile;
 
     private final Map<TowerUpgradableCharacteristic, Integer> characteristicLevels;
-    private final TowerCharacteristicsValues characteristicValues;
+    private final TowerCharacteristicsValues actualCharacteristicValues;
+    private final TowerCharacteristicsValues initialCharacteristicValues;
 
     private final int levelsUpgradeCount;
 
@@ -35,15 +37,25 @@ public class Tower<T extends Projectile> {
         this.cell = cell;
         this.field = field;
 
-        this.shootingStrategy = shootingStrategy;
         this.shotDirections = shotDirections;
-        this.typicalProjectile = typicalProjectile;
+
+        if (typicalProjectile.getDamage() != characteristicValues.getDamage() ||
+            typicalProjectile.getDistance() != characteristicValues.getRange()) {
+
+            this.typicalProjectile = (T) typicalProjectile.clone(characteristicValues.getDamage(), characteristicValues.getRange());
+        } else {
+            this.typicalProjectile = typicalProjectile;
+        }
 
         this.levelsUpgradeCount = levelsUpgradeCount;
         this.characteristicLevels = new HashMap<>();
         initializeCharacteristicLevels();
 
-        this.characteristicValues = characteristicValues;
+        this.actualCharacteristicValues = characteristicValues;
+        this.initialCharacteristicValues = characteristicValues;
+
+        this.shootingStrategy = shootingStrategy;
+        shootingStrategy.setTower(this);
     }
 
     protected void initializeCharacteristicLevels() {
@@ -83,19 +95,19 @@ public class Tower<T extends Projectile> {
     }
 
     private void upgradeDamage() {
-        characteristicValues.setDamage((int) (characteristicValues.getDamage() * 1.5));
-        this.typicalProjectile = (T) typicalProjectile.clone(characteristicValues.getDamage(), characteristicValues.getRange());
+        actualCharacteristicValues.setDamage((int) (actualCharacteristicValues.getDamage() * 1.5));
+        this.typicalProjectile = (T) typicalProjectile.clone(actualCharacteristicValues.getDamage(), actualCharacteristicValues.getRange());
     }
 
     private void upgradeRange() {
-        characteristicValues.setRange((int) (characteristicValues.getRange() * 1.5));
-        this.typicalProjectile = (T) typicalProjectile.clone(characteristicValues.getDamage(), characteristicValues.getRange());
+        actualCharacteristicValues.setRange((int) (actualCharacteristicValues.getRange() * 1.5));
+        this.typicalProjectile = (T) typicalProjectile.clone(actualCharacteristicValues.getDamage(), actualCharacteristicValues.getRange());
     }
 
     private void upgradeShootingDelay() {
-        long reduced = (long) (characteristicValues.shootingDelay() / 1.5);
+        long reduced = (long) (actualCharacteristicValues.shootingDelay() / 1.5);
 
-        characteristicValues.setShootingDelay(reduced);
+        actualCharacteristicValues.setShootingDelay(reduced);
     }
 
     public boolean canUpgrade(TowerUpgradableCharacteristic characteristic) {
@@ -104,6 +116,22 @@ public class Tower<T extends Projectile> {
         }
 
         return characteristicLevels.get(characteristic) < levelsUpgradeCount;
+    }
+
+    public Tower<T> clone(Cell cell) {
+        return new Tower<> (
+                cell,
+                this.field,
+                this.shootingStrategy.clone(),
+                this.shotDirections,
+                this.levelsUpgradeCount,
+                this.initialCharacteristicValues,
+                (T) this.typicalProjectile.clone(initialCharacteristicValues.getDamage(), initialCharacteristicValues.getRange())
+                );
+    }
+
+    public Optional<Integer> getLevelOfCharacteristic(TowerUpgradableCharacteristic characteristic) {
+        return characteristicLevels.containsKey(characteristic) ? Optional.of(characteristicLevels.get(characteristic)) : Optional.empty();
     }
 
     //--/////////////////////////////////////////////////////////////////////////
@@ -129,7 +157,7 @@ public class Tower<T extends Projectile> {
     }
 
     public TowerCharacteristicsValues characteristicValues() {
-        return characteristicValues;
+        return actualCharacteristicValues;
     }
 
     public List<Direction> getShotDirections() {
