@@ -1,6 +1,7 @@
 package core;
 
 import economic.BankAccount;
+import projectile.Projectile;
 import tower.Tower;
 import tower.TowerUpgradableCharacteristic;
 import utils.BuildingResponse;
@@ -22,12 +23,12 @@ public class Player {
         this.lives -= lives;
     }
 
-    public boolean placeTower(Class<? extends Tower> tower, Cell cell) {
-        BuildingResponse response = builder.buildTower(tower, cell, bankAccount.gold);
+    public boolean placeTower(Tower<? extends Projectile> typicalTower, Cell cell) {
         if (frozen) {
             return false;
         }
 
+        BuildingResponse response = builder.buildTower(typicalTower, cell, bankAccount.gold);
         bankAccount.setGold(response.change());
         return response.built();
     }
