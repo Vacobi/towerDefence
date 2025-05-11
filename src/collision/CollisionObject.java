@@ -3,10 +3,14 @@ package collision;
 import utils.Position;
 
 public class CollisionObject {
-    private final Hitbox hitbox;
+    private Hitbox hitbox;
 
     public CollisionObject(Hitbox hitbox) {
         this.hitbox = hitbox;
+    }
+
+    public CollisionObject(Position leftTop, HitboxParameters parameters) {
+        this.hitbox = new Hitbox(leftTop, parameters);
     }
 
     public Hitbox getHitbox() {
@@ -19,5 +23,9 @@ public class CollisionObject {
 
     public void updateHitboxPosition(Position newPosition) {
         hitbox.updateLeftTop(newPosition);
+    }
+
+    public void updateHitboxParameters(HitboxParameters newHitboxParameters) {
+        hitbox = new Hitbox(hitbox.getLeftTop(), newHitboxParameters);
     }
 }

@@ -10,15 +10,15 @@ public class HitboxParameters {
         this.angle = angle;
     }
 
-    public int getWidth() {
+    public int width() {
         return width;
     }
 
-    public int getHeight() {
+    public int height() {
         return height;
     }
 
-    public double getAngle() {
+    public double angle() {
         return angle;
     }
 

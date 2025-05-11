@@ -8,9 +8,11 @@ import static org.junit.jupiter.api.Assertions.*;
 class CollisionObjectTest {
     @Test
     void objectsCollides() {
-        Hitbox hitbox = new Hitbox(200, 100, 100, 20, Math.toRadians(0));
+        HitboxParameters hitboxParameters = new HitboxParameters(100, 20, Math.toRadians(0));
+        Hitbox hitbox = new Hitbox(200, 100, hitboxParameters);
         CollisionObject collisionObject = new CollisionObject(hitbox);
-        Hitbox other = new Hitbox(250, 100, 100, 20, Math.toRadians(0));
+        HitboxParameters hitboxParametersOther = new HitboxParameters(100, 20, Math.toRadians(0));
+        Hitbox other = new Hitbox(250, 100, hitboxParametersOther);
         CollisionObject otherCollisionObject = new CollisionObject(other);
 
         boolean actualCollides = collisionObject.collidesWith(otherCollisionObject);
@@ -20,9 +22,11 @@ class CollisionObjectTest {
 
     @Test
     void objectsNotCollides() {
-        Hitbox hitbox = new Hitbox(200, 100, 100, 20, Math.toRadians(0));
+        HitboxParameters hitboxParameters = new HitboxParameters(100, 20, Math.toRadians(0));
+        Hitbox hitbox = new Hitbox(200, 100, hitboxParameters);
         CollisionObject collisionObject = new CollisionObject(hitbox);
-        Hitbox other = new Hitbox(350, 100, 100, 20, Math.toRadians(0));
+        HitboxParameters hitboxParametersOther = new HitboxParameters(100, 20, Math.toRadians(0));
+        Hitbox other = new Hitbox(350, 100, hitboxParameters);
         CollisionObject otherCollisionObject = new CollisionObject(other);
 
         boolean actualCollides = collisionObject.collidesWith(otherCollisionObject);
@@ -32,7 +36,8 @@ class CollisionObjectTest {
 
     @Test
     void moveObject() {
-        Hitbox hitbox = new Hitbox(200, 100, 100, 20, Math.toRadians(0));
+        HitboxParameters hitboxParameters = new HitboxParameters(100, 20, Math.toRadians(0));
+        Hitbox hitbox = new Hitbox(200, 100, hitboxParameters);
         CollisionObject collisionObject = new CollisionObject(hitbox);
 
         Position newPosition = new Position(90, 80);

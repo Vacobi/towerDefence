@@ -25,12 +25,12 @@ public class Hitbox {
     public Point2D.Double[] getVertices() {
         Point2D.Double[] vertices = new Point2D.Double[4];
 
-        int[] xOffsets = {0, hitboxParameters.getWidth(), hitboxParameters.getWidth(), 0};
-        int[] yOffsets = {0, 0, hitboxParameters.getHeight(), hitboxParameters.getHeight()};
+        int[] xOffsets = {0, hitboxParameters.width(), hitboxParameters.width(), 0};
+        int[] yOffsets = {0, 0, hitboxParameters.height(), hitboxParameters.height()};
 
         for (int i = 0; i < 4; i++) {
-            double rotatedX = x + xOffsets[i] * Math.cos(hitboxParameters.getAngle()) - yOffsets[i] * Math.sin(hitboxParameters.getAngle());
-            double rotatedY = y + xOffsets[i] * Math.sin(hitboxParameters.getAngle()) + yOffsets[i] * Math.cos(hitboxParameters.getAngle());
+            double rotatedX = x + xOffsets[i] * Math.cos(hitboxParameters.angle()) - yOffsets[i] * Math.sin(hitboxParameters.angle());
+            double rotatedY = y + xOffsets[i] * Math.sin(hitboxParameters.angle()) + yOffsets[i] * Math.cos(hitboxParameters.angle());
 
             vertices[i] = new Point2D.Double(rotatedX, rotatedY);
         }
