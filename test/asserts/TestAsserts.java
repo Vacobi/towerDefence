@@ -2,7 +2,10 @@ package asserts;
 
 import collision.Hitbox;
 import collision.HitboxParameters;
+import projectile.DirectionalProjectile;
 import projectile.MovingProjectile;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -20,7 +23,13 @@ public class TestAsserts {
         assertEquals(expected.angle(), actual.angle());
     }
 
-    public static void assertMovingProjectilesEquals(MovingProjectile expectedProjectile, MovingProjectile actualProjectile) {
+    public static void assertMovingProjectilesEquals(List<DirectionalProjectile> expectedProjectile, List<DirectionalProjectile> actualProjectile) {
+        for (int i = 0; i < expectedProjectile.size(); i++) {
+            assertMovingProjectilesEquals(expectedProjectile.get(i), actualProjectile.get(i));
+        }
+    }
+
+    public static void assertMovingProjectilesEquals(DirectionalProjectile expectedProjectile, DirectionalProjectile actualProjectile) {
         assertHitboxesEquals(expectedProjectile.getHitbox(), actualProjectile.getHitbox());
 
         assertEquals(expectedProjectile.getDamage(), actualProjectile.getDamage());
@@ -35,7 +44,13 @@ public class TestAsserts {
 
         assertEquals(expectedProjectile.getDirection(), actualProjectile.getDirection());
 
-        assertEquals(expectedProjectile.getMovingStrategy().getClass(), actualProjectile.getMovingStrategy().getClass());
-        assertNotEquals(expectedProjectile.getMovingStrategy(), actualProjectile.getMovingStrategy());
+        assertEquals(expectedProjectile.getClass(), actualProjectile.getClass());
+
+        if (expectedProjectile instanceof MovingProjectile expectedMovingProjectile) {
+            if (actualProjectile instanceof MovingProjectile actualMovingProjectile) {
+                assertEquals(expectedMovingProjectile.getMovingStrategy().getClass(), actualMovingProjectile.getMovingStrategy().getClass());
+                assertNotEquals(expectedMovingProjectile.getMovingStrategy(), actualMovingProjectile.getMovingStrategy());
+            }
+        }
     }
 }
