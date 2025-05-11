@@ -1,6 +1,6 @@
 package factory;
 
-import collision.Hitbox;
+import collision.HitboxParameters;
 import monster.Monster;
 import monster.MovingMonsterStrategy;
 
@@ -9,24 +9,16 @@ import java.util.Queue;
 
 public class MonsterFactory {
 
-    private final int defaultHitboxWidth;
-    private final int defaultHitboxHeight;
+    private final HitboxParameters defaultHitboxParameters;
     private final int defaultHealth;
 
     public MonsterFactory() {
-        defaultHitboxWidth = 10;
-        defaultHitboxHeight = 10;
+        defaultHitboxParameters = new HitboxParameters(10, 10, Math.toRadians(0));
         defaultHealth = 100;
     }
 
     public Monster createMonster(MovingMonsterStrategy strategy) {
-        Hitbox hitbox = new Hitbox(
-                strategy.currentPosition().getX() - defaultHitboxWidth / 2,
-                strategy.currentPosition().getY() + defaultHitboxHeight / 2,
-                defaultHitboxWidth,
-                defaultHitboxHeight,
-                0);
-        return new Monster(hitbox, strategy, defaultHealth);
+        return new Monster(defaultHitboxParameters, strategy, defaultHealth);
     }
 
     public Queue<Monster> createMonsters(int count, MovingMonsterStrategy strategy) {
@@ -35,5 +27,9 @@ public class MonsterFactory {
             monsters.add(createMonster(strategy));
         }
         return monsters;
+    }
+
+    public HitboxParameters getDefaultHitboxParameters() {
+        return defaultHitboxParameters;
     }
 }
