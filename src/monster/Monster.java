@@ -1,8 +1,9 @@
 package monster;
 
 import collision.CollisionObject;
-import collision.Hitbox;
+import collision.HitboxParameters;
 import events.MonsterListener;
+import utils.CoordinatesConverter;
 import utils.Position;
 
 import java.util.ArrayList;
@@ -13,8 +14,11 @@ public class Monster extends CollisionObject {
     private final List<MonsterListener> listeners;
     private final MovingMonsterStrategy strategy;
 
-    public Monster(Hitbox hitbox, MovingMonsterStrategy strategy, int health) {
-        super(hitbox);
+    public Monster(HitboxParameters parameters, MovingMonsterStrategy strategy, int health) {
+        super(
+                CoordinatesConverter.centerToLeftTop(strategy.currentPosition(), parameters.width(), parameters.height()),
+                parameters
+        );
         this.health = health;
         this.strategy = strategy;
         listeners = new ArrayList<>();
@@ -34,7 +38,13 @@ public class Monster extends CollisionObject {
         }
 
         strategy.moveMonster(currentTick);
-        updateHitboxPosition(strategy.currentPosition());
+        updateHitboxPosition(
+                CoordinatesConverter.centerToLeftTop(
+                        strategy.currentPosition(),
+                        getHitbox().getHitboxParameters().width(),
+                        getHitbox().getHitboxParameters().height()
+                )
+        );
 
         if (strategy.monsterReachedEnd()) {
             monsterReachedEnd();
