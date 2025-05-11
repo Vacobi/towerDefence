@@ -1,16 +1,27 @@
 package projectile;
 
-import collision.Hitbox;
+import collision.HitboxParameters;
 import core.Field;
+import projectile.behavior.ProjectileBehavior;
+import projectile.strategy.MovingProjectileStrategy;
 import utils.Direction;
 import utils.Position;
 
 
-public class MovingProjectile extends DirectionalProjectile {
+public abstract class MovingProjectile extends DirectionalProjectile {
     private final MovingProjectileStrategy strategy;
 
-    public MovingProjectile(MovingProjectileStrategy strategy, Hitbox hitbox, int damage, Position startPosition, ProjectileBehavior behavior, Field field) {
-        super(hitbox, damage, startPosition, behavior, field);
+    public MovingProjectile(
+            HitboxParameters parameters,
+            int damage,
+            int distance,
+            Position startPosition,
+            ProjectileBehavior behavior,
+            Field field,
+            Direction direction,
+            MovingProjectileStrategy strategy
+    ) {
+        super(parameters, damage, distance, startPosition, behavior, field, direction);
 
         this.strategy = strategy;
     }
@@ -19,30 +30,10 @@ public class MovingProjectile extends DirectionalProjectile {
     public void update(long currentTick) {
         strategy.move(currentTick);
 
-        applyEffect(currentTick);
+        super.update(currentTick);
     }
 
-    @Override
-    public MovingProjectile clone(int damage, int range) {
-        return new MovingProjectile(
-                strategy.clone(range),
-                getHitbox(),
-                damage,
-                position(),
-                getBehavior(),
-                getField()
-        );
-    }
-
-    @Override
-    public MovingProjectile clone(Position position, Direction direction) {
-        return new MovingProjectile(
-                strategy.clone(direction),
-                getHitbox(),
-                getDamage(),
-                position,
-                getBehavior(),
-                getField()
-        );
+    public MovingProjectileStrategy getMovingStrategy() {
+        return strategy;
     }
 }
