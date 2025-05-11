@@ -1,24 +1,21 @@
 package tower;
 
-
 public class TowerCharacteristicsValues {
-    private Double damage;
-    private Double range;
+    private Integer damage;
+    private Integer range;
     private Long shootingDelay;
 
-    public TowerCharacteristicsValues() {}
-
-    public TowerCharacteristicsValues(Double damage, Double range, Long delay) {
+    public TowerCharacteristicsValues(int damage, int range, long delay) {
         this.damage = damage;
         this.range = range;
         this.shootingDelay = delay;
     }
 
-    public void setDamage(Double damage) {
+    public void setDamage(int damage) {
         this.damage = damage;
     }
 
-    public void setRange(Double range) {
+    public void setRange(int range) {
         this.range = range;
     }
 
@@ -26,15 +23,15 @@ public class TowerCharacteristicsValues {
         this.shootingDelay = delay;
     }
 
-    public Double getDamage() {
+    public int getDamage() {
         return damage;
     }
 
-    public Double getRange() {
+    public int getRange() {
         return range;
     }
 
-    public Long shootingDelay() {
+    public long shootingDelay() {
         return shootingDelay;
     }
 }
