@@ -1,8 +1,10 @@
 package factory;
 
-import collision.Hitbox;
+import collision.HitboxParameters;
 import core.Field;
 import projectile.*;
+import projectile.behavior.HitOneTargetBehavior;
+import projectile.strategy.LinearMovingProjectileStrategy;
 import utils.Direction;
 import utils.Position;
 
@@ -22,16 +24,24 @@ public class ProjectileFactory {
     }
 
     public MovingProjectile createLinearMovingHitOneTargetProjectile(Position position, Direction direction, Field field) {
-        LinearMovingProjectileStrategy movingStrategy = new LinearMovingProjectileStrategy(null, defaultSpeed, defaultMaxDistance, direction);
+        LinearMovingProjectileStrategy movingStrategy = new LinearMovingProjectileStrategy(defaultSpeed);
         HitOneTargetBehavior behavior = new HitOneTargetBehavior();
 
-        Hitbox hitbox = new Hitbox(
-                position.getX() - defaultWidth / 2,
-                position.getY() + defaultHeight / 2,
+        HitboxParameters hitboxParameters = new HitboxParameters(
                 defaultWidth,
                 defaultHeight,
-                0);
-        MovingProjectile projectile = new MovingProjectile(movingStrategy, hitbox, defaultDamage, position, behavior, field);
+                0
+        );
+        MovingProjectile projectile = new PlainProjectile(
+                hitboxParameters,
+                defaultDamage,
+                defaultMaxDistance,
+                position,
+                behavior,
+                field,
+                direction,
+                movingStrategy
+        );
 
         movingStrategy.setProjectile(projectile);
         behavior.setProjectile(projectile);
