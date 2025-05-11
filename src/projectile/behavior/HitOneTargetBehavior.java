@@ -1,6 +1,7 @@
-package projectile;
+package projectile.behavior;
 
 import monster.Monster;
+import projectile.Projectile;
 
 public class HitOneTargetBehavior implements ProjectileBehavior {
 
@@ -11,15 +12,21 @@ public class HitOneTargetBehavior implements ProjectileBehavior {
     }
 
     public HitOneTargetBehavior() {
-        ;
+        this(null);
     }
 
+    @Override
     public void setProjectile(Projectile projectile) {
         if (this.projectile != null) {
             throw new IllegalStateException("Projectile already set");
         }
 
         this.projectile = projectile;
+    }
+
+    @Override
+    public Projectile getProjectile() {
+        return projectile;
     }
 
     @Override
@@ -33,6 +40,11 @@ public class HitOneTargetBehavior implements ProjectileBehavior {
                 return;
             }
         }
+    }
+
+    @Override
+    public HitOneTargetBehavior clone() {
+        return new HitOneTargetBehavior();
     }
 
     protected boolean hitMonster(Monster monster) {

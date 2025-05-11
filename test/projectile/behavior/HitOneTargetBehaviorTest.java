@@ -1,4 +1,4 @@
-package projectile;
+package projectile.behavior;
 
 import core.Field;
 import core.Wave;
