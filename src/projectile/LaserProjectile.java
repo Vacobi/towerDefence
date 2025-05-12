@@ -58,7 +58,7 @@ public class LaserProjectile extends DirectionalProjectile{
                 position,
                 behavior,
                 getField(),
-                getDirection(),
+                direction,
                 activeTime,
                 damageCooldown
         );
