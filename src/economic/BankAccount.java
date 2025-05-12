@@ -38,4 +38,8 @@ public class BankAccount {
     public void setGold(int gold) {
         this.gold = gold;
     }
+
+    public int getGold() {
+        return this.gold;
+    }
 }
