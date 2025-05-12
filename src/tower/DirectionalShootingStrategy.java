@@ -28,12 +28,12 @@ public class DirectionalShootingStrategy implements ShootingStrategy<Directional
         }
 
         this.tower = tower;
-        lastShootTime -= tower.characteristicValues().shootingDelay();
+        lastShootTime -= tower.getCharacteristicValues().shootingDelay();
     }
 
     @Override
     public List<DirectionalProjectile> shoot(long currentTick) {
-        if (currentTick - lastShootTime < tower.characteristicValues().shootingDelay()) {
+        if (currentTick - lastShootTime < tower.getCharacteristicValues().shootingDelay()) {
             return Collections.emptyList();
         }
 

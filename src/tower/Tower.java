@@ -156,7 +156,7 @@ public class Tower<T extends Projectile> {
         return levelsUpgradeCount;
     }
 
-    public TowerCharacteristicsValues characteristicValues() {
+    public TowerCharacteristicsValues getCharacteristicValues() {
         return actualCharacteristicValues;
     }
 
