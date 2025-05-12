@@ -3,7 +3,7 @@ package projectile.behavior;
 import core.Field;
 import core.Wave;
 import factory.MonsterFactory;
-import factory.ProjectileFactory;
+import testutils.ProjectileFactory;
 import factory.WaveFactory;
 import monster.Monster;
 import monster.MovingMonsterStrategy;
