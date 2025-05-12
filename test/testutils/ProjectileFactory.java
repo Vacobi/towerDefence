@@ -43,9 +43,6 @@ public class ProjectileFactory {
                 movingStrategy
         );
 
-        movingStrategy.setProjectile(projectile);
-        behavior.setProjectile(projectile);
-
         return projectile;
     }
 

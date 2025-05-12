@@ -41,6 +41,7 @@ public abstract class Projectile extends CollisionObject {
         this.active = true;
 
         this.projectileBehavior = behavior;
+        this.projectileBehavior.setProjectile(this);
 
         this.field = field;
         this.position = startPosition;

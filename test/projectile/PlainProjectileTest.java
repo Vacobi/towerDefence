@@ -21,11 +21,11 @@ class PlainProjectileTest {
     Direction mockDirection = Direction.NORTH;
     HitboxParameters hitboxParameters = new HitboxParameters(10, 10, 0);
     private final int speed = 10;
-    HitOneTargetBehavior behavior = new HitOneTargetBehavior();
-    LinearMovingProjectileStrategy movingStrategy = new LinearMovingProjectileStrategy(speed);
 
     @Test
     void clonePlainProjectileWithSameCharacteristics() {
+        LinearMovingProjectileStrategy movingStrategy = new LinearMovingProjectileStrategy(speed);
+        HitOneTargetBehavior behavior = new HitOneTargetBehavior();
         PlainProjectile typicalProjectile = new PlainProjectile(
                 hitboxParameters,
                 damage,
@@ -39,15 +39,17 @@ class PlainProjectileTest {
         Position newPosition = new Position(34, 34);
         Direction newDirection = Direction.WEST;
 
+        LinearMovingProjectileStrategy expectedMovingStrategy = new LinearMovingProjectileStrategy(speed);
+        HitOneTargetBehavior expectedBehavior = new HitOneTargetBehavior();
         PlainProjectile expectedProjectile = new PlainProjectile(
                 hitboxParameters,
                 damage,
                 range,
                 newPosition,
-                behavior,
+                expectedBehavior,
                 field,
                 newDirection,
-                movingStrategy
+                expectedMovingStrategy
         );
 
         PlainProjectile actualProjectile = typicalProjectile.clone(newPosition, newDirection);
@@ -59,6 +61,8 @@ class PlainProjectileTest {
 
     @Test
     void clonePlainProjectileWithOtherCharacteristics() {
+        LinearMovingProjectileStrategy movingStrategy = new LinearMovingProjectileStrategy(speed);
+        HitOneTargetBehavior behavior = new HitOneTargetBehavior();
         PlainProjectile typicalProjectile = new PlainProjectile(
                 hitboxParameters,
                 damage,
@@ -72,15 +76,17 @@ class PlainProjectileTest {
         int newDamage = 5673;
         int newRange = 19827;
 
+        LinearMovingProjectileStrategy expectedMovingStrategy = new LinearMovingProjectileStrategy(speed);
+        HitOneTargetBehavior expectedBehavior = new HitOneTargetBehavior();
         PlainProjectile expectedProjectile = new PlainProjectile(
                 hitboxParameters,
                 newDamage,
                 newRange,
                 position,
-                behavior,
+                expectedBehavior,
                 field,
                 mockDirection,
-                movingStrategy
+                expectedMovingStrategy
         );
 
         PlainProjectile actualProjectile = typicalProjectile.clone(newDamage, newRange);

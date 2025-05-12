@@ -31,21 +31,18 @@ public class LaserProjectile extends DirectionalProjectile{
 
     @Override
     public LaserProjectile clone(int damage, int range) {
-        ProjectileBehavior behavior = getBehavior().clone();
 
         LaserProjectile projectile = new LaserProjectile(
                 getHitbox().getHitboxParameters(),
                 damage,
                 getDistance(),
                 position(),
-                behavior,
+                getBehavior().clone(),
                 getField(),
                 getDirection(),
                 activeTime,
                 damageCooldown
         );
-
-        behavior.setProjectile(projectile);
 
         return projectile;
     }
@@ -65,8 +62,6 @@ public class LaserProjectile extends DirectionalProjectile{
                 activeTime,
                 damageCooldown
         );
-
-        behavior.setProjectile(projectile);
 
         return projectile;
     }

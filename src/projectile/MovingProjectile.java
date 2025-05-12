@@ -24,6 +24,7 @@ public abstract class MovingProjectile extends DirectionalProjectile {
         super(parameters, damage, distance, startPosition, behavior, field, direction);
 
         this.strategy = strategy;
+        strategy.setProjectile(this);
     }
 
     @Override

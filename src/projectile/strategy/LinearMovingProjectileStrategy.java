@@ -30,6 +30,10 @@ public class LinearMovingProjectileStrategy implements MovingProjectileStrategy 
 
     @Override
     public void move(long currentTick) {
+        if (projectile == null) {
+            throw new IllegalStateException("No projectile found");
+        }
+
         int moveDistance = (int) ((currentTick - lastMoveTime) / MILLIS_TO_SECONDS_COEFF) * speed;
 
         move(currentTick, moveDistance);

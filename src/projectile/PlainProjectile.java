@@ -24,44 +24,34 @@ public class PlainProjectile extends MovingProjectile {
 
     @Override
     public PlainProjectile clone(int damage, int range) {
-        ProjectileBehavior behavior = getBehavior().clone();
-        MovingProjectileStrategy movingStrategy = getMovingStrategy().clone();
 
         PlainProjectile projectile = new PlainProjectile(
                 getHitbox().getHitboxParameters(),
                 damage,
                 range,
                 position(),
-                behavior,
+                getBehavior().clone(),
                 getField(),
                 getDirection(),
-                movingStrategy
+                getMovingStrategy().clone()
         );
-
-        behavior.setProjectile(projectile);
-        movingStrategy.setProjectile(projectile);
 
         return projectile;
     }
 
     @Override
     public PlainProjectile clone(Position position, Direction direction) {
-        ProjectileBehavior behavior = getBehavior().clone();
-        MovingProjectileStrategy movingStrategy = getMovingStrategy().clone();
 
         PlainProjectile projectile = new PlainProjectile(
                 getHitbox().getHitboxParameters(),
                 getDamage(),
                 getDistance(),
                 position,
-                behavior,
+                getBehavior().clone(),
                 getField(),
                 direction,
-                movingStrategy
+                getMovingStrategy().clone()
         );
-
-        behavior.setProjectile(projectile);
-        movingStrategy.setProjectile(projectile);
 
         return projectile;
     }
