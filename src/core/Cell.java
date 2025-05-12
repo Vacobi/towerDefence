@@ -4,7 +4,7 @@ import exception.CellAlreadyHasTower;
 import tower.Tower;
 import utils.Position;
 
-public class Cell extends AbstractCell {
+public class Cell extends AbstractCell implements Cloneable {
     private Tower tower;
 
     public Cell(Position position) {
@@ -29,5 +29,10 @@ public class Cell extends AbstractCell {
 
     public boolean canPlaceTower() {
         return tower == null;
+    }
+
+    @Override
+    public Cell clone() {
+        return new Cell(position());
     }
 }

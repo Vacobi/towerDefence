@@ -2,6 +2,7 @@ package asserts;
 
 import collision.Hitbox;
 import collision.HitboxParameters;
+import core.Cell;
 import projectile.DirectionalProjectile;
 import projectile.MovingProjectile;
 import projectile.Projectile;
@@ -13,8 +14,7 @@ import tower.TowerUpgradableCharacteristic;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TestAsserts {
     public static void assertHitboxesEquals(Hitbox expected, Hitbox actual) {
@@ -70,7 +70,7 @@ public class TestAsserts {
 
     public static void assertTowersEquals(Tower expected, Tower actual) {
         assertTowerCharacteristicsEquals(expected.getCharacteristicValues(), actual.getCharacteristicValues());
-        assertEquals(expected.getCell(), actual.getCell());
+        assertCellsEquals(expected.getCell(), actual.getCell());
         assertEquals(expected.getField(), actual.getField());
         assertEquals(expected.getStrategy().getClass(), actual.getStrategy().getClass());
         assertEquals(expected.getShotDirections(), actual.getShotDirections());
@@ -91,7 +91,7 @@ public class TestAsserts {
             TowerCharacteristicsValues expectedCharacteristics,
             Map<TowerUpgradableCharacteristic, Integer> characteristicLevels
     ) {
-        assertEquals(expectedTower.getCell(), actualTower.getCell());
+        assertCellsEquals(expectedTower.getCell(), actualTower.getCell());
         assertEquals(expectedTower.getField(), actualTower.getField());
         assertEquals(expectedTower.getStrategy().getClass(), actualTower.getStrategy().getClass());
         assertEquals(expectedTower.getShotDirections(), actualTower.getShotDirections());
@@ -102,5 +102,10 @@ public class TestAsserts {
         );
         assertEquals(characteristicLevels, actualTower.getCharacteristicLevels());
         assertTowerCharacteristicsEquals(expectedCharacteristics, actualTower.getCharacteristicValues());
+    }
+
+    public static void assertCellsEquals(Cell expected, Cell actual) {
+        assertEquals(expected.canPlaceTower(), actual.canPlaceTower());
+        assertEquals(expected.position(), actual.position());
     }
 }

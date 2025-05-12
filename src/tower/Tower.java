@@ -35,6 +35,8 @@ public class Tower<T extends Projectile> {
             T typicalProjectile
     ) {
         this.cell = cell;
+        cell.setTower(this);
+
         this.field = field;
 
         this.shotDirections = shotDirections;
@@ -120,7 +122,7 @@ public class Tower<T extends Projectile> {
 
     public Tower<T> clone(Cell cell) {
         return new Tower<> (
-                cell,
+                cell.clone(),
                 this.field,
                 this.shootingStrategy.clone(),
                 this.shotDirections,
