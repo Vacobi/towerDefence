@@ -6,8 +6,12 @@ import projectile.DirectionalProjectile;
 import projectile.MovingProjectile;
 import projectile.Projectile;
 import road.RoadSegment;
+import tower.Tower;
+import tower.TowerCharacteristicsValues;
+import tower.TowerUpgradableCharacteristic;
 
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -52,10 +56,6 @@ public class TestAsserts {
         }
 
         if (expectedProjectile instanceof MovingProjectile expectedMovingProjectile) {
-            if (actualProjectile instanceof MovingProjectile actualMovingProjectile) {
-                assertEquals(expectedMovingProjectile.getMovingStrategy().getClass(), actualMovingProjectile.getMovingStrategy().getClass());
-                assertNotEquals(expectedMovingProjectile.getMovingStrategy(), actualMovingProjectile.getMovingStrategy());
-            }
             MovingProjectile actualMovingProjectile = (MovingProjectile) actualProjectile;
             assertEquals(expectedMovingProjectile.getMovingStrategy().getClass(), actualMovingProjectile.getMovingStrategy().getClass());
             assertNotEquals(expectedMovingProjectile.getMovingStrategy(), actualMovingProjectile.getMovingStrategy());
@@ -66,5 +66,41 @@ public class TestAsserts {
         assertEquals(expected.getStart(), actual.getStart());
         assertEquals(expected.getDirection(), actual.getDirection());
         assertEquals(expected.getLength(), actual.getLength());
+    }
+
+    public static void assertTowersEquals(Tower expected, Tower actual) {
+        assertTowerCharacteristicsEquals(expected.getCharacteristicValues(), actual.getCharacteristicValues());
+        assertEquals(expected.getCell(), actual.getCell());
+        assertEquals(expected.getField(), actual.getField());
+        assertEquals(expected.getStrategy().getClass(), actual.getStrategy().getClass());
+        assertEquals(expected.getShotDirections(), actual.getShotDirections());
+        assertEquals(expected.getLevelsUpgradeCount(), actual.getLevelsUpgradeCount());
+        assertProjectilesEquals(expected.getTypicalProjectile(), actual.getTypicalProjectile());
+        assertEquals(expected.getCharacteristicLevels(), actual.getCharacteristicLevels());
+    }
+
+    public static void assertTowerCharacteristicsEquals(TowerCharacteristicsValues expected, TowerCharacteristicsValues actual) {
+        assertEquals(expected.getDamage(), actual.getDamage());
+        assertEquals(expected.getRange(), actual.getRange());
+        assertEquals(expected.shootingDelay(), actual.shootingDelay());
+    }
+
+    public static void assertTowersAfterUpgradeEquals(
+            Tower expectedTower,
+            Tower actualTower,
+            TowerCharacteristicsValues expectedCharacteristics,
+            Map<TowerUpgradableCharacteristic, Integer> characteristicLevels
+    ) {
+        assertEquals(expectedTower.getCell(), actualTower.getCell());
+        assertEquals(expectedTower.getField(), actualTower.getField());
+        assertEquals(expectedTower.getStrategy().getClass(), actualTower.getStrategy().getClass());
+        assertEquals(expectedTower.getShotDirections(), actualTower.getShotDirections());
+        assertEquals(expectedTower.getLevelsUpgradeCount(), actualTower.getLevelsUpgradeCount());
+        assertProjectilesEquals(
+                expectedTower.getTypicalProjectile().clone(expectedCharacteristics.getDamage(), expectedCharacteristics.getRange()),
+                actualTower.getTypicalProjectile()
+        );
+        assertEquals(characteristicLevels, actualTower.getCharacteristicLevels());
+        assertTowerCharacteristicsEquals(expectedCharacteristics, actualTower.getCharacteristicValues());
     }
 }
