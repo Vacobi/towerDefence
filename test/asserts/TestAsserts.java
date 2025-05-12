@@ -4,6 +4,7 @@ import collision.Hitbox;
 import collision.HitboxParameters;
 import projectile.DirectionalProjectile;
 import projectile.MovingProjectile;
+import projectile.Projectile;
 import road.RoadSegment;
 
 import java.util.List;
@@ -24,13 +25,15 @@ public class TestAsserts {
         assertEquals(expected.angle(), actual.angle());
     }
 
-    public static void assertMovingProjectilesEquals(List<DirectionalProjectile> expectedProjectile, List<DirectionalProjectile> actualProjectile) {
+    public static void assertProjectilesEquals(List<? extends Projectile> expectedProjectile, List<? extends Projectile> actualProjectile) {
         for (int i = 0; i < expectedProjectile.size(); i++) {
-            assertMovingProjectilesEquals(expectedProjectile.get(i), actualProjectile.get(i));
+            TestAsserts.assertProjectilesEquals(expectedProjectile.get(i), actualProjectile.get(i));
         }
     }
 
-    public static void assertMovingProjectilesEquals(DirectionalProjectile expectedProjectile, DirectionalProjectile actualProjectile) {
+    public static void assertProjectilesEquals(Projectile expectedProjectile, Projectile actualProjectile) {
+        assertEquals(expectedProjectile.getClass(), actualProjectile.getClass());
+
         assertHitboxesEquals(expectedProjectile.getHitbox(), actualProjectile.getHitbox());
 
         assertEquals(expectedProjectile.getDamage(), actualProjectile.getDamage());
@@ -43,15 +46,19 @@ public class TestAsserts {
 
         assertEquals(expectedProjectile.getField(), actualProjectile.getField());
 
-        assertEquals(expectedProjectile.getDirection(), actualProjectile.getDirection());
-
-        assertEquals(expectedProjectile.getClass(), actualProjectile.getClass());
+        if (expectedProjectile instanceof DirectionalProjectile expectedDirectionalProjectile) {
+            DirectionalProjectile actualDirectionalProjectile = (DirectionalProjectile) actualProjectile;
+            assertEquals(expectedDirectionalProjectile.getDirection(), actualDirectionalProjectile.getDirection());
+        }
 
         if (expectedProjectile instanceof MovingProjectile expectedMovingProjectile) {
             if (actualProjectile instanceof MovingProjectile actualMovingProjectile) {
                 assertEquals(expectedMovingProjectile.getMovingStrategy().getClass(), actualMovingProjectile.getMovingStrategy().getClass());
                 assertNotEquals(expectedMovingProjectile.getMovingStrategy(), actualMovingProjectile.getMovingStrategy());
             }
+            MovingProjectile actualMovingProjectile = (MovingProjectile) actualProjectile;
+            assertEquals(expectedMovingProjectile.getMovingStrategy().getClass(), actualMovingProjectile.getMovingStrategy().getClass());
+            assertNotEquals(expectedMovingProjectile.getMovingStrategy(), actualMovingProjectile.getMovingStrategy());
         }
     }
 

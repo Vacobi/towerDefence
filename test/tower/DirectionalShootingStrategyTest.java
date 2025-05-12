@@ -15,7 +15,7 @@ import utils.Position;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
-import static asserts.TestAsserts.assertMovingProjectilesEquals;
+import static asserts.TestAsserts.assertProjectilesEquals;
 
 class DirectionalShootingStrategyTest {
 
@@ -74,7 +74,7 @@ class DirectionalShootingStrategyTest {
 
         List<DirectionalProjectile> actualProjectiles = shootingStrategy.shoot(now + TimeUnit.MILLISECONDS.toMillis(1));
 
-        assertMovingProjectilesEquals(expectedProjectiles, actualProjectiles);
+        assertProjectilesEquals(expectedProjectiles, actualProjectiles);
     }
 
     @Test
@@ -123,7 +123,7 @@ class DirectionalShootingStrategyTest {
 
         List<DirectionalProjectile> actualProjectiles = shootingStrategy.shoot(now + TimeUnit.MILLISECONDS.toMillis(1));
 
-        assertMovingProjectilesEquals(expectedProjectiles, actualProjectiles);
+        assertProjectilesEquals(expectedProjectiles, actualProjectiles);
     }
 
     @Test
@@ -172,6 +172,6 @@ class DirectionalShootingStrategyTest {
 
         List<DirectionalProjectile> actualProjectiles = shootingStrategy.shoot(now + TimeUnit.MILLISECONDS.toMillis(1));
 
-        assertMovingProjectilesEquals(expectedProjectiles, actualProjectiles);
+        assertProjectilesEquals(expectedProjectiles, actualProjectiles);
     }
 }

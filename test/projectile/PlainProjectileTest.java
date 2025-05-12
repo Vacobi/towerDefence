@@ -8,7 +8,7 @@ import projectile.strategy.LinearMovingProjectileStrategy;
 import utils.Direction;
 import utils.Position;
 
-import static asserts.TestAsserts.assertMovingProjectilesEquals;
+import static asserts.TestAsserts.assertProjectilesEquals;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PlainProjectileTest {
@@ -54,7 +54,7 @@ class PlainProjectileTest {
 
         PlainProjectile actualProjectile = typicalProjectile.clone(newPosition, newDirection);
 
-        assertMovingProjectilesEquals(expectedProjectile, actualProjectile);
+        assertProjectilesEquals(expectedProjectile, actualProjectile);
         assertEquals(actualProjectile, actualProjectile.getBehavior().getProjectile());
         assertEquals(actualProjectile, actualProjectile.getMovingStrategy().getProjectile());
     }
@@ -91,7 +91,7 @@ class PlainProjectileTest {
 
         PlainProjectile actualProjectile = typicalProjectile.clone(newDamage, newRange);
 
-        assertMovingProjectilesEquals(expectedProjectile, actualProjectile);
+        assertProjectilesEquals(expectedProjectile, actualProjectile);
         assertEquals(actualProjectile, actualProjectile.getBehavior().getProjectile());
         assertEquals(actualProjectile, actualProjectile.getMovingStrategy().getProjectile());
     }
