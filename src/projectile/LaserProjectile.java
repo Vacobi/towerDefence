@@ -35,7 +35,7 @@ public class LaserProjectile extends DirectionalProjectile{
         LaserProjectile projectile = new LaserProjectile(
                 getHitbox().getHitboxParameters(),
                 damage,
-                getDistance(),
+                range,
                 position(),
                 getBehavior().clone(),
                 getField(),
