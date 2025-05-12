@@ -14,7 +14,6 @@ import static asserts.TestAsserts.assertRoadSegmentsEquals;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PlainRoadMovingTest {
-    private final Position monsterPosition = new Position(100, 100);
 
     private final int MILLIS_TO_SECONDS_COEFF = 1000;
 
