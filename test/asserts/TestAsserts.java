@@ -4,6 +4,7 @@ import collision.Hitbox;
 import collision.HitboxParameters;
 import projectile.DirectionalProjectile;
 import projectile.MovingProjectile;
+import road.RoadSegment;
 
 import java.util.List;
 
@@ -52,5 +53,11 @@ public class TestAsserts {
                 assertNotEquals(expectedMovingProjectile.getMovingStrategy(), actualMovingProjectile.getMovingStrategy());
             }
         }
+    }
+
+    public static void assertRoadSegmentsEquals(RoadSegment expected, RoadSegment actual) {
+        assertEquals(expected.getStart(), actual.getStart());
+        assertEquals(expected.getDirection(), actual.getDirection());
+        assertEquals(expected.getLength(), actual.getLength());
     }
 }

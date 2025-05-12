@@ -10,6 +10,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.concurrent.TimeUnit;
 
+import static asserts.TestAsserts.assertRoadSegmentsEquals;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PlainRoadMovingTest {
@@ -57,11 +58,5 @@ class PlainRoadMovingTest {
         assertRoadSegmentsEquals(expectedRoadSegment, strategy.currentRoadSegment());
         assertFalse(strategy.monsterReachedEnd());
         assertEquals(tickTime, strategy.lastMovingTime());
-    }
-
-    void assertRoadSegmentsEquals(RoadSegment expected, RoadSegment actual) {
-        assertEquals(expected.getStart(), actual.getStart());
-        assertEquals(expected.getDirection(), actual.getDirection());
-        assertEquals(expected.getLength(), actual.getLength());
     }
 }
