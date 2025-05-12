@@ -24,8 +24,8 @@ class TowerTest {
     private final Field field = new Field();
     private final int levelsUpgradeCount = 3;
 
-    Direction mockDirection = Direction.NORTH;
-    HitboxParameters hitboxParameters = new HitboxParameters(10, 10, 0);
+    private final Direction mockDirection = Direction.NORTH;
+    private final HitboxParameters hitboxParameters = new HitboxParameters(10, 10, 0);
     private final int speed = 10;
 
     @Test
@@ -44,9 +44,10 @@ class TowerTest {
                 mockDirection,
                 movingStrategy
         );
+        Cell cell = new Cell(cellPosition);
 
         DirectionalShootingStrategy expectedShootingStrategy = new DirectionalShootingStrategy();
-        Cell cell = new Cell(cellPosition);
+        Cell expectedCell = new Cell(cellPosition);
         int damageInCharacteristics = 51;
         int rangeInCharacteristics = 812;
         long delayInCharacteristics = 192;
@@ -54,7 +55,7 @@ class TowerTest {
                 hitboxParameters,
                 damageInCharacteristics,
                 rangeInCharacteristics,
-                cell.getGlobalPosition(),
+                expectedCell.getGlobalPosition(),
                 behavior.clone(),
                 field,
                 mockDirection,
@@ -66,7 +67,7 @@ class TowerTest {
                 delayInCharacteristics
         );
         Tower expectedTower = new Tower(
-                cell,
+                expectedCell,
                 field,
                 expectedShootingStrategy,
                 List.of(mockDirection),
@@ -104,14 +105,15 @@ class TowerTest {
                 mockDirection,
                 movingStrategy
         );
+        Cell cell = new Cell(cellPosition);
 
         DirectionalShootingStrategy expectedShootingStrategy = new DirectionalShootingStrategy();
-        Cell cell = new Cell(cellPosition);
+        Cell expectedCell = new Cell(cellPosition);
         PlainProjectile expectedProjectile = new PlainProjectile(
                 hitboxParameters,
                 characteristics.getDamage(),
                 characteristics.getRange(),
-                cell.getGlobalPosition(),
+                expectedCell.getGlobalPosition(),
                 behavior.clone(),
                 field,
                 mockDirection,
@@ -123,7 +125,7 @@ class TowerTest {
                 characteristics.shootingDelay()
         );
         Tower expectedTower = new Tower(
-                cell,
+                expectedCell,
                 field,
                 expectedShootingStrategy,
                 List.of(mockDirection),
@@ -167,14 +169,15 @@ class TowerTest {
                 mockDirection,
                 movingStrategy
         );
+        Cell cell = new Cell(cellPosition);
 
         DirectionalShootingStrategy expectedShootingStrategy = new DirectionalShootingStrategy();
-        Cell cell = new Cell(cellPosition);
+        Cell expectedCell = new Cell(cellPosition);
         PlainProjectile expectedProjectile = new PlainProjectile(
                 hitboxParameters,
                 characteristics.getDamage(),
                 characteristics.getRange(),
-                cell.getGlobalPosition(),
+                expectedCell.getGlobalPosition(),
                 behavior.clone(),
                 field,
                 mockDirection,
@@ -186,7 +189,7 @@ class TowerTest {
                 characteristics.shootingDelay()
         );
         Tower expectedTower = new Tower(
-                cell,
+                expectedCell,
                 field,
                 expectedShootingStrategy,
                 List.of(mockDirection),
@@ -230,14 +233,15 @@ class TowerTest {
                 mockDirection,
                 movingStrategy
         );
+        Cell cell = new Cell(cellPosition);
 
         DirectionalShootingStrategy expectedShootingStrategy = new DirectionalShootingStrategy();
-        Cell cell = new Cell(cellPosition);
+        Cell expectedCell = new Cell(cellPosition);
         PlainProjectile expectedProjectile = new PlainProjectile(
                 hitboxParameters,
                 characteristics.getDamage(),
                 characteristics.getRange(),
-                cell.getGlobalPosition(),
+                expectedCell.getGlobalPosition(),
                 behavior.clone(),
                 field,
                 mockDirection,
@@ -249,7 +253,7 @@ class TowerTest {
                 (long) (characteristics.shootingDelay() / 1.5)
         );
         Tower expectedTower = new Tower(
-                cell,
+                expectedCell,
                 field,
                 expectedShootingStrategy,
                 List.of(mockDirection),
@@ -293,14 +297,15 @@ class TowerTest {
                 mockDirection,
                 movingStrategy
         );
+        Cell cell = new Cell(cellPosition);
 
         DirectionalShootingStrategy expectedShootingStrategy = new DirectionalShootingStrategy();
-        Cell cell = new Cell(cellPosition);
+        Cell expectedCell = new Cell(cellPosition);
         PlainProjectile expectedProjectile = new PlainProjectile(
                 hitboxParameters,
                 characteristics.getDamage(),
                 characteristics.getRange(),
-                cell.getGlobalPosition(),
+                expectedCell.getGlobalPosition(),
                 behavior.clone(),
                 field,
                 mockDirection,
@@ -312,7 +317,7 @@ class TowerTest {
                 characteristics.shootingDelay()
         );
         Tower expectedTower = new Tower(
-                cell,
+                expectedCell,
                 field,
                 expectedShootingStrategy,
                 List.of(mockDirection),
@@ -357,14 +362,15 @@ class TowerTest {
                 mockDirection,
                 movingStrategy
         );
+        Cell cell = new Cell(cellPosition);
 
         DirectionalShootingStrategy expectedShootingStrategy = new DirectionalShootingStrategy();
-        Cell cell = new Cell(cellPosition);
+        Cell expectedCell = new Cell(cellPosition);
         PlainProjectile expectedProjectile = new PlainProjectile(
                 hitboxParameters,
                 characteristics.getDamage(),
                 characteristics.getRange(),
-                cell.getGlobalPosition(),
+                expectedCell.getGlobalPosition(),
                 behavior.clone(),
                 field,
                 mockDirection,
@@ -376,7 +382,7 @@ class TowerTest {
                 (long) (characteristics.shootingDelay() / 1.5 / 1.5)
         );
         Tower expectedTower = new Tower(
-                cell,
+                expectedCell,
                 field,
                 expectedShootingStrategy,
                 List.of(mockDirection),
@@ -459,11 +465,6 @@ class TowerTest {
                 mockDirection,
                 movingStrategy
         );
-        TowerCharacteristicsValues typicalCharacteristicsValues = new TowerCharacteristicsValues(
-                (int) (characteristics.getDamage() * 1.5),
-                characteristics.getRange(),
-                characteristics.shootingDelay()
-        );
         DirectionalShootingStrategy typicalShootingStrategy = new DirectionalShootingStrategy();
         Cell typicalCell = new Cell(cellPosition);
         Tower typicalTower = new Tower(
@@ -487,11 +488,6 @@ class TowerTest {
                 field,
                 mockDirection,
                 movingStrategy.clone()
-        );
-        TowerCharacteristicsValues expectedCharacteristicsValues = new TowerCharacteristicsValues(
-                (int) (characteristics.getDamage() * 1.5),
-                characteristics.getRange(),
-                characteristics.shootingDelay()
         );
         Tower expectedTower = new Tower(
                 expectedCell,
