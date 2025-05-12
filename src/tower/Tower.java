@@ -82,7 +82,7 @@ public class Tower<T extends Projectile> {
 
     private void upgradeCharacteristic(TowerUpgradableCharacteristic characteristic) {
         characteristicLevels.compute(
-                TowerUpgradableCharacteristic.DAMAGE,
+                characteristic,
                 (k, v) -> v + 1
         );
 
