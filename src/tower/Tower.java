@@ -51,8 +51,8 @@ public class Tower<T extends Projectile> {
         this.characteristicLevels = new HashMap<>();
         initializeCharacteristicLevels();
 
-        this.actualCharacteristicValues = characteristicValues;
-        this.initialCharacteristicValues = characteristicValues;
+        this.actualCharacteristicValues = characteristicValues.clone();
+        this.initialCharacteristicValues = characteristicValues.clone();
 
         this.shootingStrategy = shootingStrategy;
         shootingStrategy.setTower(this);

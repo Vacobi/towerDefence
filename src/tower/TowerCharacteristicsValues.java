@@ -1,6 +1,6 @@
 package tower;
 
-public class TowerCharacteristicsValues {
+public class TowerCharacteristicsValues implements Cloneable{
     private Integer damage;
     private Integer range;
     private Long shootingDelay;
@@ -33,5 +33,10 @@ public class TowerCharacteristicsValues {
 
     public long shootingDelay() {
         return shootingDelay;
+    }
+
+    @Override
+    public TowerCharacteristicsValues clone() {
+        return new TowerCharacteristicsValues(damage, range, shootingDelay);
     }
 }
