@@ -9,7 +9,7 @@ import utils.Direction;
 import utils.Position;
 
 import static asserts.TestAsserts.assertMovingProjectilesEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class PlainProjectileTest {
 
@@ -94,5 +94,95 @@ class PlainProjectileTest {
         assertMovingProjectilesEquals(expectedProjectile, actualProjectile);
         assertEquals(actualProjectile, actualProjectile.getBehavior().getProjectile());
         assertEquals(actualProjectile, actualProjectile.getMovingStrategy().getProjectile());
+    }
+
+    @Test
+    void maxDistanceIsLessThanZero() {
+        int speed = 0;
+        int damage = 15;
+        int maxDistance = -10;
+        Direction direction = Direction.NORTH;
+        Position startPosition = new Position(1, 1);
+        HitOneTargetBehavior behavior = new HitOneTargetBehavior();
+        LinearMovingProjectileStrategy movingStrategy = new LinearMovingProjectileStrategy(speed);
+
+        assertThrows(IllegalArgumentException.class, () -> new PlainProjectile(
+                hitboxParameters,
+                damage,
+                maxDistance,
+                startPosition,
+                behavior,
+                field,
+                direction,
+                movingStrategy
+        ));
+    }
+
+    @Test
+    void maxDistanceIsZero() {
+        int speed = 0;
+        int damage = 15;
+        int maxDistance = 0;
+        Direction direction = Direction.NORTH;
+        Position startPosition = new Position(1, 1);
+        HitOneTargetBehavior behavior = new HitOneTargetBehavior();
+        LinearMovingProjectileStrategy movingStrategy = new LinearMovingProjectileStrategy(speed);
+
+        assertThrows(IllegalArgumentException.class, () -> new PlainProjectile(
+                hitboxParameters,
+                damage,
+                maxDistance,
+                startPosition,
+                behavior,
+                field,
+                direction,
+                movingStrategy
+        ));
+    }
+
+    @Test
+    void damageIsZero() {
+        int speed = 0;
+        int damage = 15;
+        int maxDistance = 1;
+        Direction direction = Direction.NORTH;
+        Position startPosition = new Position(1, 1);
+        HitOneTargetBehavior behavior = new HitOneTargetBehavior();
+        LinearMovingProjectileStrategy movingStrategy = new LinearMovingProjectileStrategy(speed);
+
+        assertDoesNotThrow(() -> {
+            new PlainProjectile(
+                    hitboxParameters,
+                    damage,
+                    maxDistance,
+                    startPosition,
+                    behavior,
+                    field,
+                    direction,
+                    movingStrategy
+            );
+        });
+    }
+
+    @Test
+    void damageIsLessThanZero() {
+        int speed = 0;
+        int damage = -15;
+        int maxDistance = 0;
+        Direction direction = Direction.NORTH;
+        Position startPosition = new Position(1, 1);
+        HitOneTargetBehavior behavior = new HitOneTargetBehavior();
+        LinearMovingProjectileStrategy movingStrategy = new LinearMovingProjectileStrategy(speed);
+
+        assertThrows(IllegalArgumentException.class, () -> new PlainProjectile(
+                hitboxParameters,
+                damage,
+                maxDistance,
+                startPosition,
+                behavior,
+                field,
+                direction,
+                movingStrategy
+        ));
     }
 }
