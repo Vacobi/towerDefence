@@ -33,7 +33,7 @@ public class Player {
         return response.built();
     }
 
-    public boolean upgradeTower(Tower tower, TowerUpgradableCharacteristic towerUpgrade) {
+    public boolean upgradeTower(Tower<? extends Projectile> tower, TowerUpgradableCharacteristic towerUpgrade) {
         if (frozen) {
             return false;
         }
