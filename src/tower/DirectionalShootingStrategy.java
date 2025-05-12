@@ -56,6 +56,6 @@ public class DirectionalShootingStrategy implements ShootingStrategy<Directional
 
     @Override
     public ShootingStrategy<DirectionalProjectile> clone() {
-        return new DirectionalShootingStrategy(null);
+        return new DirectionalShootingStrategy();
     }
 }
