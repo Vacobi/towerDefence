@@ -8,6 +8,13 @@ public class CoordinatesConverter {
         return new Position(center.getX() - width / 2, center.getY() + height / 2);
     }
 
+    public static Position toGlobalCoordinates(Position position) {
+        return new Position(
+                xToGlobalCoordinate(position.getX()),
+                yToGlobalCoordinate(position.getY())
+        );
+    }
+
     public static int xToGlobalCoordinate(int x) {
         return x * CellPositionToGlobalPositionCoeffX;
     }
