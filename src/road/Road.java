@@ -2,6 +2,8 @@ package road;
 
 import core.RoadCell;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,7 +23,10 @@ public class Road {
     }
 
     public Road() {
-        RoadParser roadParser = new RoadParser("road.txt");
+        Path path = Paths.get("src", "road", "resources", "road.txt")
+                .toAbsolutePath()
+                .normalize();
+        RoadParser roadParser = new RoadParser(path.toString());
         this.road = roadParser.getRoadSegments();
         this.roadCells = roadParser.getRoadCells();
     }
