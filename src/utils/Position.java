@@ -1,5 +1,7 @@
 package utils;
 
+import java.util.Objects;
+
 public class Position {
     private final int x;
     private final int y;
@@ -46,5 +48,10 @@ public class Position {
     @Override
     public String toString() {
         return "x: " + x + "\ny: " + y + "\n";
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y);
     }
 }
