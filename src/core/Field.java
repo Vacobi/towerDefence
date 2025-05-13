@@ -57,6 +57,7 @@ public class Field {
     }
 
     public void startUpdates(UpdateFieldController controller) {
+        updateTimer = new Timer();
         updateTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
