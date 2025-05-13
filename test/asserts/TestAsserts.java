@@ -10,6 +10,7 @@ import road.RoadSegment;
 import tower.Tower;
 import tower.TowerCharacteristicsValues;
 import tower.TowerUpgradableCharacteristic;
+import utils.BuildingResponse;
 
 import java.util.List;
 import java.util.Map;
@@ -107,5 +108,10 @@ public class TestAsserts {
     public static void assertCellsEquals(Cell expected, Cell actual) {
         assertEquals(expected.canPlaceTower(), actual.canPlaceTower());
         assertEquals(expected.position(), actual.position());
+    }
+
+    public static void assertBuildingResponsesEquals(BuildingResponse expected, BuildingResponse actual) {
+        assertEquals(expected.change(), actual.change());
+        assertEquals(expected.built(), actual.built());
     }
 }
