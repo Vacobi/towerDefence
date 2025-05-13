@@ -19,8 +19,8 @@ public class Field {
     private static final int UPDATE_RATE = 25;
     private static final int UPDATE_PERIOD_MS = 1000 / UPDATE_RATE;
 
-    private static final int WIDTH = 500;
-    private static final int HEIGHT = 500;
+    private static final int WIDTH = 20;
+    private static final int HEIGHT = 20;
 
     public Field() {
         road = new Road();
