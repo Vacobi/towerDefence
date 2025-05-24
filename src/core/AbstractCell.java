@@ -16,8 +16,8 @@ public abstract class AbstractCell {
 
     public Position getGlobalPosition() {
         return new Position(
-                CoordinatesConverter.xToGlobalCoordinate(position.getX()),
-                CoordinatesConverter.yToGlobalCoordinate(position.getY())
+                CoordinatesConverter.toGlobalCoordinate(position.getX()) + getSize() / 2,
+                CoordinatesConverter.toGlobalCoordinate(position.getY()) + getSize() / 2
         );
     }
 
