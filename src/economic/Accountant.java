@@ -16,7 +16,13 @@ public class Accountant {
     }
 
     public void creditGoldBeforeWave(Wave wave) {
-        account.creditGold(defaultCreditBeforeWave * wave.getNumber());
+        int gold;
+        if (wave.getNumber() == 1) {
+            gold = defaultCreditBeforeWave * 5;
+        } else {
+            gold = defaultCreditBeforeWave * wave.getNumber();
+        }
+        account.creditGold(gold);
     }
 
     public void creditGoldForMonsterKill() {
