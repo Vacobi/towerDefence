@@ -26,4 +26,11 @@ public abstract class AbstractCell {
     public static int getSize() {
         return 30;
     }
+
+    public static Position toGlobalPosition(Position position) {
+        return new Position(
+                CoordinatesConverter.toGlobalCoordinate(position.getX()) + getSize() / 2,
+                CoordinatesConverter.toGlobalCoordinate(position.getY()) + getSize() / 2
+        );
+    }
 }
