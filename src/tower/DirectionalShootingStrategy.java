@@ -3,8 +3,8 @@ package tower;
 import projectile.DirectionalProjectile;
 import utils.Direction;
 
-import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 public class DirectionalShootingStrategy implements ShootingStrategy<DirectionalProjectile>{
@@ -41,7 +41,7 @@ public class DirectionalShootingStrategy implements ShootingStrategy<Directional
             throw new IllegalStateException("Tower has not been set");
         }
 
-        List<DirectionalProjectile> projectiles = new ArrayList<>();
+        List<DirectionalProjectile> projectiles = new LinkedList<>();
         for (Direction direction : tower.getShotDirections()) {
             DirectionalProjectile projectile = tower.getTypicalProjectile().clone(
                     tower.getCell().getGlobalPosition(),
