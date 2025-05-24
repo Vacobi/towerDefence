@@ -10,7 +10,7 @@ public class Accountant {
 
     public Accountant(BankAccount account) {
         this.account = account;
-        defaultCreditBeforeWave = 50;
+        defaultCreditBeforeWave = 20;
         defaultCreditForMonsterKill = 2;
         defaultCreditForMonsterKillChance = 0.15;
     }
