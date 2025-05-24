@@ -1,13 +1,13 @@
 package tower;
 
 import collision.HitboxParameters;
+import core.AbstractCell;
 import core.Cell;
 import core.Field;
 import org.junit.jupiter.api.Test;
 import projectile.PlainProjectile;
 import projectile.behavior.HitOneTargetBehavior;
 import projectile.strategy.LinearMovingProjectileStrategy;
-import utils.CoordinatesConverter;
 import utils.Direction;
 import utils.Position;
 
@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class TowerTest {
     private final Position cellPosition = new Position(100, 100);
-    private final Position projectilePosition = CoordinatesConverter.toGlobalCoordinates(cellPosition);
+    private final Position projectilePosition = AbstractCell.toGlobalPosition(cellPosition);
     private final Field field = new Field();
     private final int levelsUpgradeCount = 3;
 
