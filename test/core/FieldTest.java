@@ -14,8 +14,8 @@ class FieldTest {
             .toAbsolutePath()
             .normalize();
 
-    private static final int WIDTH = 20;
-    private static final int HEIGHT = 20;
+    private static final int WIDTH = 15;
+    private static final int HEIGHT = 15;
     private static final int CELLS_ON_FIELD = WIDTH * HEIGHT;
 
     @Test

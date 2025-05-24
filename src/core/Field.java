@@ -21,6 +21,8 @@ public class Field {
 
     private static final int WIDTH = 20;
     private static final int HEIGHT = 20;
+    private static final int WIDTH = 15;
+    private static final int HEIGHT = 15;
 
     public Field() {
         road = new Road();
