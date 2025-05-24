@@ -1,17 +1,18 @@
 package utils;
 
 public enum Direction {
-    NORTH,
-    WEST,
-    SOUTH,
-    EAST;
+    EAST(Math.toRadians(0)),
+    NORTH(Math.toRadians(90)),
+    WEST(Math.toRadians(180)),
+    SOUTH(Math.toRadians(270));
 
-    public static double toRadians(Direction direction) {
-        return switch (direction) {
-            case NORTH -> -Math.PI / 2;
-            case WEST -> Math.PI;
-            case SOUTH -> Math.PI / 2;
-            case EAST -> 0;
-        };
+    private final double angleRadians;
+
+    Direction(double angleRadians) {
+        this.angleRadians = angleRadians;
+    }
+
+    public double toRadians() {
+        return angleRadians;
     }
 }
