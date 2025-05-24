@@ -80,10 +80,10 @@ class HitboxTest {
 
     @Test
     void collidesByOneEdgeInRotated() {
-        HitboxParameters hitboxParameters = new HitboxParameters(400, 200, Math.toRadians(90));
-        Hitbox hitbox = new Hitbox(700, 100, hitboxParameters);
-        HitboxParameters hitboxParametersOther = new HitboxParameters(400, 200, Math.toRadians(0));
-        Hitbox other = new Hitbox(100, 200, hitboxParametersOther);
+        HitboxParameters hitboxParameters = new HitboxParameters(100, 20, Math.toRadians(0));
+        Hitbox hitbox = new Hitbox(90, 600, hitboxParameters);
+        HitboxParameters hitboxParametersOther = new HitboxParameters(100, 20, Math.toRadians(180));
+        Hitbox other = new Hitbox(290, 600, hitboxParametersOther);
 
         boolean actualCollides = hitbox.intersects(other);
 
@@ -92,10 +92,10 @@ class HitboxTest {
 
     @Test
     void collidesByOneLineInRotated() {
-        HitboxParameters hitboxParameters = new HitboxParameters(400, 200, Math.toRadians(90));
-        Hitbox hitbox = new Hitbox(700, 100, hitboxParameters);
-        HitboxParameters hitboxParametersOther = new HitboxParameters(400, 200, Math.toRadians(0));
-        Hitbox other = new Hitbox(101, 200, hitboxParametersOther);
+        HitboxParameters hitboxParameters = new HitboxParameters(100, 20, Math.toRadians(0));
+        Hitbox hitbox = new Hitbox(90, 600, hitboxParameters);
+        HitboxParameters hitboxParametersOther = new HitboxParameters(100, 20, Math.toRadians(180));
+        Hitbox other = new Hitbox(289, 600, hitboxParametersOther);
 
         boolean actualCollides = hitbox.intersects(other);
 
@@ -104,10 +104,10 @@ class HitboxTest {
 
     @Test
     void collidesByOnePointByRotated() {
-        HitboxParameters hitboxParameters = new HitboxParameters(400, 200, Math.toRadians(0));
-        Hitbox hitbox = new Hitbox(200, 100, hitboxParameters);
-        HitboxParameters hitboxParametersOther = new HitboxParameters(400, 200, Math.toRadians(45));
-        Hitbox other = new Hitbox(600, 300, hitboxParametersOther);
+        HitboxParameters hitboxParameters = new HitboxParameters(100, 20, Math.toRadians(0));
+        Hitbox hitbox = new Hitbox(90, 600, hitboxParameters);
+        HitboxParameters hitboxParametersOther = new HitboxParameters(100, 20, Math.toRadians(180));
+        Hitbox other = new Hitbox(290, 580, hitboxParametersOther);
 
         boolean actualCollides = hitbox.intersects(other);
 
@@ -130,8 +130,8 @@ class HitboxTest {
     void collidesOnlyAfterRotate() {
         HitboxParameters hitboxParameters = new HitboxParameters(100, 60, Math.toRadians(0));
         Hitbox hitbox = new Hitbox(150, 150, hitboxParameters);
-        HitboxParameters hitboxParametersOther = new HitboxParameters(120, 80, Math.toRadians(45));
-        Hitbox other = new Hitbox(260, 180, hitboxParametersOther);
+        HitboxParameters hitboxParametersOther = new HitboxParameters(120, 80, Math.toRadians(180));
+        Hitbox other = new Hitbox(270, 180, hitboxParametersOther);
 
         boolean actualCollides = hitbox.intersects(other);
 
@@ -144,8 +144,8 @@ class HitboxTest {
         Hitbox hitbox = new Hitbox(150, 150, hitboxParameters);
 
         Position newPosition = new Position(100, 100);
-        hitbox.updateLeftTop(newPosition);
+        hitbox.updateCenter(newPosition);
 
-        assertEquals(newPosition, hitbox.getLeftTop());
+        assertEquals(newPosition, hitbox.getCenter());
     }
 }

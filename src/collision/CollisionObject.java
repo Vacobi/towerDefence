@@ -9,8 +9,8 @@ public class CollisionObject {
         this.hitbox = hitbox;
     }
 
-    public CollisionObject(Position leftTop, HitboxParameters parameters) {
-        this.hitbox = new Hitbox(leftTop, parameters);
+    public CollisionObject(Position center, HitboxParameters parameters) {
+        this.hitbox = new Hitbox(center, parameters);
     }
 
     public Hitbox getHitbox() {
@@ -22,10 +22,10 @@ public class CollisionObject {
     }
 
     public void updateHitboxPosition(Position newPosition) {
-        hitbox.updateLeftTop(newPosition);
+        hitbox.updateCenter(newPosition);
     }
 
     public void updateHitboxParameters(HitboxParameters newHitboxParameters) {
-        hitbox = new Hitbox(hitbox.getLeftTop(), newHitboxParameters);
+        hitbox = new Hitbox(hitbox.getCenter(), newHitboxParameters);
     }
 }

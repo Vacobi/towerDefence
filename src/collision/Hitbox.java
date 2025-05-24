@@ -7,7 +7,8 @@ import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 
 public class Hitbox {
-    private int x, y;
+    private int x;
+    private int y;
     private HitboxParameters hitboxParameters;
 
     public Hitbox(int x, int y, HitboxParameters hitboxParameters) {
@@ -16,71 +17,70 @@ public class Hitbox {
         this.hitboxParameters = hitboxParameters;
     }
 
-    public Hitbox(Position leftTop, HitboxParameters hitboxParameters) {
-        this.x = leftTop.getX();
-        this.y = leftTop.getY();
+    public Hitbox(Position center, HitboxParameters hitboxParameters) {
+        this.x = center.getX();
+        this.y = center.getY();
         this.hitboxParameters = hitboxParameters;
     }
 
     public Point2D.Double[] getVertices() {
         Point2D.Double[] vertices = new Point2D.Double[4];
+        double halfHeight = hitboxParameters.height() / 2.0;
 
-        int[] xOffsets = {0, hitboxParameters.width(), hitboxParameters.width(), 0};
-        int[] yOffsets = {0, 0, hitboxParameters.height(), hitboxParameters.height()};
+        double[] xOffsets = {0, hitboxParameters.width(), hitboxParameters.width(), 0};
+        double[] yOffsets = {-halfHeight, -halfHeight, halfHeight, halfHeight};
+
+        double angle = hitboxParameters.angle();
+        double cos = Math.cos(angle);
+        double sin = Math.sin(angle);
 
         for (int i = 0; i < 4; i++) {
-            double rotatedX = x + xOffsets[i] * Math.cos(hitboxParameters.angle()) - yOffsets[i] * Math.sin(hitboxParameters.angle());
-            double rotatedY = y + xOffsets[i] * Math.sin(hitboxParameters.angle()) + yOffsets[i] * Math.cos(hitboxParameters.angle());
-
+            double rotatedX = x + xOffsets[i] * cos - yOffsets[i] * sin;
+            double rotatedY = y + xOffsets[i] * sin + yOffsets[i] * cos;
             vertices[i] = new Point2D.Double(rotatedX, rotatedY);
         }
 
         return vertices;
     }
 
-    public void updateLeftTop(int x, int y) {
-        updateLeftTop(new Position(x, y));
-    }
-
-    public void updateLeftTop(Position position) {
+    public void updateCenter(Position position) {
         this.x = position.getX();
         this.y = position.getY();
     }
 
     public boolean intersects(Hitbox other) {
-        Path2D thisPath = new Path2D.Double();
-        Point2D.Double[] thisVertices = this.getVertices();
-        thisPath.moveTo(thisVertices[0].x, thisVertices[0].y);
-        for (int i = 1; i < thisVertices.length; i++) {
-            thisPath.lineTo(thisVertices[i].x, thisVertices[i].y);
-        }
-        thisPath.closePath();
-
-        Path2D otherPath = new Path2D.Double();
-        Point2D.Double[] otherVertices = other.getVertices();
-        otherPath.moveTo(otherVertices[0].x, otherVertices[0].y);
-        for (int i = 1; i < otherVertices.length; i++) {
-            otherPath.lineTo(otherVertices[i].x, otherVertices[i].y);
-        }
-        otherPath.closePath();
-
-        Area thisArea = new Area(thisPath);
-        Area otherArea = new Area(otherPath);
+        Area thisArea = createArea(this);
+        Area otherArea = createArea(other);
 
         thisArea.intersect(otherArea);
         return !thisArea.isEmpty();
     }
 
+    private Area createArea(Hitbox hitbox) {
+        Path2D path = new Path2D.Double();
+        Point2D.Double[] vertices = hitbox.getVertices();
+
+        path.moveTo(vertices[0].x, vertices[0].y);
+        for (int i = 1; i < vertices.length; i++) {
+            path.lineTo(vertices[i].x, vertices[i].y);
+        }
+        path.closePath();
+        return new Area(path);
+    }
+
     public int getX() {
         return x;
     }
+
     public int getY() {
         return y;
     }
+
     public HitboxParameters getHitboxParameters() {
         return hitboxParameters;
     }
-    public Position getLeftTop() {
+
+    public Position getCenter() {
         return new Position(x, y);
     }
 }

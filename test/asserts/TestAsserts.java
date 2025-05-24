@@ -21,7 +21,7 @@ public class TestAsserts {
     public static void assertHitboxesEquals(Hitbox expected, Hitbox actual) {
         assertHitboxParametersEquals(expected.getHitboxParameters(), actual.getHitboxParameters());
 
-        assertEquals(expected.getLeftTop(), actual.getLeftTop());
+        assertEquals(expected.getCenter(), actual.getCenter());
     }
 
     private static void assertHitboxParametersEquals(HitboxParameters expected, HitboxParameters actual) {
