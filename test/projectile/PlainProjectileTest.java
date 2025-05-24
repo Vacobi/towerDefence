@@ -41,8 +41,13 @@ class PlainProjectileTest {
 
         LinearMovingProjectileStrategy expectedMovingStrategy = new LinearMovingProjectileStrategy(speed);
         HitOneTargetBehavior expectedBehavior = new HitOneTargetBehavior();
+        HitboxParameters expectedHitboxParameters = new HitboxParameters(
+                hitboxParameters.width(),
+                hitboxParameters.height(),
+                newDirection.toRadians()
+        );
         PlainProjectile expectedProjectile = new PlainProjectile(
-                hitboxParameters,
+                expectedHitboxParameters,
                 damage,
                 range,
                 newPosition,
