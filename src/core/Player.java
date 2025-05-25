@@ -1,20 +1,28 @@
 package core;
 
 import economic.BankAccount;
+import events.BankAccountListener;
+import events.PlayerListener;
 import projectile.Projectile;
 import tower.Tower;
 import tower.TowerUpgradableCharacteristic;
 import utils.BuildingResponse;
 
-public class Player {
+import java.util.LinkedList;
+import java.util.List;
+
+public class Player implements BankAccountListener {
     private final Builder builder;
     private final BankAccount bankAccount;
     private boolean frozen;
     private int lives;
 
+    private final List<PlayerListener> listeners;
+
     public Player(Builder builder) {
         this.builder = builder;
         this.bankAccount = new BankAccount();
+        this.bankAccount.addListener(this);
         frozen = false;
         lives = 5;
 
@@ -23,6 +31,8 @@ public class Player {
 
     public void reduceLives(int lives) {
         this.lives -= lives;
+
+        listeners.forEach(listener -> listener.onPlayerLostLive(this));
     }
 
     public boolean placeTower(Tower<? extends Projectile> typicalTower, Cell cell) {
@@ -45,7 +55,19 @@ public class Player {
         return response.built();
     }
 
+    public boolean canBuildTower(Tower<? extends Projectile> tower) {
+        return false;
+    }
+
     // - /////////////////////////////////////////////////////////////
+    public void addListener(PlayerListener listener) {
+        listeners.add(listener);
+    }
+
+    public void removeListener(PlayerListener listener) {
+        listeners.remove(listener);
+    }
+
     public BankAccount getBankAccount() {
         return this.bankAccount;
     }
@@ -60,5 +82,14 @@ public class Player {
 
     public int getLives() {
         return this.lives;
+    }
+
+    @Override
+    public void onGoldCountChange(int gold) {
+        listeners.forEach(listener -> listener.onChangedPlayerGoldCount(this));
+    }
+
+    public Builder getBuilder() {
+        return builder;
     }
 }
