@@ -48,4 +48,19 @@ class AccountantTest {
 
         assertTrue(bankAccount.getGold() > initialGoldCount);
     }
+
+
+    @Test
+    void creditGoldBeforeNotFirstWave() {
+        BankAccount bankAccount = new BankAccount();
+        Accountant accountant = new Accountant(bankAccount);
+        int waveNumber = 4;
+        Wave wave = waveFactory.createWave(waveNumber, field);
+
+        int expectedGoldCount = bankAccount.getGold() + waveModifierOfGoldCount * waveNumber;
+
+        accountant.creditGoldBeforeWave(wave);
+
+        assertEquals(expectedGoldCount, bankAccount.getGold());
+    }
 }
