@@ -1,5 +1,6 @@
 package utils;
 
+import core.AbstractCell;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -7,73 +8,67 @@ import static org.junit.jupiter.api.Assertions.*;
 class CoordinatesConverterTest {
 
     @Test
-    void xToGlobalCoordinate() {
-        int xCoeff = CoordinatesConverter.coeffConvertToGlobalX();
+    void toGlobalCoordinate() {
         int coordinate = 2;
 
-        int expected = xCoeff * coordinate;
+        int expected = AbstractCell.getSize() * coordinate;
 
-        int actual = CoordinatesConverter.xToGlobalCoordinate(coordinate);
+        int actual = CoordinatesConverter.toGlobalCoordinate(coordinate);
 
         assertEquals(expected, actual);
     }
 
     @Test
     void yToGlobalCoordinate() {
-        int yCoeff = CoordinatesConverter.coeffConvertToGlobalY();
         int coordinate = 2;
 
-        int expected = yCoeff * coordinate;
+        int expected = AbstractCell.getSize() * coordinate;
 
-        int actual = CoordinatesConverter.yToGlobalCoordinate(coordinate);
+        int actual = CoordinatesConverter.toGlobalCoordinate(coordinate);
 
         assertEquals(expected, actual);
     }
 
     @Test
     void xCoordinateIsZero() {
-        int xCoeff = CoordinatesConverter.coeffConvertToGlobalX();
         int coordinate = 0;
 
-        int expected = xCoeff * coordinate;
+        int expected = AbstractCell.getSize() * coordinate;
 
-        int actual = CoordinatesConverter.xToGlobalCoordinate(coordinate);
+        int actual = CoordinatesConverter.toGlobalCoordinate(coordinate);
 
         assertEquals(expected, actual);
     }
 
     @Test
     void yCoordinateIsZero() {
-        int yCoeff = CoordinatesConverter.coeffConvertToGlobalY();
         int coordinate = 0;
 
-        int expected = yCoeff * coordinate;
+        int expected = AbstractCell.getSize() * coordinate;
 
-        int actual = CoordinatesConverter.yToGlobalCoordinate(coordinate);
+        int actual = CoordinatesConverter.toGlobalCoordinate(coordinate);
 
         assertEquals(expected, actual);
     }
 
     @Test
     void xCoordinateIsNegative() {
-        int xCoeff = CoordinatesConverter.coeffConvertToGlobalX();
         int coordinate = -3;
 
-        int expected = xCoeff * coordinate;
+        int expected = AbstractCell.getSize() * coordinate;
 
-        int actual = CoordinatesConverter.xToGlobalCoordinate(coordinate);
+        int actual = CoordinatesConverter.toGlobalCoordinate(coordinate);
 
         assertEquals(expected, actual);
     }
 
     @Test
     void yCoordinateIsNegative() {
-        int yCoeff = CoordinatesConverter.coeffConvertToGlobalY();
         int coordinate = -3;
 
-        int expected = yCoeff * coordinate;
+        int expected = AbstractCell.getSize() * coordinate;
 
-        int actual = CoordinatesConverter.yToGlobalCoordinate(coordinate);
+        int actual = CoordinatesConverter.toGlobalCoordinate(coordinate);
 
         assertEquals(expected, actual);
     }
@@ -81,47 +76,10 @@ class CoordinatesConverterTest {
     @Test
     void lengthOfSegmentInNorthDirection() {
         int coordinatesCount = 3;
-        Direction direction = Direction.NORTH;
 
-        int expectedLength = coordinatesCount * CoordinatesConverter.coeffConvertToGlobalX();
+        int expectedLength = coordinatesCount * AbstractCell.getSize();
 
-        int actualLength = CoordinatesConverter.lengthOfSegment(coordinatesCount, direction);
-
-        assertEquals(expectedLength, actualLength);
-    }
-
-    @Test
-    void lengthOfSegmentInWestDirection() {
-        int coordinatesCount = 3;
-        Direction direction = Direction.WEST;
-
-        int expectedLength = coordinatesCount * CoordinatesConverter.coeffConvertToGlobalY();
-
-        int actualLength = CoordinatesConverter.lengthOfSegment(coordinatesCount, direction);
-
-        assertEquals(expectedLength, actualLength);
-    }
-
-    @Test
-    void lengthOfSegmentInSouthDirection() {
-        int coordinatesCount = 3;
-        Direction direction = Direction.SOUTH;
-
-        int expectedLength = coordinatesCount * CoordinatesConverter.coeffConvertToGlobalX();
-
-        int actualLength = CoordinatesConverter.lengthOfSegment(coordinatesCount, direction);
-
-        assertEquals(expectedLength, actualLength);
-    }
-
-    @Test
-    void lengthOfSegmentInEastDirection() {
-        int coordinatesCount = 3;
-        Direction direction = Direction.EAST;
-
-        int expectedLength = coordinatesCount * CoordinatesConverter.coeffConvertToGlobalY();
-
-        int actualLength = CoordinatesConverter.lengthOfSegment(coordinatesCount, direction);
+        int actualLength = CoordinatesConverter.lengthOfSegment(coordinatesCount);
 
         assertEquals(expectedLength, actualLength);
     }
@@ -129,11 +87,10 @@ class CoordinatesConverterTest {
     @Test
     void zeroCoordinates() {
         int coordinatesCount = 0;
-        Direction direction = Direction.EAST;
 
-        int expectedLength = coordinatesCount * CoordinatesConverter.coeffConvertToGlobalY();
+        int expectedLength = coordinatesCount * AbstractCell.getSize();
 
-        int actualLength = CoordinatesConverter.lengthOfSegment(coordinatesCount, direction);
+        int actualLength = CoordinatesConverter.lengthOfSegment(coordinatesCount);
 
         assertEquals(expectedLength, actualLength);
     }
@@ -141,8 +98,7 @@ class CoordinatesConverterTest {
     @Test
     void negativeCoordinatesCount() {
         int coordinatesCount = -1;
-        Direction direction = Direction.EAST;
 
-        assertThrows(IllegalArgumentException.class, () -> CoordinatesConverter.lengthOfSegment(coordinatesCount, direction));
+        assertThrows(IllegalArgumentException.class, () -> CoordinatesConverter.lengthOfSegment(coordinatesCount));
     }
 }
