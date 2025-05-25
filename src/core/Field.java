@@ -67,11 +67,11 @@ public class Field implements WaveListener, CellListener {
                 }
 
                 long currentTick = System.currentTimeMillis();
-                wave.updateMonsters(currentTick);
                 wave.spawnMonsters(currentTick);
+                wave.updateMonsters(currentTick);
 
-                updateProjectiles(currentTick);
                 towersShoot(currentTick);
+                updateProjectiles(currentTick);
             }
         }, 0, UPDATE_PERIOD_MS);
     }
