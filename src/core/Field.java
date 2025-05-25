@@ -132,6 +132,22 @@ public class Field implements WaveListener, CellListener {
         return projectiles.getProjectiles();
     }
 
+    public Optional<AbstractCell> cellAt(Position position) {
+        for (Cell cell : cells) {
+            if (cell.position().equals(position)) {
+                return Optional.of(cell);
+            }
+        }
+
+        for (RoadCell roadCell : road.getRoadCells()) {
+            if (roadCell.position().equals(position)) {
+                return Optional.of(roadCell);
+            }
+        }
+
+        return Optional.empty();
+    }
+
     @Override
     public void onMonsterDeath(Monster monster) {
         ;
