@@ -60,7 +60,7 @@ public class Game implements WaveListener, UpdateFieldController {
     }
 
     private void changeWave() {
-        wave = waveFactory.createWave(currentWaveNumber, field);
+        wave = waveFactory.createWave(++currentWaveNumber, field);
         wave.addListener(this);
         field.setWave(wave);
     }
@@ -68,9 +68,8 @@ public class Game implements WaveListener, UpdateFieldController {
     private void processEndOfWave() {
         if (gameState != GameState.END) {
             this.gameState = GameState.WAITING_WAVE_START;
-            determineWin();
-            currentWaveNumber++;
             unfreezePlayer();
+            determineWin();
         }
     }
 
