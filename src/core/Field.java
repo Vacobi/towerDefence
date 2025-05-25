@@ -31,7 +31,7 @@ public class Field implements WaveListener, CellListener {
         initializeCells();
 
         towers = new TowersContainer(this);
-        projectiles = new ProjectilesContainer(this);
+        projectiles = new ProjectilesContainer();
         wave = null;
     }
 
@@ -41,7 +41,7 @@ public class Field implements WaveListener, CellListener {
         initializeCells();
 
         towers = new TowersContainer(this);
-        projectiles = new ProjectilesContainer(this);
+        projectiles = new ProjectilesContainer();
         wave = null;
     }
 

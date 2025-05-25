@@ -1,18 +1,13 @@
 package projectile;
 
-import core.Field;
-
 import java.util.*;
 import java.util.function.Consumer;
 
 public class ProjectilesContainer implements Iterable<Projectile> {
     private final List<Projectile> projectiles;
-    private final Field field;
 
-    public ProjectilesContainer(Field field) {
+    public ProjectilesContainer() {
         projectiles = new LinkedList<>();
-
-        this.field = field;
     }
 
     public void addProjectile(Projectile projectile) {
