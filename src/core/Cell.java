@@ -1,18 +1,22 @@
 package core;
 
+import events.CellListener;
 import exception.CellAlreadyHasTower;
 import tower.Tower;
 import utils.Position;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class Cell extends AbstractCell implements Cloneable {
     private Tower tower;
 
+    private List<CellListener> listeners;
+
     public Cell(Position position) {
         super(position);
-    }
 
-    public Cell(Position position, Tower tower) {
-        super(position);
+        listeners = new LinkedList<>();
     }
 
     public Tower getTower() {
@@ -25,6 +29,8 @@ public class Cell extends AbstractCell implements Cloneable {
         }
 
         this.tower = tower;
+
+        listeners.forEach(l -> l.onTowerBuilt(this));
     }
 
     public boolean canPlaceTower() {
@@ -34,5 +40,13 @@ public class Cell extends AbstractCell implements Cloneable {
     @Override
     public Cell clone() {
         return new Cell(position());
+    }
+
+    public void addListener(CellListener listener) {
+        listeners.add(listener);
+    }
+
+    public void removeListener(CellListener listener) {
+        listeners.remove(listener);
     }
 }
