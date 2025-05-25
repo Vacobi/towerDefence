@@ -16,7 +16,9 @@ public class Player {
         this.builder = builder;
         this.bankAccount = new BankAccount();
         frozen = false;
-        lives = 10;
+        lives = 5;
+
+        listeners = new LinkedList<>();
     }
 
     public void reduceLives(int lives) {
