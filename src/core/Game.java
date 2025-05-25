@@ -104,6 +104,11 @@ public class Game implements WaveListener, UpdateFieldController {
         determineLose();
     }
 
+    @Override
+    public void onWaveEnd(Wave wave) {
+        processEndOfWave();
+    }
+
     private void determineLose() {
         if (player.getLives() <= 0) {
             listeners.forEach((GameListener l) -> l.onPlayerLose(player));
