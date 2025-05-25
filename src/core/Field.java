@@ -1,5 +1,8 @@
 package core;
 
+import events.CellListener;
+import events.WaveListener;
+import monster.Monster;
 import projectile.Projectile;
 import projectile.ProjectilesContainer;
 import road.Road;
@@ -50,7 +53,9 @@ public class Field implements WaveListener, CellListener {
             for (int j = 0; j < HEIGHT; j++) {
                 Position pos = new Position(i, j);
                 if (!roadPositions.contains(pos)) {
-                    cells.add(new Cell(pos));
+                    Cell cell = new Cell(pos);
+                    cell.addListener(this);
+                    cells.add(cell);
                 }
             }
         }
@@ -91,6 +96,7 @@ public class Field implements WaveListener, CellListener {
         }
 
         this.wave = wave;
+        wave.addListener(this);
     }
 
     public Wave getWave() {
@@ -120,5 +126,27 @@ public class Field implements WaveListener, CellListener {
 
     public int getHeight() {
         return HEIGHT;
+    }
+
+    @Override
+    public void onMonsterDeath(Monster monster) {
+        ;
+    }
+
+    @Override
+    public void onMonsterReachedEnd(Monster monster) {
+        ;
+    }
+
+    @Override
+    public void onWaveEnd(Wave wave) {
+
+        projectiles.clearProjectiles();
+        stopUpdates();
+    }
+
+    @Override
+    public void onTowerBuilt(Cell cell) {
+        towers.addTower(cell.getTower());
     }
 }
