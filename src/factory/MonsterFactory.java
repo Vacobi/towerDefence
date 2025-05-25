@@ -24,7 +24,7 @@ public class MonsterFactory {
     public Queue<Monster> createMonsters(int count, MovingMonsterStrategy strategy) {
         Queue<Monster> monsters = new LinkedList<>();
         for (int i = 0; i < count; i++) {
-            monsters.add(createMonster(strategy));
+            monsters.add(createMonster(strategy.clone()));
         }
         return monsters;
     }
