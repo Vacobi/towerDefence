@@ -111,9 +111,15 @@ public class Field implements WaveListener, CellListener {
     }
 
     protected void updateProjectiles(long currentTick) {
-        projectiles.forEach((Projectile projectile) -> {
-            projectile.update(currentTick);
-        });
+        Iterator<Projectile> iterator = projectiles.iterator();
+        while (iterator.hasNext()) {
+            Projectile projectile = iterator.next();
+            if (!projectile.active()) {
+                iterator.remove();
+            } else {
+                projectile.update(currentTick);
+            }
+        }
     }
 
     public Set<Cell> getCells() {
