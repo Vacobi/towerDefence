@@ -57,7 +57,7 @@ public class TowersCatalogue {
     }
 
     private void initializeMovingStrategies() {
-        int defaultSpeed = 20;
+        int defaultSpeed = 1;
 
         LinearMovingProjectileStrategy lmps = new LinearMovingProjectileStrategy(defaultSpeed);
 
