@@ -21,11 +21,11 @@ public class WaveFactory {
     }
 
     public Wave createWave(int number, Field field) {
-        MovingMonsterStrategy strategy = new PlainRoadMoving(field, 20 * (number - number / 2));
+        MovingMonsterStrategy strategy = new PlainRoadMoving(field, 1);
 
-        Queue<Monster> monstersToSpawn = monsterFactory.createMonsters(defaultMonstersCount * number / 2, strategy);
+        Queue<Monster> monstersToSpawn = monsterFactory.createMonsters(defaultMonstersCount * number / 4, strategy);
 
-        Wave wave = new Wave(monstersToSpawn, defaultDelay / number, number);
+        Wave wave = new Wave(monstersToSpawn, defaultDelay, number);
         return wave;
     }
 
