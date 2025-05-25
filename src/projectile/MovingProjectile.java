@@ -29,9 +29,9 @@ public abstract class MovingProjectile extends DirectionalProjectile {
 
     @Override
     public void update(long currentTick) {
-        strategy.move(currentTick);
-
         super.update(currentTick);
+
+        strategy.move(currentTick);
     }
 
     public MovingProjectileStrategy getMovingStrategy() {
