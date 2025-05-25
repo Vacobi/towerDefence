@@ -56,7 +56,7 @@ public class Game implements WaveListener, UpdateFieldController {
         this.gameState = GameState.WAVE_IN_PROGRESS;
         field.startUpdates(this);
 
-        processEndOfWave();
+        listeners.forEach((GameListener l) -> l.onWaveStart(wave));
     }
 
     private void changeWave() {
