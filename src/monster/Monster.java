@@ -38,13 +38,7 @@ public class Monster extends CollisionObject {
         }
 
         strategy.moveMonster(currentTick);
-        updateHitboxPosition(
-                CoordinatesConverter.centerToLeftTop(
-                        strategy.currentPosition(),
-                        getHitbox().getHitboxParameters().width(),
-                        getHitbox().getHitboxParameters().height()
-                )
-        );
+        updateHitboxPosition(strategy.currentPosition());
 
         if (strategy.monsterReachedEnd()) {
             monsterReachedEnd();
