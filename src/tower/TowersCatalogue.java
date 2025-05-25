@@ -79,7 +79,7 @@ public class TowersCatalogue {
 
     private void addTowerWithPlainProjectile(Field field) {
         int maxDistance = 100;
-        int damage = 20;
+        int damage = 50;
         Position mockPosition = new Position(Integer.MAX_VALUE, Integer.MAX_VALUE);
         Direction mockDirection = Direction.NORTH;
         HitboxParameters hitboxParameters = new HitboxParameters(10, 10, 0);
@@ -113,7 +113,7 @@ public class TowersCatalogue {
 
     private void addTowerWithLaser(Field field) {
         int length = 40;
-        int damage = 10;
+        int damage = 100;
         Position mockPosition = new Position(Integer.MAX_VALUE, Integer.MAX_VALUE);
         Direction mockDirection = Direction.NORTH;
         HitboxParameters hitboxParameters = new HitboxParameters(length, 10, 0);
