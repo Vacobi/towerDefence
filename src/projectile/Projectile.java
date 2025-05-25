@@ -4,7 +4,6 @@ import collision.CollisionObject;
 import collision.HitboxParameters;
 import core.Field;
 import projectile.behavior.ProjectileBehavior;
-import utils.CoordinatesConverter;
 import utils.Position;
 
 public abstract class Projectile extends CollisionObject {
@@ -26,7 +25,7 @@ public abstract class Projectile extends CollisionObject {
             ProjectileBehavior behavior,
             Field field
     ) {
-        super(CoordinatesConverter.centerToLeftTop(startPosition, parameters.width(), parameters.height()), parameters);
+        super(startPosition, parameters);
 
         if (damage < 0) {
             throw new IllegalArgumentException("Damage cannot be negative");
