@@ -4,6 +4,8 @@ import monster.Monster;
 import projectile.LaserProjectile;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 public class LaserBehavior implements ProjectileBehavior<LaserProjectile> {
@@ -33,7 +35,9 @@ public class LaserBehavior implements ProjectileBehavior<LaserProjectile> {
             return;
         }
 
-        for (Monster monster : projectile.getField().getWave().getAliveMonsters()) {
+        List<Monster> targets = new LinkedList<>(projectile.getField().getWave().getAliveMonsters());
+
+        for (Monster monster : targets) {
             if (projectile.collidesWith(monster) && canDamage(monster, currentTick)) {
                 monster.applyDamage(projectile.getDamage());
 
