@@ -128,6 +128,10 @@ public class Field implements WaveListener, CellListener {
         return HEIGHT;
     }
 
+    public List<Projectile> getProjectiles() {
+        return projectiles.getProjectiles();
+    }
+
     @Override
     public void onMonsterDeath(Monster monster) {
         ;
