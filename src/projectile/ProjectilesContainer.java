@@ -36,4 +36,12 @@ public class ProjectilesContainer implements Iterable<Projectile> {
     public void forEach(Consumer<? super Projectile> action) {
         Iterable.super.forEach(action);
     }
+
+    public List<Projectile> getProjectiles() {
+        return projectiles;
+    }
+
+    public void clearProjectiles() {
+        projectiles.clear();
+    }
 }
