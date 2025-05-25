@@ -48,14 +48,8 @@ public class Wave implements Iterable<Monster>, MonsterListener {
     }
 
     public void updateMonsters(long currentTick) {
-        Iterator<Monster> iterator = aliveMonsters.iterator();
-        while (iterator.hasNext()) {
-            Monster monster = iterator.next();
+        for (Monster monster : new ArrayList<>(aliveMonsters)) {
             monster.move(currentTick);
-
-            if (!monster.stillInWave()) {
-                iterator.remove();
-            }
         }
     }
 
@@ -76,11 +70,25 @@ public class Wave implements Iterable<Monster>, MonsterListener {
     @Override
     public void onMonsterDeath(Monster monster) {
         listeners.forEach(l -> l.onMonsterDeath(monster));
+
+        aliveMonsters.remove(monster);
+
+        processEndOfWave();
     }
 
     @Override
     public void onMonsterReachedEnd(Monster monster) {
         listeners.forEach(l -> l.onMonsterReachedEnd(monster));
+
+        aliveMonsters.remove(monster);
+
+        processEndOfWave();
+    }
+
+    private void processEndOfWave() {
+        if (hasEnded()) {
+            listeners.forEach(l -> l.onWaveEnd(this));
+        }
     }
 
     @Override
