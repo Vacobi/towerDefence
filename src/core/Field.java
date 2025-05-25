@@ -57,7 +57,7 @@ public class Field implements WaveListener, CellListener {
     }
 
     public void startUpdates(UpdateFieldController controller) {
-        updateTimer = new Timer();
+        updateTimer = new Timer("FieldUpdateTimer", true);
         updateTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
@@ -79,7 +79,6 @@ public class Field implements WaveListener, CellListener {
     public void stopUpdates() {
         updateTimer.cancel();
         updateTimer.purge();
-        updateTimer = new Timer("FieldUpdateTimer", true);
     }
 
     public Road getRoad() {
