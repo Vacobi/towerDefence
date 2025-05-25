@@ -42,6 +42,10 @@ public class Cell extends AbstractCell implements Cloneable {
         return new Cell(position());
     }
 
+    public boolean hasTower() {
+        return tower != null;
+    }
+
     public void addListener(CellListener listener) {
         listeners.add(listener);
     }
