@@ -47,9 +47,13 @@ public class PlainRoadMoving extends MovingMonsterStrategy{
 
             leftTravelOnThisTick -= traveledDistance;
 
-        setLastMovingTime(currentTick);
             setLastMovingTime(currentTick);
         }
+    }
+
+    @Override
+    public MovingMonsterStrategy clone() {
+        return new PlainRoadMoving(field(), speed());
     }
 
     private void switchRoadSegmentIfNecessary() {

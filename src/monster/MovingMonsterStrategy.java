@@ -73,4 +73,6 @@ public abstract class MovingMonsterStrategy {
     public void setMonsterReachedEnd(boolean reachedEnd) {
         this.reachedEnd = reachedEnd;
     }
+
+    public abstract MovingMonsterStrategy clone();
 }
