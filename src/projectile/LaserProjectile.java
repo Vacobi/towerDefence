@@ -32,8 +32,11 @@ public class LaserProjectile extends DirectionalProjectile{
     @Override
     public LaserProjectile clone(int damage, int range) {
 
+        HitboxParameters old = getHitbox().getHitboxParameters();
+        HitboxParameters hitboxParameters = new HitboxParameters(range, old.height(), getDirection().toRadians());
+
         LaserProjectile projectile = new LaserProjectile(
-                getHitbox().getHitboxParameters(),
+                hitboxParameters,
                 damage,
                 range,
                 position(),
@@ -51,8 +54,11 @@ public class LaserProjectile extends DirectionalProjectile{
     public LaserProjectile clone(Position position, Direction direction) {
         ProjectileBehavior behavior = getBehavior().clone();
 
+        HitboxParameters old = getHitbox().getHitboxParameters();
+        HitboxParameters hitboxParameters = new HitboxParameters(old.width(), old.height(), direction.toRadians());
+
         LaserProjectile projectile = new LaserProjectile(
-                getHitbox().getHitboxParameters(),
+                hitboxParameters,
                 getDamage(),
                 getDistance(),
                 position,
