@@ -4,7 +4,7 @@ public class BankAccount {
     public int gold;
 
     public BankAccount() {
-        this.gold = 0;
+        this(0);
     }
 
     public BankAccount(int gold) {
