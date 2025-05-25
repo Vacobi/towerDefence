@@ -43,7 +43,7 @@ public class TowersCatalogue {
         projectileBehaviors = new HashMap<>();
         initializeProjectileBehaviors();
 
-        availableTowersWithPrices = new HashMap<>();
+        availableTowersWithPrices = new LinkedHashMap<>();
         initializeTowersWithPrices(field);
 
         upgradePrices = new HashMap<>();
