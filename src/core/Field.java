@@ -9,7 +9,7 @@ import utils.Position;
 
 import java.util.*;
 
-public class Field {
+public class Field implements WaveListener, CellListener {
     private final Set<Cell> cells;
     private final Road road;
     private final TowersContainer towers;
@@ -19,8 +19,6 @@ public class Field {
     private static final int UPDATE_RATE = 25;
     private static final int UPDATE_PERIOD_MS = 1000 / UPDATE_RATE;
 
-    private static final int WIDTH = 20;
-    private static final int HEIGHT = 20;
     private static final int WIDTH = 15;
     private static final int HEIGHT = 15;
 
@@ -115,5 +113,13 @@ public class Field {
 
     public Set<Cell> getCells() {
         return cells;
+    }
+
+    public int getWidth() {
+        return WIDTH;
+    }
+
+    public int getHeight() {
+        return HEIGHT;
     }
 }
