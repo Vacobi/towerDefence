@@ -19,7 +19,6 @@ public abstract class MovingMonsterStrategy {
         this.speed = speed;
         this.field = field;
 
-        lastMovingTime = System.currentTimeMillis();
         currentRoadSegment = null;
         traveledInCurrentSegment = 0;
         reachedEnd = false;

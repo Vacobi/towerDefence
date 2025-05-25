@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public class PlainRoadMoving extends MovingMonsterStrategy{
 
-    private final int MILLIS_TO_SECONDS_COEFF = 1_000;
+    private static final int SPEED_COEFF = 25;
 
     public PlainRoadMoving(Field field, int speed) {
         super(field.getRoad().getNextRoadSegment(null).get().getStart(), field, speed);
@@ -27,8 +27,13 @@ public class PlainRoadMoving extends MovingMonsterStrategy{
             return;
         }
 
+        if (lastMovingTime() == null) {
+            setLastMovingTime(currentTick);
+            return;
+        }
+
         int delta = (int)(currentTick - lastMovingTime());
-        int leftTravelOnThisTick = speed() * (delta / MILLIS_TO_SECONDS_COEFF);
+        int leftTravelOnThisTick = speed() * (delta / SPEED_COEFF);
 
         while (leftTravelOnThisTick > 0 && !monsterReachedEnd()) {
             Direction movingDirection = currentRoadSegment().getDirection();
@@ -60,5 +65,9 @@ public class PlainRoadMoving extends MovingMonsterStrategy{
                 setMonsterReachedEnd(true);
             }
         }
+    }
+
+    public static int getSpeedCoeff() {
+        return SPEED_COEFF;
     }
 }
