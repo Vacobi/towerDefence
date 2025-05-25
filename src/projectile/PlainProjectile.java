@@ -41,13 +41,17 @@ public class PlainProjectile extends MovingProjectile {
 
     @Override
     public PlainProjectile clone(Position position, Direction direction) {
+        ProjectileBehavior behavior = getBehavior().clone();
+
+        HitboxParameters old = getHitbox().getHitboxParameters();
+        HitboxParameters hitboxParameters = new HitboxParameters(old.width(), old.height(), direction.toRadians());
 
         PlainProjectile projectile = new PlainProjectile(
-                getHitbox().getHitboxParameters(),
+                hitboxParameters,
                 getDamage(),
                 getDistance(),
                 position,
-                getBehavior().clone(),
+                behavior,
                 getField(),
                 direction,
                 getMovingStrategy().clone()
