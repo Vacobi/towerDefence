@@ -28,8 +28,4 @@ public class MonsterFactory {
         }
         return monsters;
     }
-
-    public HitboxParameters getDefaultHitboxParameters() {
-        return defaultHitboxParameters;
-    }
 }
