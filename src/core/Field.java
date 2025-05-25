@@ -66,7 +66,7 @@ public class Field implements WaveListener, CellListener {
         updateTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                if (wave.hasEnded() || !controller.shouldContinue()) {
+                if (!controller.shouldContinue()) {
                     stopUpdates();
                     return;
                 }
