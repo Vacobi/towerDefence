@@ -50,7 +50,7 @@ class DirectionalShootingStrategyTest {
         Cell cell = new Cell(position);
         DirectionalShootingStrategy shootingStrategy = new DirectionalShootingStrategy();
         long now = System.currentTimeMillis();
-        Tower tower = new Tower(
+        new Tower(
                 cell,
                 field,
                 shootingStrategy,
@@ -60,8 +60,13 @@ class DirectionalShootingStrategyTest {
                 typicalProjectile
         );
 
+        HitboxParameters expectedHitboxParameters = new HitboxParameters(
+                hitboxParameters.width(),
+                hitboxParameters.height(),
+                direction.toRadians()
+        );
         PlainProjectile expectedSouthProjectile = new PlainProjectile(
-                hitboxParameters,
+                expectedHitboxParameters,
                 damage,
                 range,
                 cell.getGlobalPosition(),
@@ -108,8 +113,13 @@ class DirectionalShootingStrategyTest {
                 typicalProjectile
         );
 
+        HitboxParameters expectedHitboxParameters = new HitboxParameters(
+                hitboxParameters.width(),
+                hitboxParameters.height(),
+                direction.toRadians()
+        );
         LaserProjectile expectedSouthProjectile = new LaserProjectile(
-                hitboxParameters,
+                expectedHitboxParameters,
                 damage,
                 range,
                 cell.getGlobalPosition(),
@@ -158,8 +168,13 @@ class DirectionalShootingStrategyTest {
 
         List<DirectionalProjectile> expectedProjectiles = new LinkedList<>();
         for (Direction direction: directions) {
+            HitboxParameters expectedHitboxParameters = new HitboxParameters(
+                    hitboxParameters.width(),
+                    hitboxParameters.height(),
+                    direction.toRadians()
+            );
             expectedProjectiles.add(new PlainProjectile(
-                    hitboxParameters,
+                    expectedHitboxParameters,
                     damage,
                     range,
                     cell.getGlobalPosition(),
