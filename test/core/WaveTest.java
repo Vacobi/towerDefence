@@ -127,4 +127,9 @@ class WaveTest implements WaveListener {
     public void onMonsterReachedEnd(Monster monster) {
         monsterReachedEnd++;
     }
+
+    @Override
+    public void onWaveEnd(Wave wave) {
+        ;
+    }
 }
