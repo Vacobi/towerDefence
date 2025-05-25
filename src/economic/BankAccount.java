@@ -1,7 +1,14 @@
 package economic;
 
+import events.BankAccountListener;
+
+import java.util.LinkedList;
+import java.util.List;
+
 public class BankAccount {
     public int gold;
+
+    private final List<BankAccountListener> listeners;
 
     public BankAccount() {
         this(0);
@@ -13,6 +20,8 @@ public class BankAccount {
         }
 
         this.gold = gold;
+
+        listeners = new LinkedList<>();
     }
 
     public void creditGold(int count) {
@@ -21,6 +30,8 @@ public class BankAccount {
         }
 
         this.gold += count;
+
+        noticeGoldCountChanged();
     }
 
     public void writeOffGold(int count) {
@@ -33,13 +44,31 @@ public class BankAccount {
         }
 
         this.gold -= count;
+
+        noticeGoldCountChanged();
     }
 
     public void setGold(int gold) {
         this.gold = gold;
+
+        noticeGoldCountChanged();
     }
 
     public int getGold() {
         return this.gold;
+    }
+
+    public void addListener(BankAccountListener listener) {
+        listeners.add(listener);
+    }
+
+    public void removeListener(BankAccountListener listener) {
+        listeners.remove(listener);
+    }
+
+    private void noticeGoldCountChanged() {
+        for (BankAccountListener listener : listeners) {
+            listener.onGoldCountChange(gold);
+        }
     }
 }
