@@ -47,7 +47,10 @@ public class Game implements WaveListener, UpdateFieldController {
             return;
         }
 
-        changeWave();
+        if (wave.getNumber() >= WAVES_COUNT) {
+            return;
+        }
+
         freezePlayer();
 
         this.gameState = GameState.WAVE_IN_PROGRESS;
