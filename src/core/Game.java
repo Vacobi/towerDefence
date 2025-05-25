@@ -125,4 +125,16 @@ public class Game implements WaveListener, UpdateFieldController {
     public void removeGameListener(GameListener listener) {
         listeners.remove(listener);
     }
+
+    public Field getField() {
+        return field;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public int getCurrentWaveNumber() {
+        return currentWaveNumber;
+    }
 }
