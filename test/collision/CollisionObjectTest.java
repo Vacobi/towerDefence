@@ -26,7 +26,7 @@ class CollisionObjectTest {
         Hitbox hitbox = new Hitbox(200, 100, hitboxParameters);
         CollisionObject collisionObject = new CollisionObject(hitbox);
         HitboxParameters hitboxParametersOther = new HitboxParameters(100, 20, Math.toRadians(0));
-        Hitbox other = new Hitbox(350, 100, hitboxParameters);
+        Hitbox other = new Hitbox(350, 100, hitboxParametersOther);
         CollisionObject otherCollisionObject = new CollisionObject(other);
 
         boolean actualCollides = collisionObject.collidesWith(otherCollisionObject);
@@ -43,6 +43,6 @@ class CollisionObjectTest {
         Position newPosition = new Position(90, 80);
         collisionObject.updateHitboxPosition(newPosition);
 
-        assertEquals(newPosition, collisionObject.getHitbox().getLeftTop());
+        assertEquals(newPosition, collisionObject.getHitbox().getCenter());
     }
 }
