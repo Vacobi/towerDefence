@@ -12,10 +12,6 @@ public class TowersContainer implements Iterable<Tower> {
     private final Set<Tower> towers;
     private Field field;
 
-    public TowersContainer() {
-        towers = new HashSet<>();
-    }
-
     public TowersContainer(Field field) {
         towers = new HashSet<>();
         this.field = field;
