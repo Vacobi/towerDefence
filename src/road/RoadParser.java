@@ -1,5 +1,6 @@
 package road;
 
+import core.AbstractCell;
 import core.RoadCell;
 import exception.FileNotDetectedException;
 import utils.CoordinatesConverter;
@@ -36,8 +37,9 @@ public class RoadParser {
     }
 
     protected static RoadSegment extractRoadSegment(RoadFileLine line) {
-        Position start = new Position(line.x, line.y);
-        int lengthOfSegment = CoordinatesConverter.lengthOfSegment(line.cellsCount, line.direction);
+        Position start = AbstractCell.toGlobalPosition(new Position(line.x, line.y));
+
+        int lengthOfSegment = CoordinatesConverter.lengthOfSegment(line.cellsCount);
         return new RoadSegment(start, line.direction, lengthOfSegment);
     }
 
