@@ -19,17 +19,17 @@ class AccountantTest {
 
     private final WaveFactory waveFactory = new WaveFactory();
 
-    private final int waveModifierOfGoldCount = 50;
+    private final int waveModifierOfGoldCount = 20;
 
     @Test
     void creditGoldBeforeFirstWave() {
-        int initialGoldCount = 50;
-        BankAccount bankAccount = new BankAccount(initialGoldCount);
+        BankAccount bankAccount = new BankAccount();
         Accountant accountant = new Accountant(bankAccount);
         int waveNumber = 1;
         Wave wave = waveFactory.createWave(waveNumber, field);
 
-        int expectedGoldCount = bankAccount.getGold() + waveModifierOfGoldCount * waveNumber;
+        int MODIFIER_FOR_FIRST_WAVE = 5;
+        int expectedGoldCount = bankAccount.getGold() + waveModifierOfGoldCount * MODIFIER_FOR_FIRST_WAVE;
 
         accountant.creditGoldBeforeWave(wave);
 
