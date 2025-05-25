@@ -24,20 +24,18 @@ public class Game implements WaveListener, UpdateFieldController {
 
     public Game() {
         this.waveFactory = new WaveFactory();
-        currentWaveNumber = 1;
+        currentWaveNumber = 0;
 
         field = new Field();
-        changeWave();
-        field.setWave(wave);
         gameState = GameState.WAITING_WAVE_START;
 
         Builder builder = new Builder(field);
         player = new Player(builder);
         accountant = new Accountant(player.getBankAccount());
 
-        listeners = new ArrayList<>();
+        changeWave();
 
-        creditGoldBeforeWave(wave);
+        listeners = new ArrayList<>();
     }
 
     private void creditGoldBeforeWave(Wave wave) {
