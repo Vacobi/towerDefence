@@ -63,6 +63,7 @@ public class Game implements WaveListener, UpdateFieldController {
         wave = waveFactory.createWave(++currentWaveNumber, field);
         wave.addListener(this);
         field.setWave(wave);
+        creditGoldBeforeWave(wave);
     }
 
     private void processEndOfWave() {
