@@ -16,7 +16,7 @@ public class Field implements WaveListener, CellListener {
     private final ProjectilesContainer projectiles;
     private Wave wave;
     private Timer updateTimer;
-    private static final int UPDATE_RATE = 25;
+    private static final int UPDATE_RATE = 24;
     private static final int UPDATE_PERIOD_MS = 1000 / UPDATE_RATE;
 
     private static final int WIDTH = 15;
