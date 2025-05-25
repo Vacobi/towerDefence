@@ -61,6 +61,7 @@ public abstract class Projectile extends CollisionObject {
     // - ///////////////////////////////////////////////
     public void setPosition(Position position) {
         this.position = position;
+        updateHitboxPosition(position);
     }
 
     public Position position() {
