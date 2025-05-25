@@ -42,11 +42,6 @@ public class HitOneTargetBehavior implements ProjectileBehavior {
         }
     }
 
-    @Override
-    public HitOneTargetBehavior clone() {
-        return new HitOneTargetBehavior();
-    }
-
     protected boolean hitMonster(Monster monster) {
         if (projectile.collidesWith(monster)) {
             monster.applyDamage(projectile.getDamage());
@@ -55,5 +50,10 @@ public class HitOneTargetBehavior implements ProjectileBehavior {
         }
 
         return false;
+    }
+
+    @Override
+    public HitOneTargetBehavior clone() {
+        return new HitOneTargetBehavior();
     }
 }
