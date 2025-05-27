@@ -1,6 +1,7 @@
 package tower;
 
 import collision.HitboxParameters;
+import core.AbstractCell;
 import core.Cell;
 import core.Field;
 import projectile.LaserProjectile;
@@ -78,11 +79,13 @@ public class TowersCatalogue {
     }
 
     private void addTowerWithPlainProjectile(Field field) {
-        int maxDistance = 100;
+        int maxDistance =  (int) (AbstractCell.getSize() * 2.5);
         int damage = 50;
         Position mockPosition = new Position(Integer.MAX_VALUE, Integer.MAX_VALUE);
         Direction mockDirection = Direction.NORTH;
-        HitboxParameters hitboxParameters = new HitboxParameters(10, 10, 0);
+        int width = (int) (AbstractCell.getSize() * 0.4);
+        int height = (int) (AbstractCell.getSize() * 0.4);
+        HitboxParameters hitboxParameters = new HitboxParameters(width, height, 0);
         long shootingDelay = TimeUnit.SECONDS.toMillis(3);
 
         PlainProjectile plainProjectile = new PlainProjectile(
