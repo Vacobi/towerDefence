@@ -9,7 +9,7 @@ import utils.Position;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class RoadParser {
@@ -17,8 +17,8 @@ public class RoadParser {
     private final List<RoadCell> roadCells;
 
     public RoadParser(String path) {
-        List<RoadSegment> roadSegments = new ArrayList<>();
-        List<RoadCell> roadCells = new ArrayList<>();
+        roadSegments = new LinkedList<>();
+        roadCells = new LinkedList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             br.lines().forEach(line -> {
@@ -31,9 +31,6 @@ public class RoadParser {
         } catch (IOException e) {
             throw new RuntimeException("Input exception: " + e.getMessage());
         }
-
-        this.roadSegments = roadSegments;
-        this.roadCells = roadCells;
     }
 
     protected static RoadSegment extractRoadSegment(RoadFileLine line) {
@@ -44,7 +41,7 @@ public class RoadParser {
     }
 
     protected static List<RoadCell> extractRoadCell(RoadFileLine line) {
-        List<RoadCell> cells = new ArrayList<>();
+        List<RoadCell> cells = new LinkedList<>();
         Position currentCellPosition = new Position(line.x, line.y);
         for (int i = 0; i < line.cellsCount; i++) {
             cells.add(new RoadCell(currentCellPosition.move(line.direction, i)));
