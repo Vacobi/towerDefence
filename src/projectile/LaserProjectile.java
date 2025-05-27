@@ -2,6 +2,7 @@ package projectile;
 
 import collision.HitboxParameters;
 import core.Field;
+import projectile.behavior.LaserBehavior;
 import projectile.behavior.ProjectileBehavior;
 import utils.Direction;
 import utils.Position;
@@ -16,7 +17,7 @@ public class LaserProjectile extends DirectionalProjectile{
             int damage,
             int length,
             Position startPosition,
-            ProjectileBehavior behavior,
+            ProjectileBehavior<LaserProjectile> behavior,
             Field field,
             Direction direction,
             long activeTime,
