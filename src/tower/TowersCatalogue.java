@@ -115,11 +115,12 @@ public class TowersCatalogue {
     }
 
     private void addTowerWithLaser(Field field) {
-        int length = 40;
+        int length = (int) (AbstractCell.getSize() * 2.9);
         int damage = 100;
         Position mockPosition = new Position(Integer.MAX_VALUE, Integer.MAX_VALUE);
         Direction mockDirection = Direction.NORTH;
-        HitboxParameters hitboxParameters = new HitboxParameters(length, 10, 0);
+        int height = (int) (AbstractCell.getSize() * 0.2);
+        HitboxParameters hitboxParameters = new HitboxParameters(length, height, 0);
         long activeTime = TimeUnit.SECONDS.toMillis(3);
         long damageCooldown = TimeUnit.MILLISECONDS.toMillis(500);
         long shootingDelay = TimeUnit.SECONDS.toMillis(5);
