@@ -4,9 +4,11 @@ import collision.HitboxParameters;
 import core.AbstractCell;
 import core.Cell;
 import core.Field;
+import projectile.ExplosiveProjectile;
 import projectile.LaserProjectile;
 import projectile.PlainProjectile;
 import projectile.Projectile;
+import projectile.behavior.ExplosiveBehavior;
 import projectile.behavior.HitOneTargetBehavior;
 import projectile.behavior.LaserBehavior;
 import projectile.behavior.ProjectileBehavior;
@@ -68,14 +70,17 @@ public class TowersCatalogue {
     private void initializeProjectileBehaviors() {
         HitOneTargetBehavior hotb = new HitOneTargetBehavior();
         LaserBehavior lb = new LaserBehavior();
+        ExplosiveBehavior eb = new ExplosiveBehavior();
 
         projectileBehaviors.put(hotb.getClass(), hotb);
         projectileBehaviors.put(lb.getClass(), lb);
+        projectileBehaviors.put(eb.getClass(), eb);
     }
 
     private void initializeTowersWithPrices(Field field) {
         addTowerWithPlainProjectile(field);
         addTowerWithLaser(field);
+        addTowerWithExplosiveProjectile(field);
     }
 
     private void addTowerWithPlainProjectile(Field field) {
@@ -149,6 +154,44 @@ public class TowersCatalogue {
         );
 
         int price = 30;
+        availableTowersWithPrices.put(tower, price);
+    }
+
+    private void addTowerWithExplosiveProjectile(Field field) {
+        int maxDistance =  (int) (AbstractCell.getSize() * 2.5);
+        int damage = 100;
+        Position mockPosition = new Position(Integer.MAX_VALUE, Integer.MAX_VALUE);
+        Direction mockDirection = Direction.NORTH;
+        int width = (int) (AbstractCell.getSize() * 0.3);
+        int height = (int) (AbstractCell.getSize() * 0.3);
+        HitboxParameters hitboxParameters = new HitboxParameters(width, height, 0);
+        long shootingDelay = TimeUnit.SECONDS.toMillis(3);
+        int radius = 50;
+
+        ExplosiveProjectile plainProjectile = new ExplosiveProjectile(
+                hitboxParameters,
+                damage,
+                maxDistance,
+                mockPosition,
+                projectileBehaviors.get(ExplosiveBehavior.class).clone(),
+                field,
+                mockDirection,
+                movingProjectileStrategies.get(LinearMovingProjectileStrategy.class).clone(),
+                radius
+        );
+
+        Cell cell = new Cell(mockPosition);
+        Tower<ExplosiveProjectile> tower = new Tower<ExplosiveProjectile>(
+                cell,
+                field,
+                towerShootingStrategies.get(DirectionalShootingStrategy.class).clone(),
+                shotDirections,
+                levelsCount,
+                new TowerCharacteristicsValues(damage, maxDistance, shootingDelay),
+                plainProjectile
+        );
+
+        int price = 50;
         availableTowersWithPrices.put(tower, price);
     }
 
