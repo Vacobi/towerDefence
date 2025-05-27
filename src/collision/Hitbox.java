@@ -25,9 +25,11 @@ public class Hitbox {
 
     public Point2D.Double[] getVertices() {
         Point2D.Double[] vertices = new Point2D.Double[4];
+
+        double halfWidth = hitboxParameters.width() / 2.0;
         double halfHeight = hitboxParameters.height() / 2.0;
 
-        double[] xOffsets = {0, hitboxParameters.width(), hitboxParameters.width(), 0};
+        double[] xOffsets = {-halfWidth, halfWidth, halfWidth, -halfWidth};
         double[] yOffsets = {-halfHeight, -halfHeight, halfHeight, halfHeight};
 
         double angle = hitboxParameters.angle();
@@ -35,9 +37,9 @@ public class Hitbox {
         double sin = Math.sin(angle);
 
         for (int i = 0; i < 4; i++) {
-            double rotatedX = x + xOffsets[i] * cos - yOffsets[i] * sin;
-            double rotatedY = y + xOffsets[i] * sin + yOffsets[i] * cos;
-            vertices[i] = new Point2D.Double(rotatedX, rotatedY);
+            double rotatedX = xOffsets[i] * cos - yOffsets[i] * sin;
+            double rotatedY = xOffsets[i] * sin + yOffsets[i] * cos;
+            vertices[i] = new Point2D.Double(x + rotatedX, y + rotatedY);
         }
 
         return vertices;
