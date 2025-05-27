@@ -24,7 +24,7 @@ public abstract class AbstractCell {
     public abstract boolean canPlaceTower();
 
     public static int getSize() {
-        return 30;
+        return 50;
     }
 
     public static Position toGlobalPosition(Position position) {
