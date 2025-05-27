@@ -133,14 +133,14 @@ class RoadParserTest {
             String line = "1 3 2 NORTH";
             RoadFileLine rfl = new RoadFileLine(line);
 
-            Position expectedStartPosition = new Position(1, 3);
+            Position expectedStartPosition = AbstractCell.toGlobalPosition(new Position(1, 3));
             Direction expectedDirection = Direction.NORTH;
             int expectedLength = CoordinatesConverter.lengthOfSegment(2);
             RoadSegment expectedRoadSegment = new RoadSegment(expectedStartPosition, expectedDirection, expectedLength);
 
-            //RoadSegment actualRoadSegment = RoadParser.extractRoadSegment(rfl);
+            RoadSegment actualRoadSegment = RoadParser.extractRoadSegment(rfl);
 
-            //assertRoadSegmentsEquals(expectedRoadSegment, actualRoadSegment);
+            assertRoadSegmentsEquals(expectedRoadSegment, actualRoadSegment);
         }
 
         @Test
@@ -148,14 +148,14 @@ class RoadParserTest {
             String line = "1 3 2 WEST";
             RoadFileLine rfl = new RoadFileLine(line);
 
-            Position expectedStartPosition = new Position(1, 3);
+            Position expectedStartPosition = AbstractCell.toGlobalPosition(new Position(1, 3));
             Direction expectedDirection = Direction.WEST;
             int expectedLength = CoordinatesConverter.lengthOfSegment(2);
             RoadSegment expectedRoadSegment = new RoadSegment(expectedStartPosition, expectedDirection, expectedLength);
 
-            //RoadSegment actualRoadSegment = RoadParser.extractRoadSegment(rfl);
+            RoadSegment actualRoadSegment = RoadParser.extractRoadSegment(rfl);
 
-            //assertRoadSegmentsEquals(expectedRoadSegment, actualRoadSegment);
+            assertRoadSegmentsEquals(expectedRoadSegment, actualRoadSegment);
         }
 
         @Test
@@ -163,14 +163,14 @@ class RoadParserTest {
             String line = "1 3 2 SOUTH";
             RoadFileLine rfl = new RoadFileLine(line);
 
-            Position expectedStartPosition = new Position(1, 3);
+            Position expectedStartPosition = AbstractCell.toGlobalPosition(new Position(1, 3));
             Direction expectedDirection = Direction.SOUTH;
             int expectedLength = CoordinatesConverter.lengthOfSegment(2);
             RoadSegment expectedRoadSegment = new RoadSegment(expectedStartPosition, expectedDirection, expectedLength);
 
-            //RoadSegment actualRoadSegment = RoadParser.extractRoadSegment(rfl);
+            RoadSegment actualRoadSegment = RoadParser.extractRoadSegment(rfl);
 
-            //assertRoadSegmentsEquals(expectedRoadSegment, actualRoadSegment);
+            assertRoadSegmentsEquals(expectedRoadSegment, actualRoadSegment);
         }
 
         @Test
