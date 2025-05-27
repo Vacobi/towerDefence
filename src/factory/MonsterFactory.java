@@ -1,6 +1,7 @@
 package factory;
 
 import collision.HitboxParameters;
+import core.AbstractCell;
 import monster.Monster;
 import monster.MovingMonsterStrategy;
 
@@ -13,7 +14,9 @@ public class MonsterFactory {
     private final int defaultHealth;
 
     public MonsterFactory() {
-        defaultHitboxParameters = new HitboxParameters(10, 10, Math.toRadians(0));
+        int width = (int) (AbstractCell.getSize() * 0.7);
+        int height = (int) (AbstractCell.getSize() * 0.7);
+        defaultHitboxParameters = new HitboxParameters(width, height, Math.toRadians(0));
         defaultHealth = 100;
     }
 
