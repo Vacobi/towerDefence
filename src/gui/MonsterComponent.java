@@ -1,13 +1,23 @@
 package gui;
 
 import collision.Hitbox;
+import collision.HitboxParameters;
+import gui.sprites.SpriteLoader;
 import monster.Monster;
 
 import java.awt.*;
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
+import java.awt.image.BufferedImage;
 
 public class MonsterComponent extends GameComponent<Monster> {
+
+    protected static BufferedImage sprite;
+
+    static {
+        String pathToSprite = "/gui/sprites/monster.png";
+        sprite = SpriteLoader.getSprite(pathToSprite);
+    }
 
     public MonsterComponent(Monster model, int fieldWidthPx, int fieldHeightPx) {
         super(model,
@@ -15,7 +25,9 @@ public class MonsterComponent extends GameComponent<Monster> {
                 model.getHitbox().getHitboxParameters().height()
         );
 
-        setBounds(0, 0, fieldWidthPx, fieldHeightPx);
+        Hitbox hitbox = model.getHitbox();
+        HitboxParameters parameters = model.getHitbox().getHitboxParameters();
+        setBounds(hitbox.getX() - parameters.width()/2, hitbox.getY() - parameters.height()/2, parameters.width(), parameters.height());
         setOpaque(false);
     }
 
@@ -23,8 +35,11 @@ public class MonsterComponent extends GameComponent<Monster> {
     public void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g.create();
 
-        Hitbox hb = model.getHitbox();
-        drawHitbox(g2, hb, Color.RED);
+        if (sprite != null) {
+            g2.drawImage(sprite, 0, 0, getWidth(), getHeight(), null);
+        } else {
+            drawHitbox(g2, model.getHitbox(), Color.GRAY);
+        }
 
         g2.dispose();
     }
@@ -32,9 +47,13 @@ public class MonsterComponent extends GameComponent<Monster> {
     private void drawHitbox(Graphics2D g2, Hitbox h, Color color) {
         Point2D.Double[] vs = h.getVertices();
         Path2D p = new Path2D.Double();
-        p.moveTo(vs[0].x, vs[0].y);
+
+        int componentX = getX();
+        int componentY = getY();
+
+        p.moveTo(vs[0].x - componentX, vs[0].y - componentY);
         for (int i = 1; i < vs.length; i++) {
-            p.lineTo(vs[i].x, vs[i].y);
+            p.lineTo(vs[i].x - componentX, vs[i].y - componentY);
         }
         p.closePath();
 
