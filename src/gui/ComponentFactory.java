@@ -4,6 +4,7 @@ import core.AbstractCell;
 import core.Cell;
 import core.RoadCell;
 import monster.Monster;
+import projectile.ExplosiveProjectile;
 import projectile.LaserProjectile;
 import projectile.PlainProjectile;
 import tower.Tower;
@@ -28,6 +29,8 @@ public class ComponentFactory {
                 (Function<PlainProjectile, GameComponent<?>>) p -> new PlainProjectileComponent(p, 450, 450));
         creators.put(LaserProjectile.class,
                 (Function<LaserProjectile, GameComponent<?>>) l -> new LaserProjectileComponent(l, 450, 450));
+        creators.put(ExplosiveProjectile.class,
+                (Function<ExplosiveProjectile, GameComponent<?>>) e -> new ExplosiveProjectileComponent(e, 450, 450));
         creators.put(Tower.class,
                 (Function<Tower<?>, GameComponent<?>>) t -> new TowerComponent(t, towerSize, towerSize));
     }
