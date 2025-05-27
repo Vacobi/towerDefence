@@ -37,6 +37,7 @@ public class RoadParser {
         Position start = AbstractCell.toGlobalPosition(new Position(line.x, line.y));
 
         int lengthOfSegment = CoordinatesConverter.lengthOfSegment(line.cellsCount);
+
         return new RoadSegment(start, line.direction, lengthOfSegment);
     }
 
