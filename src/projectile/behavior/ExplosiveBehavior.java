@@ -30,24 +30,42 @@ public class ExplosiveBehavior implements ProjectileBehavior<ExplosiveProjectile
         }
 
         Set<Monster> monsters = new HashSet<>(projectile.getField().getWave().getAliveMonsters());
+
+        if (collidesAtLeastWithOne(monsters)) {
+            explode();
+
+            damageCollideableMonsters(monsters);
+
+            projectile.deactivate();
+        }
+    }
+
+    private boolean collidesAtLeastWithOne(Set<Monster> monsters) {
         for (Monster monster : monsters) {
             if (projectile.collidesWith(monster)) {
-                if (!projectile.isExploded()) {
-                    projectile.updateHitboxParameters(
-                            new HitboxParameters(
-                                    projectile.getRadius(),
-                                    projectile.getRadius(),
-                                    projectile.getHitbox().getHitboxParameters().angle()
-                            )
-                    );
-                    projectile.setExploded();
-                }
-                monster.applyDamage(projectile.getDamage());
+                return true;
             }
         }
 
-        if (projectile.isExploded()) {
-            projectile.deactivate();
+        return false;
+    }
+
+    private void explode() {
+        projectile.updateHitboxParameters(
+                new HitboxParameters(
+                        projectile.getRadius() * 2, // diameter in the Hitbox
+                        projectile.getRadius() * 2, // diameter in the Hitbox
+                        projectile.getHitbox().getHitboxParameters().angle()
+                )
+        );
+        projectile.setExploded();
+    }
+
+    private void damageCollideableMonsters(Set<Monster> monsters) {
+        for (Monster monster : monsters) {
+            if (projectile.collidesWith(monster)) {
+                monster.applyDamage(projectile.getDamage());
+            }
         }
     }
 
