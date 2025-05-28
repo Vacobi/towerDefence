@@ -12,7 +12,7 @@ public class LaserBehavior implements ProjectileBehavior<LaserProjectile> {
 
     private LaserProjectile projectile;
 
-    private long startTime;
+    private final long startTime;
 
     private final Map<Monster, Long> lastDamageTimes;
 
