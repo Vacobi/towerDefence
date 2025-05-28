@@ -69,4 +69,8 @@ public class LaserBehavior implements ProjectileBehavior<LaserProjectile> {
     public LaserProjectile getProjectile() {
         return projectile;
     }
+
+    long getStartTime() {
+        return startTime;
+    }
 }
