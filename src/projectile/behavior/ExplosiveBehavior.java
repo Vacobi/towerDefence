@@ -21,6 +21,14 @@ public class ExplosiveBehavior implements ProjectileBehavior<ExplosiveProjectile
 
     @Override
     public void applyEffect(long currentTick) {
+        if (projectile == null) {
+            throw new IllegalStateException("Projectile not set");
+        }
+
+        if (!projectile.active()) {
+            throw new IllegalStateException("Explosive Projectile should be active");
+        }
+
         Set<Monster> monsters = new HashSet<>(projectile.getField().getWave().getAliveMonsters());
         for (Monster monster : monsters) {
             if (projectile.collidesWith(monster)) {
