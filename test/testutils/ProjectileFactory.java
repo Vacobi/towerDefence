@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 public class ProjectileFactory {
 
     public MovingProjectile createLinearMovingHitOneTargetProjectile(Position position, Direction direction, Field field) {
-        int speed = 20;
+        int speed = 1;
         int maxDistance = 100;
         int damage = 20;
         int width = 10;
