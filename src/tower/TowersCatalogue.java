@@ -166,7 +166,7 @@ public class TowersCatalogue {
         int height = (int) (AbstractCell.getSize() * 0.3);
         HitboxParameters hitboxParameters = new HitboxParameters(width, height, 0);
         long shootingDelay = TimeUnit.SECONDS.toMillis(3);
-        int radius = 50;
+        int radius = (int) (AbstractCell.getSize() * 1.5);
 
         ExplosiveProjectile plainProjectile = new ExplosiveProjectile(
                 hitboxParameters,
