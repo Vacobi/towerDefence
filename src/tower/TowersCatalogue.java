@@ -121,7 +121,7 @@ public class TowersCatalogue {
 
     private void addTowerWithLaser(Field field) {
         int length = (int) (AbstractCell.getSize() * 2.9);
-        int damage = 100;
+        int damage = 20;
         Position mockPosition = new Position(Integer.MAX_VALUE, Integer.MAX_VALUE);
         Direction mockDirection = Direction.NORTH;
         int height = (int) (AbstractCell.getSize() * 0.2);
