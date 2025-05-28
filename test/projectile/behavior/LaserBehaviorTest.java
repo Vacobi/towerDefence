@@ -44,7 +44,7 @@ class LaserBehaviorTest {
     void collidesWithMonster() throws InterruptedException {
         Queue<Monster> monsterQueue = new LinkedList<>();
 
-        monsterQueue.add(monsterFactory.createMonster(strategy));
+        monsterQueue.add(monsterFactory.createMonster(strategy.clone()));
 
         int monstersCount = monsterQueue.size();
         Wave wave = waveFactory.createWave(1, monsterQueue, 1, field);
@@ -80,7 +80,7 @@ class LaserBehaviorTest {
     void noCollisionWithMonster() throws InterruptedException {
         Queue<Monster> monsterQueue = new LinkedList<>();
 
-        monsterQueue.add(monsterFactory.createMonster(strategy));
+        monsterQueue.add(monsterFactory.createMonster(strategy.clone()));
 
         int monstersCount = monsterQueue.size();
         Wave wave = waveFactory.createWave(1, monsterQueue, 1, field);
@@ -117,10 +117,10 @@ class LaserBehaviorTest {
     void collidesWithAllMonstersInTheSamePosition() throws InterruptedException {
         Queue<Monster> monsterQueue = new LinkedList<>();
 
-        monsterQueue.add(monsterFactory.createMonster(strategy));
-        monsterQueue.add(monsterFactory.createMonster(strategy));
-        monsterQueue.add(monsterFactory.createMonster(strategy));
-        monsterQueue.add(monsterFactory.createMonster(strategy));
+        monsterQueue.add(monsterFactory.createMonster(strategy.clone()));
+        monsterQueue.add(monsterFactory.createMonster(strategy.clone()));
+        monsterQueue.add(monsterFactory.createMonster(strategy.clone()));
+        monsterQueue.add(monsterFactory.createMonster(strategy.clone()));
 
         int monstersCount = monsterQueue.size();
         Wave wave = waveFactory.createWave(1, monsterQueue, 1, field);
@@ -155,7 +155,7 @@ class LaserBehaviorTest {
     @Test
     void collidesWithAllMonstersInDifferentPositions() throws InterruptedException {
         Queue<Monster> monsterQueue = new LinkedList<>();
-        int monsterHitboxWidth = monsterFactory.createMonster(strategy).getHitbox().getHitboxParameters().width();
+        int monsterHitboxWidth = monsterFactory.createMonster(strategy.clone()).getHitbox().getHitboxParameters().width();
 
         PlainRoadMoving strategyOfFirst = new PlainRoadMoving(new Position(100, 100), field, 10);
         monsterQueue.add(monsterFactory.createMonster(strategyOfFirst));
@@ -207,7 +207,7 @@ class LaserBehaviorTest {
         LaserBehavior behavior = (LaserBehavior) projectile.getBehavior();
 
         Queue<Monster> monsterQueue = new LinkedList<>();
-        int monsterHitboxWidth = monsterFactory.createMonster(strategy).getHitbox().getHitboxParameters().width();
+        int monsterHitboxWidth = monsterFactory.createMonster(strategy.clone()).getHitbox().getHitboxParameters().width();
 
         PlainRoadMoving strategyOfFirst = new PlainRoadMoving(new Position(100 + projectile.getDistance() * 2, 100), field, 10);
         monsterQueue.add(monsterFactory.createMonster(strategyOfFirst));
@@ -253,7 +253,7 @@ class LaserBehaviorTest {
     void collidesWithSameMonsterInCooldown() throws InterruptedException {
         Queue<Monster> monsterQueue = new LinkedList<>();
 
-        monsterQueue.add(monsterFactory.createMonster(strategy));
+        monsterQueue.add(monsterFactory.createMonster(strategy.clone()));
 
         int monstersCount = monsterQueue.size();
         Wave wave = waveFactory.createWave(1, monsterQueue, 1, field);
@@ -291,7 +291,7 @@ class LaserBehaviorTest {
     void collidesWithSameMonsterInBorderOfCooldown() throws InterruptedException {
         Queue<Monster> monsterQueue = new LinkedList<>();
 
-        monsterQueue.add(monsterFactory.createMonster(strategy));
+        monsterQueue.add(monsterFactory.createMonster(strategy.clone()));
 
         int monstersCount = monsterQueue.size();
         Wave wave = waveFactory.createWave(1, monsterQueue, 1, field);
@@ -329,7 +329,7 @@ class LaserBehaviorTest {
     void collidesWithSameMonsterBeforeAndAfterCooldown() throws InterruptedException {
         Queue<Monster> monsterQueue = new LinkedList<>();
 
-        monsterQueue.add(monsterFactory.createMonster(strategy));
+        monsterQueue.add(monsterFactory.createMonster(strategy.clone()));
 
         int monstersCount = monsterQueue.size();
         Wave wave = waveFactory.createWave(1, monsterQueue, 1, field);
@@ -367,7 +367,7 @@ class LaserBehaviorTest {
     void collidesWithMonsterOnTheBorderOfActiveTime() throws InterruptedException {
         Queue<Monster> monsterQueue = new LinkedList<>();
 
-        monsterQueue.add(monsterFactory.createMonster(strategy));
+        monsterQueue.add(monsterFactory.createMonster(strategy.clone()));
 
         int monstersCount = monsterQueue.size();
         Wave wave = waveFactory.createWave(1, monsterQueue, 1, field);
@@ -403,7 +403,7 @@ class LaserBehaviorTest {
     void collidesWithMonsterAfterActiveTime() throws InterruptedException {
         Queue<Monster> monsterQueue = new LinkedList<>();
 
-        monsterQueue.add(monsterFactory.createMonster(strategy));
+        monsterQueue.add(monsterFactory.createMonster(strategy.clone()));
 
         int monstersCount = monsterQueue.size();
         Wave wave = waveFactory.createWave(1, monsterQueue, 1, field);
@@ -441,8 +441,8 @@ class LaserBehaviorTest {
     void collidesOtherMonsterBeforeCooldownOfPrevious() {
         Queue<Monster> monsterQueue = new LinkedList<>();
 
-        monsterQueue.add(monsterFactory.createMonster(strategy));
-        monsterQueue.add(monsterFactory.createMonster(strategy));
+        monsterQueue.add(monsterFactory.createMonster(strategy.clone()));
+        monsterQueue.add(monsterFactory.createMonster(strategy.clone()));
 
         Wave wave = waveFactory.createWave(1, monsterQueue, 1, field);
         field.setWave(wave);
@@ -477,7 +477,7 @@ class LaserBehaviorTest {
     void collidesWithMonsterAfterDeactivate() {
         Queue<Monster> monsterQueue = new LinkedList<>();
 
-        monsterQueue.add(monsterFactory.createMonster(strategy));
+        monsterQueue.add(monsterFactory.createMonster(strategy.clone()));
 
         Wave wave = waveFactory.createWave(1, monsterQueue, 1, field);
         field.setWave(wave);
