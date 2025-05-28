@@ -53,7 +53,7 @@ public class PlainRoadMoving extends MovingMonsterStrategy{
 
     @Override
     public MovingMonsterStrategy clone() {
-        return new PlainRoadMoving(field(), speed());
+        return new PlainRoadMoving(currentPosition(), field(), speed());
     }
 
     private void switchRoadSegmentIfNecessary() {
