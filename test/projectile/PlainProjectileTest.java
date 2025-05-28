@@ -103,7 +103,7 @@ class PlainProjectileTest {
 
     @Test
     void maxDistanceIsLessThanZero() {
-        int speed = 0;
+        int speed = 1;
         int damage = 15;
         int maxDistance = -10;
         Direction direction = Direction.NORTH;
@@ -125,7 +125,7 @@ class PlainProjectileTest {
 
     @Test
     void maxDistanceIsZero() {
-        int speed = 0;
+        int speed = 1;
         int damage = 15;
         int maxDistance = 0;
         Direction direction = Direction.NORTH;
@@ -147,8 +147,8 @@ class PlainProjectileTest {
 
     @Test
     void damageIsZero() {
-        int speed = 0;
-        int damage = 15;
+        int speed = 1;
+        int damage = 0;
         int maxDistance = 1;
         Direction direction = Direction.NORTH;
         Position startPosition = new Position(1, 1);
@@ -171,9 +171,9 @@ class PlainProjectileTest {
 
     @Test
     void damageIsLessThanZero() {
-        int speed = 0;
+        int speed = 1;
         int damage = -15;
-        int maxDistance = 0;
+        int maxDistance = 1;
         Direction direction = Direction.NORTH;
         Position startPosition = new Position(1, 1);
         HitOneTargetBehavior behavior = new HitOneTargetBehavior();
