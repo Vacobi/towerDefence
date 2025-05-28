@@ -30,6 +30,14 @@ public class LaserBehavior implements ProjectileBehavior<LaserProjectile> {
 
     @Override
     public void applyEffect(long currentTick) {
+        if (projectile == null) {
+            throw new IllegalStateException("Projectile not set");
+        }
+
+        if (!projectile.active()) {
+            throw new IllegalStateException("Laser Projectile should be active");
+        }
+
         if (currentTick - startTime > projectile.getActiveTime()) {
             projectile.deactivate();
             return;
