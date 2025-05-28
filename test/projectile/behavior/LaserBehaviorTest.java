@@ -417,13 +417,15 @@ class LaserBehaviorTest {
         LaserBehavior behavior = (LaserBehavior) projectile.getBehavior();
 
 
-        int expectedDamagedMonstersCount = 1;
+        int expectedDamagedMonstersCount = 0;
         int expectedHealthAfterHit = monsterFullHealth - projectile.getDamage();
 
 
         long now = System.currentTimeMillis();
         behavior.applyEffect(behavior.getStartTime() + projectile.getActiveTime() + 1);
-        behavior.applyEffect(now + projectile.getDamageCooldown() + 1);
+        assertThrows(IllegalStateException.class,
+                () -> behavior.applyEffect(now + projectile.getDamageCooldown() + 1)
+        );
 
 
         AtomicInteger actualDamagedMonsters = new AtomicInteger();
@@ -485,15 +487,18 @@ class LaserBehaviorTest {
         LaserProjectile projectile = projectileFactory.createLaserProjectile(monsterPosition, Direction.EAST, field);
         LaserBehavior behavior = (LaserBehavior) projectile.getBehavior();
 
-
         int expectedDamagedMonstersCount = 0;
         int expectedHealthAfterHit = monsterFullHealth;
-
 
         long now = System.currentTimeMillis();
         behavior.applyEffect(now);
         wave.spawnMonsters(System.currentTimeMillis());
-        behavior.applyEffect(now + projectile.getActiveTime() + 1);
+
+
+        projectile.deactivate();
+        assertThrows(IllegalStateException.class,
+                () -> behavior.applyEffect(System.currentTimeMillis())
+        );
 
 
         AtomicInteger actualDamagedMonsters = new AtomicInteger();
