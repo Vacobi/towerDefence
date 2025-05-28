@@ -52,7 +52,7 @@ public class ExplosiveBehavior implements ProjectileBehavior<ExplosiveProjectile
     }
 
     @Override
-    public ProjectileBehavior clone() {
+    public ExplosiveBehavior clone() {
         return new ExplosiveBehavior();
     }
 
