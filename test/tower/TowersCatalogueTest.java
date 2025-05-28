@@ -22,11 +22,10 @@ import static org.junit.jupiter.api.Assertions.*;
 class TowersCatalogueTest {
 
     Field field = new Field();
+    TowersCatalogue towersCatalogue = new TowersCatalogue(field);
 
     @Test
     void towersCatalogueContainsAllNecessaryTowers() {
-        TowersCatalogue towersCatalogue = new TowersCatalogue(field);
-
         int expectedTowers = 2;
 
         int actualTowers = towersCatalogue.getAvailableTowersWithPrices().size();
@@ -36,7 +35,6 @@ class TowersCatalogueTest {
 
     @Test
     void towersCatalogueContainsTowerWithPlainProjectile() {
-        TowersCatalogue towersCatalogue = new TowersCatalogue(field);
 
         Class<? extends DirectionalShootingStrategy> expectedShootingStrategy = DirectionalShootingStrategy.class;
         Class<? extends MovingProjectile> expectedProjectile = PlainProjectile.class;
@@ -63,7 +61,6 @@ class TowersCatalogueTest {
 
     @Test
     void towersCatalogueContainsTowerWithLaserProjectile() {
-        TowersCatalogue towersCatalogue = new TowersCatalogue(field);
 
         Class<? extends DirectionalShootingStrategy> expectedShootingStrategy = DirectionalShootingStrategy.class;
         Class<? extends Projectile> expectedProjectile = LaserProjectile.class;
@@ -88,7 +85,7 @@ class TowersCatalogueTest {
 
     @Test
     void totalListsOfDamageUpgradePrices() {
-        TowersCatalogue towersCatalogue = new TowersCatalogue(field);
+
         TowerUpgradableCharacteristic characteristic = TowerUpgradableCharacteristic.DAMAGE;
 
         List<Integer> expectedPrices = new ArrayList<>();
@@ -103,7 +100,7 @@ class TowersCatalogueTest {
 
     @Test
     void totalListsOfRangeUpgradePrices() {
-        TowersCatalogue towersCatalogue = new TowersCatalogue(field);
+
         TowerUpgradableCharacteristic characteristic = TowerUpgradableCharacteristic.RANGE;
 
         List<Integer> expectedPrices = new ArrayList<>();
@@ -118,7 +115,7 @@ class TowersCatalogueTest {
 
     @Test
     void totalListsOfDelayUpgradePrices() {
-        TowersCatalogue towersCatalogue = new TowersCatalogue(field);
+
         TowerUpgradableCharacteristic characteristic = TowerUpgradableCharacteristic.SHOOTING_DELAY;
 
         List<Integer> expectedPrices = new ArrayList<>();
@@ -133,7 +130,7 @@ class TowersCatalogueTest {
 
     @Test
     void getPriceOfUpgradeOfExistingLevelCharacteristic() {
-        TowersCatalogue towersCatalogue = new TowersCatalogue(field);
+
         TowerUpgradableCharacteristic characteristic = TowerUpgradableCharacteristic.DAMAGE;
         int level = 3;
 
@@ -147,7 +144,7 @@ class TowersCatalogueTest {
 
     @Test
     void getPriceOfUpgradeOfNotExistingLevelCharacteristic() {
-        TowersCatalogue towersCatalogue = new TowersCatalogue(field);
+
         TowerUpgradableCharacteristic characteristic = TowerUpgradableCharacteristic.DAMAGE;
         int level = 4;
 
