@@ -25,8 +25,14 @@ public class LaserProjectile extends DirectionalProjectile{
     ) {
         super(parameters, damage, length, startPosition, behavior, field, direction);
 
+        if (activeTime <= 0) {
+            throw new IllegalArgumentException("Active time must be positive");
+        }
         this.activeTime = activeTime;
 
+        if (damageCooldown < 0) {
+            throw new IllegalArgumentException("Damage cooldown must non negative");
+        }
         this.damageCooldown = damageCooldown;
     }
 
