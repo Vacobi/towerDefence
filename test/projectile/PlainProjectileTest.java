@@ -19,7 +19,7 @@ class PlainProjectileTest {
     private final int range = 30;
 
     Direction mockDirection = Direction.NORTH;
-    HitboxParameters hitboxParameters = new HitboxParameters(10, 10, 0);
+    HitboxParameters hitboxParameters = new HitboxParameters(10, 10, mockDirection.toRadians());
     private final int speed = 10;
 
     @Test
