@@ -190,4 +190,29 @@ class PlainProjectileTest {
                 movingStrategy
         ));
     }
+
+    @Test
+    void updatingDeactivatedProjectile() {
+        int speed = 1;
+        int damage = 1;
+        int maxDistance = 100;
+        Direction direction = Direction.NORTH;
+        Position startPosition = new Position(1, 1);
+        HitOneTargetBehavior behavior = new HitOneTargetBehavior();
+        LinearMovingProjectileStrategy movingStrategy = new LinearMovingProjectileStrategy(speed);
+
+        PlainProjectile projectile = new PlainProjectile(
+                hitboxParameters,
+                damage,
+                maxDistance,
+                startPosition,
+                behavior,
+                field,
+                direction,
+                movingStrategy
+        );
+        projectile.deactivate();
+
+        assertThrows(IllegalStateException.class, () -> projectile.update(System.currentTimeMillis()));
+    }
 }
