@@ -25,7 +25,11 @@ public class ExplosiveProjectile extends MovingProjectile {
     ) {
         super(parameters, damage, distance, position, behavior, field, direction, strategy);
 
+        if (radius <= 0) {
+            throw new IllegalArgumentException("Radius of explosion must be positive");
+        }
         this.radius = radius;
+
         this.exploded = false;
     }
 
