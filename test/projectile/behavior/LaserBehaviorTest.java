@@ -456,9 +456,9 @@ class LaserBehaviorTest {
 
 
         long now = System.currentTimeMillis();
-        wave.spawnMonsters(System.currentTimeMillis());
+        wave.spawnMonsters(now);
         behavior.applyEffect(now);
-        wave.spawnMonsters(System.currentTimeMillis());
+        wave.spawnMonsters(now + 1);
         behavior.applyEffect(now + 1);
 
 
