@@ -35,6 +35,10 @@ public class HitOneTargetBehavior implements ProjectileBehavior {
             throw new IllegalStateException("Projectile not set");
         }
 
+        if (!projectile.active()) {
+            throw new IllegalStateException("Projectile should be active");
+        }
+
         for (Monster monster : projectile.getField().getWave().getAliveMonsters()) {
             if (hitMonster(monster)) {
                 return;
