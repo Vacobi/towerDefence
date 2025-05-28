@@ -41,7 +41,7 @@ public class LaserBehavior implements ProjectileBehavior<LaserProjectile> {
             if (projectile.collidesWith(monster) && canDamage(monster, currentTick)) {
                 monster.applyDamage(projectile.getDamage());
 
-                if (monster.alive()) {
+                if (!monster.alive()) {
                     lastDamageTimes.remove(monster);
                 } else {
                     lastDamageTimes.put(monster, currentTick);
