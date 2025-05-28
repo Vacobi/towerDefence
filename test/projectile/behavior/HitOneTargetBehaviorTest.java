@@ -219,7 +219,8 @@ class HitOneTargetBehaviorTest {
                 wave.spawnMonsters(System.currentTimeMillis());
             }
             field.setWave(wave);
-            Projectile projectile = projectileFactory.createLinearMovingHitOneTargetProjectile(monsterPosition, Direction.NORTH, field);
+            Position projectilePosition = new Position(100, 100);
+            Projectile projectile = projectileFactory.createLinearMovingHitOneTargetProjectile(projectilePosition, Direction.NORTH, field);
             HitOneTargetBehavior behavior = (HitOneTargetBehavior) projectile.getBehavior();
 
 
