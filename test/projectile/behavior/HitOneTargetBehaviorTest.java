@@ -239,5 +239,42 @@ class HitOneTargetBehaviorTest {
             assertEquals(expectedDamagedMonstersCount, actualDamagedMonsters.get());
             assertTrue(projectile.active());
         }
+
+        @Test
+        void applyEffectToDeactivatedProjectile() throws InterruptedException {
+            Queue<Monster> monsterQueue = new LinkedList<>();
+            monsterQueue.add(monsterFactory.createMonster(strategy));
+            int monstersCount = monsterQueue.size();
+            Wave wave = waveFactory.createWave(1, monsterQueue, 1, field);
+            for (int i = 0; i < monstersCount; i++) {
+                Thread.sleep(1);
+                wave.spawnMonsters(System.currentTimeMillis());
+            }
+            field.setWave(wave);
+            Projectile projectile = projectileFactory.createLinearMovingHitOneTargetProjectile(monsterPosition, Direction.NORTH, field);
+            HitOneTargetBehavior behavior = (HitOneTargetBehavior) projectile.getBehavior();
+
+
+            int expectedDamagedMonstersCount = 0;
+            int expectedHealthAfterHit = monsterFullHealth - projectile.getDamage();
+
+
+            projectile.deactivate();
+            assertThrows(IllegalStateException.class,
+                    () -> behavior.applyEffect(System.currentTimeMillis())
+            );
+
+            AtomicInteger actualDamagedMonsters = new AtomicInteger();
+
+
+            wave.getAliveMonsters().forEach((Monster m) -> {
+                if (m.getHealth() != monsterFullHealth) {
+                    actualDamagedMonsters.getAndIncrement();
+                    assertEquals(expectedHealthAfterHit, m.getHealth());
+                }
+            });
+            assertEquals(expectedDamagedMonstersCount, actualDamagedMonsters.get());
+            assertFalse(projectile.active());
+        }
     }
 }
