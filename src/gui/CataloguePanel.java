@@ -1,5 +1,7 @@
 package gui;
 
+import core.Player;
+import events.PlayerListener;
 import projectile.Projectile;
 import tower.Tower;
 import tower.TowersCatalogue;
@@ -9,11 +11,14 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CataloguePanel extends JPanel {
+public class CataloguePanel extends JPanel implements PlayerListener {
     private final Map<Tower<? extends Projectile>, JButton> buttons = new HashMap<>();
     private final JButton cancelSelectionBtn;
 
-    public CataloguePanel(TowersCatalogue catalogue) {
+    private final Player player;
+    private Tower<? extends Projectile> selectedTower = null;
+
+    public CataloguePanel(TowersCatalogue catalogue, Player player) {
         setLayout(new GridLayout(0, 1, 5, 5));
         setBorder(BorderFactory.createTitledBorder("Tower Catalogue"));
         catalogue.getAvailableTowersWithPrices().forEach((prototype, price) -> {
@@ -29,26 +34,54 @@ public class CataloguePanel extends JPanel {
         cancelSelectionBtn = new JButton("Cancel");
         cancelSelectionBtn.addActionListener(e -> cancelSelection());
         add(cancelSelectionBtn);
+
+        player.addListener(this);
+        this.player = player;
+        onChangedPlayerGoldCount(player);
     }
 
     private void select(Tower<? extends Projectile> proto) {
-        buttons.forEach((p, btn) -> btn.setEnabled(p != proto));
+        selectedTower = proto;
+        updateButtonStates();
+        cancelSelectionBtn.setEnabled(selectedTower != null);
         firePropertyChange("selectedPrototype", null, proto);
     }
 
     public void cancelSelection() {
         select(null);
+        selectedTower = null;
+        updateButtonStates();
     }
 
     public void activeButtons(boolean enabled) {
-        if (!enabled) {
+        if (enabled) {
+            updateButtonStates();
+        } else {
             cancelSelection();
+
+            for (JButton btn : buttons.values()) {
+                btn.setEnabled(false);
+            }
+        }
+    }
+
+    @Override
+    public void onPlayerLostLive(Player player) {
+        ;
+    }
+
+    @Override
+    public void onChangedPlayerGoldCount(Player player) {
+        updateButtonStates();
+    }
+
+    private void updateButtonStates() {
+        for (Map.Entry<Tower<? extends Projectile>, JButton> entry : buttons.entrySet()) {
+            Tower<? extends Projectile> tower = entry.getKey();
+            JButton btn = entry.getValue();
+            btn.setEnabled(selectedTower != tower && player.enoughGoldToBuild(tower));
         }
 
-        for (JButton btn : buttons.values()) {
-            btn.setEnabled(enabled);
-        }
-
-        cancelSelectionBtn.setEnabled(enabled);
+        cancelSelectionBtn.setEnabled(selectedTower != null);
     }
 }
