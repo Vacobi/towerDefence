@@ -1,23 +1,24 @@
-package gui;
+package gui.components;
 
-import core.RoadCell;
+import core.Cell;
 import gui.sprites.SpriteLoader;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class RoadCellComponent extends GameComponent<RoadCell> {
+public class CellComponent extends GameComponent<Cell> {
 
     protected static BufferedImage sprite;
 
     static {
-        String pathToGrassSprite = "/gui/sprites/stone.png";
+        String pathToGrassSprite = "/gui/sprites/grass_sprite.png";
         sprite = SpriteLoader.getSprite(pathToGrassSprite);
     }
 
-    public RoadCellComponent(RoadCell model, int width, int height) {
+    public CellComponent(Cell model, int width, int height) {
         super(model, width, height);
     }
+
     @Override
     public void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
@@ -31,7 +32,7 @@ public class RoadCellComponent extends GameComponent<RoadCell> {
                     null
             );
         } else {
-            g2.setColor(Color.LIGHT_GRAY);
+            g2.setColor(new Color(40, 180, 40));
             g2.fillRect(0, 0, getWidth(), getHeight());
         }
 

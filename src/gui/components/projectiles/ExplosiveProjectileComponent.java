@@ -1,7 +1,8 @@
-package gui;
+package gui.components.projectiles;
 
 import collision.Hitbox;
 import collision.HitboxParameters;
+import gui.components.GameComponent;
 import gui.sprites.SpriteLoader;
 import projectile.ExplosiveProjectile;
 

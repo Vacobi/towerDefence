@@ -1,4 +1,4 @@
-package gui;
+package gui.components;
 
 import collision.Hitbox;
 import collision.HitboxParameters;

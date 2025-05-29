@@ -1,4 +1,4 @@
-package gui;
+package gui.components;
 
 import gui.sprites.SpriteLoader;
 import projectile.ExplosiveProjectile;

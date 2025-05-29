@@ -1,8 +1,11 @@
-package gui;
+package gui.components;
 
 import core.AbstractCell;
 import core.Cell;
 import core.RoadCell;
+import gui.components.projectiles.ExplosiveProjectileComponent;
+import gui.components.projectiles.LaserProjectileComponent;
+import gui.components.projectiles.PlainProjectileComponent;
 import monster.Monster;
 import projectile.ExplosiveProjectile;
 import projectile.LaserProjectile;

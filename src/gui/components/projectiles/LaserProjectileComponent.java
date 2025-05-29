@@ -1,6 +1,7 @@
-package gui;
+package gui.components.projectiles;
 
 import collision.Hitbox;
+import gui.components.GameComponent;
 import projectile.LaserProjectile;
 
 import java.awt.*;
