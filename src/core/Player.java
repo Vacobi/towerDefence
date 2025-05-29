@@ -55,8 +55,8 @@ public class Player implements BankAccountListener {
         return response.built();
     }
 
-    public boolean canBuildTower(Tower<? extends Projectile> tower) {
-        return false;
+    public boolean canBuildTower(Tower<? extends Projectile> tower, Cell cell) {
+        return builder.canBuildTower(tower, cell, bankAccount.getGold());
     }
 
     // - /////////////////////////////////////////////////////////////
