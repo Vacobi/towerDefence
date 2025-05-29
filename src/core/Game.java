@@ -59,6 +59,10 @@ public class Game implements WaveListener, UpdateFieldController {
         listeners.forEach((GameListener l) -> l.onWaveStart(wave));
     }
 
+    public boolean canStartWave() {
+        return gameState == GameState.WAITING_WAVE_START && wave.getNumber() < WAVES_COUNT;
+    }
+
     private void changeWave() {
         wave = waveFactory.createWave(++currentWaveNumber, field);
         wave.addListener(this);
