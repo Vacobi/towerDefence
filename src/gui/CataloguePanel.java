@@ -11,6 +11,7 @@ import java.util.Map;
 
 public class CataloguePanel extends JPanel {
     private final Map<Tower<? extends Projectile>, JButton> buttons = new HashMap<>();
+    private final JButton cancelSelectionBtn;
 
     public CataloguePanel(TowersCatalogue catalogue) {
         setLayout(new GridLayout(0, 1, 5, 5));
@@ -25,7 +26,7 @@ public class CataloguePanel extends JPanel {
             add(btn);
         });
 
-        JButton cancelSelectionBtn = new JButton("Cancel");
+        cancelSelectionBtn = new JButton("Cancel");
         cancelSelectionBtn.addActionListener(e -> cancelSelection());
         add(cancelSelectionBtn);
     }
@@ -47,5 +48,7 @@ public class CataloguePanel extends JPanel {
         for (JButton btn : buttons.values()) {
             btn.setEnabled(enabled);
         }
+
+        cancelSelectionBtn.setEnabled(enabled);
     }
 }
