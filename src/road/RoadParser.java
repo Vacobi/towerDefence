@@ -24,7 +24,7 @@ public class RoadParser {
             br.lines().forEach(line -> {
                 RoadFileLine rfl = new RoadFileLine(line);
                 roadSegments.add(extractRoadSegment(rfl));
-                roadCells.addAll(extractRoadCell(rfl));
+                roadCells.addAll(extractRoadCells(rfl));
             });
         } catch (FileNotDetectedException e) {
             throw new FileNotDetectedException("Ошибка: файл не найден - " + path);
@@ -41,7 +41,7 @@ public class RoadParser {
         return new RoadSegment(start, line.direction, lengthOfSegment);
     }
 
-    protected static List<RoadCell> extractRoadCell(RoadFileLine line) {
+    protected static List<RoadCell> extractRoadCells(RoadFileLine line) {
         List<RoadCell> cells = new LinkedList<>();
         Position currentCellPosition = new Position(line.x, line.y);
         for (int i = 0; i < line.cellsCount; i++) {
