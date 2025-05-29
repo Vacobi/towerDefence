@@ -34,22 +34,15 @@ public class Builder {
     public BuildingResponse upgradeTower(Tower<? extends Projectile> tower, TowerUpgradableCharacteristic towerUpgrade, int gold) {
         BuildingResponse buildingResponse = new BuildingResponse(gold, false);
 
-        if (!tower.canUpgrade(towerUpgrade)) {
+        if (!canUpgradeTower(tower, towerUpgrade, gold)) {
             return buildingResponse;
         }
 
         int nextLevel = tower.getLevelOfCharacteristic(towerUpgrade).get() + 1;
-        Optional<Integer> optionalUpgradePrice = towersCatalogue.getUpgradePrice(towerUpgrade, nextLevel);
-        if (optionalUpgradePrice.isEmpty()) {
-            return buildingResponse;
-        }
-        int upgradePrice = optionalUpgradePrice.get();
-
-        if (upgradePrice > gold) {
-            return buildingResponse;
-        }
+        int upgradePrice = towersCatalogue.getUpgradePrice(towerUpgrade, nextLevel).get();
 
         tower.upgrade(towerUpgrade);
+
         return new BuildingResponse(gold - upgradePrice, true);
     }
 
@@ -72,7 +65,25 @@ public class Builder {
         }
 
         int buildPrice = optionalBuildPrice.get();
-        boolean enough = gold >= buildPrice;
-        return enough;
+        return gold >= buildPrice;
+    }
+
+    public boolean canUpgradeTower(Tower<? extends Projectile> tower, TowerUpgradableCharacteristic towerUpgrade, int gold) {
+        if (!tower.canUpgrade(towerUpgrade)) {
+            return false;
+        }
+
+        return enoughGoldToUpgrade(tower, towerUpgrade, gold);
+    }
+
+    public boolean enoughGoldToUpgrade(Tower<? extends Projectile> tower, TowerUpgradableCharacteristic towerUpgrade, int gold) {
+        int nextLevel = tower.getLevelOfCharacteristic(towerUpgrade).get() + 1;
+        Optional<Integer> optionalUpgradePrice = towersCatalogue.getUpgradePrice(towerUpgrade, nextLevel);
+        if (optionalUpgradePrice.isEmpty()) {
+            return false;
+        }
+        int upgradePrice = optionalUpgradePrice.get();
+
+        return upgradePrice <= gold;
     }
 }
