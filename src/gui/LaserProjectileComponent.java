@@ -15,8 +15,31 @@ public class LaserProjectileComponent extends GameComponent<LaserProjectile> {
                 model.getHitbox().getHitboxParameters().height()
         );
 
-        setBounds(0, 0, fieldWidthPx, fieldHeightPx);
+        setBoundingRectangle();
         setOpaque(false);
+    }
+
+    private void setBoundingRectangle() {
+        Point2D.Double[] vertices = model.getHitbox().getVertices();
+
+        double minX = vertices[0].x;
+        double maxX = vertices[0].x;
+        double minY = vertices[0].y;
+        double maxY = vertices[0].y;
+
+        for (int i = 1; i < vertices.length; i++) {
+            minX = Math.min(minX, vertices[i].x);
+            maxX = Math.max(maxX, vertices[i].x);
+            minY = Math.min(minY, vertices[i].y);
+            maxY = Math.max(maxY, vertices[i].y);
+        }
+
+        int x = (int) minX;
+        int y = (int) minY;
+        int width = (int) Math.ceil(maxX - minX);
+        int height = (int) Math.ceil(maxY - minY);
+
+        setBounds(x, y, width, height);
     }
 
     @Override
@@ -32,9 +55,13 @@ public class LaserProjectileComponent extends GameComponent<LaserProjectile> {
     private void drawHitbox(Graphics2D g2, Hitbox h, Color color) {
         Point2D.Double[] vs = h.getVertices();
         Path2D p = new Path2D.Double();
-        p.moveTo(vs[0].x, vs[0].y);
+
+        int componentX = getX();
+        int componentY = getY();
+
+        p.moveTo(vs[0].x - componentX, vs[0].y - componentY);
         for (int i = 1; i < vs.length; i++) {
-            p.lineTo(vs[i].x, vs[i].y);
+            p.lineTo(vs[i].x - componentX, vs[i].y - componentY);
         }
         p.closePath();
 
