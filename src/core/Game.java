@@ -71,9 +71,9 @@ public class Game implements WaveListener, UpdateFieldController {
             this.gameState = GameState.WAITING_WAVE_START;
             unfreezePlayer();
             Wave endedWave = wave;
-            changeWave();
             listeners.forEach((GameListener l) -> l.onWaveEnd(endedWave));
             determineWin();
+            changeWave();
         }
     }
 
