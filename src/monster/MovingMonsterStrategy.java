@@ -26,7 +26,9 @@ public abstract class MovingMonsterStrategy {
 
     public abstract void moveMonster(long currentTick);
 
-    public boolean monsterReachedEnd() {
+    public abstract MovingMonsterStrategy clone();
+
+    protected boolean monsterReachedEnd() {
         return reachedEnd;
     }
 
@@ -34,7 +36,7 @@ public abstract class MovingMonsterStrategy {
         return lastMovingTime;
     }
 
-    public void setLastMovingTime(Long lastMovingTime) {
+    protected void setLastMovingTime(Long lastMovingTime) {
         this.lastMovingTime = lastMovingTime;
     }
 
@@ -42,15 +44,15 @@ public abstract class MovingMonsterStrategy {
         return currentRoadSegment;
     }
 
-    public void setCurrentRoadSegment(RoadSegment currentRoadSegment) {
+    protected void setCurrentRoadSegment(RoadSegment currentRoadSegment) {
         this.currentRoadSegment = currentRoadSegment;
     }
 
-    public int traveledInCurrentSegment() {
+    protected int traveledInCurrentSegment() {
         return traveledInCurrentSegment;
     }
 
-    public void setTraveledInCurrentSegment(int traveledInCurrentSegment) {
+    protected void setTraveledInCurrentSegment(int traveledInCurrentSegment) {
         this.traveledInCurrentSegment = traveledInCurrentSegment;
     }
 
@@ -58,21 +60,19 @@ public abstract class MovingMonsterStrategy {
         return currentPosition;
     }
 
-    public void setCurrentPosition(Position currentPosition) {
+    protected void setCurrentPosition(Position currentPosition) {
         this.currentPosition = currentPosition;
     }
 
-    public Field field() {
+    protected Field field() {
         return field;
     }
 
-    public int speed() {
+    protected int speed() {
         return speed;
     }
 
-    public void setMonsterReachedEnd(boolean reachedEnd) {
+    protected void setMonsterReachedEnd(boolean reachedEnd) {
         this.reachedEnd = reachedEnd;
     }
-
-    public abstract MovingMonsterStrategy clone();
 }
