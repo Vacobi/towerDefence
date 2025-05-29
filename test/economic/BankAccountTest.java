@@ -12,7 +12,7 @@ class BankAccountTest {
         bankAccount.writeOffGold(50);
 
         int expectedGold = 50;
-        assertEquals(expectedGold, bankAccount.gold);
+        assertEquals(expectedGold, bankAccount.getGold());
     }
 
     @Test
@@ -36,7 +36,7 @@ class BankAccountTest {
         bankAccount.creditGold(50);
 
         int expectedGold = 50;
-        assertEquals(expectedGold, bankAccount.gold);
+        assertEquals(expectedGold, bankAccount.getGold());
     }
 
     @Test
