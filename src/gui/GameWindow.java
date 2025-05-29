@@ -15,6 +15,7 @@ import java.awt.*;
 public class GameWindow extends JFrame implements GameListener {
     private final GameWidgetPanel gameWidgetPanel;
     private final InfoPanel infoPanel;
+    private final JButton startButton;
 
     private final Game game;
 
@@ -33,12 +34,12 @@ public class GameWindow extends JFrame implements GameListener {
 
         gameWidgetPanel.setCataloguePanel(cataloguePanel);
 
-        JButton startBtn = new JButton("Start Wave");
-        startBtn.addActionListener(e -> {
+        startButton = new JButton("Start Wave");
+        startButton.addActionListener(e -> {
             game.startWave();
             gameWidgetPanel.startUpdateTimer();
         });
-        add(startBtn, BorderLayout.NORTH);
+        add(startButton, BorderLayout.NORTH);
 
         infoPanel = new InfoPanel(game);
         add(infoPanel, BorderLayout.SOUTH);
@@ -59,21 +60,27 @@ public class GameWindow extends JFrame implements GameListener {
     @Override
     public void onPlayerWin(Player player) {
         showEndDialog("Вы выиграли!");
+        processWaveStartButtonEnable();
     }
 
     @Override
     public void onPlayerLose(Player player) {
         showEndDialog("Вы проиграли!");
+        processWaveStartButtonEnable();
     }
 
     @Override
     public void onWaveStart(Wave wave) {
-        ;
+        processWaveStartButtonEnable();
     }
 
     @Override
     public void onWaveEnd(Wave wave) {
-        ;
+        processWaveStartButtonEnable();
+    }
+
+    private void processWaveStartButtonEnable() {
+        startButton.setEnabled(game.canStartWave());
     }
 
     private void showEndDialog(String message) {
