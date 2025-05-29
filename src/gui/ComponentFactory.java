@@ -20,9 +20,9 @@ public class ComponentFactory {
 
     static {
         creators.put(Cell.class,
-                (Function<Cell, GameComponent<?>>) c -> new CellComponent(c, c.getSize(), c.getSize()));
+                (Function<Cell, GameComponent<?>>) c -> new CellComponent(c, AbstractCell.getSize(), AbstractCell.getSize()));
         creators.put(RoadCell.class,
-                (Function<RoadCell, GameComponent<?>>) c -> new RoadCellComponent(c, c.getSize(), c.getSize()));
+                (Function<RoadCell, GameComponent<?>>) c -> new RoadCellComponent(c, AbstractCell.getSize(), AbstractCell.getSize()));
         creators.put(Monster.class,
                 (Function<Monster, GameComponent<?>>) MonsterComponent::new);
         creators.put(PlainProjectile.class,
