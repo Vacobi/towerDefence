@@ -43,11 +43,7 @@ public class Game implements WaveListener, UpdateFieldController {
     }
 
     public void startWave() {
-        if (gameState != GameState.WAITING_WAVE_START) {
-            return;
-        }
-
-        if (wave.getNumber() >= WAVES_COUNT) {
+        if (!canStartWave()) {
             return;
         }
 
