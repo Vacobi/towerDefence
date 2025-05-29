@@ -40,7 +40,7 @@ public class Player implements BankAccountListener {
             return false;
         }
 
-        BuildingResponse response = builder.buildTower(typicalTower, cell, bankAccount.gold);
+        BuildingResponse response = builder.buildTower(typicalTower, cell, bankAccount.getGold());
         bankAccount.setGold(response.change());
         return response.built();
     }
@@ -50,7 +50,7 @@ public class Player implements BankAccountListener {
             return false;
         }
 
-        BuildingResponse response = builder.upgradeTower(tower,towerUpgrade, bankAccount.gold);
+        BuildingResponse response = builder.upgradeTower(tower,towerUpgrade, bankAccount.getGold());
         bankAccount.setGold(response.change());
         return response.built();
     }
