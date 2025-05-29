@@ -28,20 +28,24 @@ public abstract class MovingMonsterStrategy {
 
     public abstract MovingMonsterStrategy clone();
 
-    protected boolean monsterReachedEnd() {
-        return reachedEnd;
-    }
-
     public Long lastMovingTime() {
         return lastMovingTime;
     }
 
-    protected void setLastMovingTime(Long lastMovingTime) {
-        this.lastMovingTime = lastMovingTime;
-    }
-
     public RoadSegment currentRoadSegment() {
         return currentRoadSegment;
+    }
+
+    public Position currentPosition() {
+        return currentPosition;
+    }
+
+    protected boolean monsterReachedEnd() {
+        return reachedEnd;
+    }
+
+    protected void setLastMovingTime(Long lastMovingTime) {
+        this.lastMovingTime = lastMovingTime;
     }
 
     protected void setCurrentRoadSegment(RoadSegment currentRoadSegment) {
@@ -54,10 +58,6 @@ public abstract class MovingMonsterStrategy {
 
     protected void setTraveledInCurrentSegment(int traveledInCurrentSegment) {
         this.traveledInCurrentSegment = traveledInCurrentSegment;
-    }
-
-    public Position currentPosition() {
-        return currentPosition;
     }
 
     protected void setCurrentPosition(Position currentPosition) {
