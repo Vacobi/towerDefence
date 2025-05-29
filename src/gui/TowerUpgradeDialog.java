@@ -1,6 +1,7 @@
 package gui;
 
 import core.Player;
+import projectile.Projectile;
 import tower.Tower;
 import tower.TowerUpgradableCharacteristic;
 import tower.TowersCatalogue;
@@ -10,7 +11,7 @@ import java.awt.*;
 import java.util.Optional;
 
 public class TowerUpgradeDialog extends JDialog {
-    public TowerUpgradeDialog(JFrame parent, Tower<?> tower, Player player) {
+    public TowerUpgradeDialog(JFrame parent, Tower<? extends Projectile> tower, Player player) {
         super(parent, "Улучшение башни", true);
         setLayout(new BorderLayout());
         JPanel upgradesPanel = new JPanel(new GridLayout(0, 1, 5, 5));
