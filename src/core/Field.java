@@ -123,7 +123,7 @@ public class Field implements WaveListener, CellListener {
     }
 
     public Set<Cell> getCells() {
-        return cells;
+        return new HashSet<>(cells);
     }
 
     public int getWidth() {
@@ -135,7 +135,7 @@ public class Field implements WaveListener, CellListener {
     }
 
     public List<Projectile> getProjectiles() {
-        return projectiles.getProjectiles();
+        return new LinkedList<>(projectiles.getProjectiles());
     }
 
     public Optional<AbstractCell> cellAt(Position position) {
