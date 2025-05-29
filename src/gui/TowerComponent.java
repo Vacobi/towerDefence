@@ -1,6 +1,7 @@
 package gui;
 
 import gui.sprites.SpriteLoader;
+import projectile.ExplosiveProjectile;
 import projectile.LaserProjectile;
 import projectile.PlainProjectile;
 import projectile.Projectile;
@@ -23,9 +24,13 @@ public class TowerComponent extends GameComponent<Tower<?>> {
 
         String pathToDefaultTowerSprite = "/gui/sprites/tower.png";
         sprites.put(PlainProjectile.class, SpriteLoader.getSprite(pathToDefaultTowerSprite));
+
+        String pathToExplosiveTowerSprite = "/gui/sprites/explosive_tower.png";
+        sprites.put(ExplosiveProjectile.class, SpriteLoader.getSprite(pathToExplosiveTowerSprite));
     }
 
     protected BufferedImage sprite;
+
     public TowerComponent(Tower<?> model, int width, int height) {
         super(model,
                 width,
