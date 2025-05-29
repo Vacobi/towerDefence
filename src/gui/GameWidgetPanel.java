@@ -2,6 +2,9 @@ package gui;
 
 import core.*;
 import events.WaveListener;
+import gui.components.ComponentFactory;
+import gui.components.GameComponent;
+import gui.components.MonsterComponent;
 import monster.Monster;
 import projectile.Projectile;
 import tower.Tower;
@@ -27,7 +30,7 @@ public class GameWidgetPanel extends JLayeredPane implements WaveListener {
 
     private Timer uiUpdateTimer;
 
-    public GameWidgetPanel(Game game, int cellSize) {
+    public GameWidgetPanel(Game game, int cellSize, CataloguePanel cataloguePanel) {
         this.game = game;
         this.cellSize = cellSize;
         setPreferredSize(new Dimension(
@@ -35,6 +38,7 @@ public class GameWidgetPanel extends JLayeredPane implements WaveListener {
                 game.getField().getHeight() * cellSize
         ));
         initStaticComponents();
+        this.cataloguePanel = cataloguePanel;
     }
 
     private void initStaticComponents() {
@@ -136,9 +140,9 @@ public class GameWidgetPanel extends JLayeredPane implements WaveListener {
         repaint();
     }
 
-    public void setCataloguePanel(CataloguePanel cataloguePanel) {
-        this.cataloguePanel = cataloguePanel;
-    }
+//    public void setCataloguePanel(CataloguePanel cataloguePanel) {
+//        this.cataloguePanel = cataloguePanel;
+//    }
 
     @Override
     public void onMonsterDeath(Monster monster) {

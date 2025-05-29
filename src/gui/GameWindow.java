@@ -27,12 +27,10 @@ public class GameWindow extends JFrame implements GameListener {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        gameWidgetPanel = new GameWidgetPanel(game, AbstractCell.getSize());
-
         TowersCatalogue catalogue = new TowersCatalogue(game.getField());
         CataloguePanel cataloguePanel = new CataloguePanel(catalogue, game.getPlayer());
 
-        gameWidgetPanel.setCataloguePanel(cataloguePanel);
+        gameWidgetPanel = new GameWidgetPanel(game, AbstractCell.getSize(), cataloguePanel);
 
         startButton = new JButton("Start Wave");
         startButton.addActionListener(e -> {
