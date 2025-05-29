@@ -19,19 +19,12 @@ public class Builder {
     public BuildingResponse buildTower(Tower<? extends Projectile> towerFromCatalogue, Cell cell, int gold) {
         BuildingResponse buildingResponse = new BuildingResponse(gold, false);
 
+        if (!canBuildTower(towerFromCatalogue, cell, gold)) {
+            return buildingResponse;
+        }
+
         Optional<Integer> optionalBuildPrice = towersCatalogue.getPrice(towerFromCatalogue);
-        if (optionalBuildPrice.isEmpty()) {
-            return buildingResponse;
-        }
         int buildPrice = optionalBuildPrice.get();
-
-        if (buildPrice > gold) {
-            return buildingResponse;
-        }
-
-        if (!cell.canPlaceTower()) {
-            return buildingResponse;
-        }
 
         Tower tower = towerFromCatalogue.clone(cell);
         cell.setTower(tower);
@@ -62,5 +55,24 @@ public class Builder {
 
     public TowersCatalogue getTowersCatalogue() {
         return towersCatalogue;
+    }
+
+    public boolean canBuildTower(Tower<? extends Projectile> tower, Cell cell, int gold) {
+        if (!enoughGoldToBuild(tower, gold)) {
+            return false;
+        }
+
+        return cell.canPlaceTower();
+    }
+
+    public boolean enoughGoldToBuild(Tower<? extends Projectile> tower, int gold) {
+        Optional<Integer> optionalBuildPrice = towersCatalogue.getPrice(tower);
+        if (optionalBuildPrice.isEmpty()) {
+            return false;
+        }
+
+        int buildPrice = optionalBuildPrice.get();
+        boolean enough = gold >= buildPrice;
+        return enough;
     }
 }
