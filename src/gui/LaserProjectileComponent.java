@@ -9,7 +9,7 @@ import java.awt.geom.Point2D;
 
 public class LaserProjectileComponent extends GameComponent<LaserProjectile> {
 
-    public LaserProjectileComponent(LaserProjectile model, int fieldWidthPx, int fieldHeightPx) {
+    public LaserProjectileComponent(LaserProjectile model) {
         super(model,
                 model.getHitbox().getHitboxParameters().width(),
                 model.getHitbox().getHitboxParameters().height()

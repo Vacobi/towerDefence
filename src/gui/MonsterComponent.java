@@ -19,7 +19,7 @@ public class MonsterComponent extends GameComponent<Monster> {
         sprite = SpriteLoader.getSprite(pathToSprite);
     }
 
-    public MonsterComponent(Monster model, int fieldWidthPx, int fieldHeightPx) {
+    public MonsterComponent(Monster model) {
         super(model,
                 model.getHitbox().getHitboxParameters().width(),
                 model.getHitbox().getHitboxParameters().height()

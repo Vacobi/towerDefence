@@ -19,7 +19,7 @@ public class PlainProjectileComponent extends GameComponent<PlainProjectile> {
         sprite = SpriteLoader.getSprite(pathToSprite);
     }
 
-    public PlainProjectileComponent(PlainProjectile model, int fieldWidthPx, int fieldHeightPx) {
+    public PlainProjectileComponent(PlainProjectile model) {
         super(model,
             model.getHitbox().getHitboxParameters().width(),
             model.getHitbox().getHitboxParameters().height()

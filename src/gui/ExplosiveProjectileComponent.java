@@ -20,7 +20,7 @@ public class ExplosiveProjectileComponent extends GameComponent<ExplosiveProject
         explosionSprite = SpriteLoader.getSprite("/gui/sprites/explose.png");
     }
 
-    public ExplosiveProjectileComponent(ExplosiveProjectile model, int fieldWidthPx, int fieldHeightPx) {
+    public ExplosiveProjectileComponent(ExplosiveProjectile model) {
         super(model,
                 model.getHitbox().getHitboxParameters().width(),
                 model.getHitbox().getHitboxParameters().height()

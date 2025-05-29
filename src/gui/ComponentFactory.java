@@ -24,13 +24,13 @@ public class ComponentFactory {
         creators.put(RoadCell.class,
                 (Function<RoadCell, GameComponent<?>>) c -> new RoadCellComponent(c, c.getSize(), c.getSize()));
         creators.put(Monster.class,
-                (Function<Monster, GameComponent<?>>) m -> new MonsterComponent(m, 450, 450));
+                (Function<Monster, GameComponent<?>>) MonsterComponent::new);
         creators.put(PlainProjectile.class,
-                (Function<PlainProjectile, GameComponent<?>>) p -> new PlainProjectileComponent(p, 450, 450));
+                (Function<PlainProjectile, GameComponent<?>>) PlainProjectileComponent::new);
         creators.put(LaserProjectile.class,
-                (Function<LaserProjectile, GameComponent<?>>) l -> new LaserProjectileComponent(l, 450, 450));
+                (Function<LaserProjectile, GameComponent<?>>) LaserProjectileComponent::new);
         creators.put(ExplosiveProjectile.class,
-                (Function<ExplosiveProjectile, GameComponent<?>>) e -> new ExplosiveProjectileComponent(e, 450, 450));
+                (Function<ExplosiveProjectile, GameComponent<?>>) ExplosiveProjectileComponent::new);
         creators.put(Tower.class,
                 (Function<Tower<?>, GameComponent<?>>) t -> new TowerComponent(t, towerSize, towerSize));
     }
