@@ -20,10 +20,10 @@ class RoadFileLineTest {
 
         RoadFileLine actualRfl = new RoadFileLine(line);
 
-        assertEquals(expectedX, actualRfl.x);
-        assertEquals(expectedY, actualRfl.y);
-        assertEquals(expectedCellsCount, actualRfl.cellsCount);
-        assertEquals(expectedDirection, actualRfl.direction);
+        assertEquals(expectedX, actualRfl.getX());
+        assertEquals(expectedY, actualRfl.getY());
+        assertEquals(expectedCellsCount, actualRfl.getCellsCount());
+        assertEquals(expectedDirection, actualRfl.getDirection());
     }
 
     @Test
@@ -37,10 +37,10 @@ class RoadFileLineTest {
 
         RoadFileLine actualRfl = new RoadFileLine(line);
 
-        assertEquals(expectedX, actualRfl.x);
-        assertEquals(expectedY, actualRfl.y);
-        assertEquals(expectedCellsCount, actualRfl.cellsCount);
-        assertEquals(expectedDirection, actualRfl.direction);
+        assertEquals(expectedX, actualRfl.getX());
+        assertEquals(expectedY, actualRfl.getY());
+        assertEquals(expectedCellsCount, actualRfl.getCellsCount());
+        assertEquals(expectedDirection, actualRfl.getDirection());
     }
 
     @Test
@@ -54,10 +54,10 @@ class RoadFileLineTest {
 
         RoadFileLine actualRfl = new RoadFileLine(line);
 
-        assertEquals(expectedX, actualRfl.x);
-        assertEquals(expectedY, actualRfl.y);
-        assertEquals(expectedCellsCount, actualRfl.cellsCount);
-        assertEquals(expectedDirection, actualRfl.direction);
+        assertEquals(expectedX, actualRfl.getX());
+        assertEquals(expectedY, actualRfl.getY());
+        assertEquals(expectedCellsCount, actualRfl.getCellsCount());
+        assertEquals(expectedDirection, actualRfl.getDirection());
     }
 
     @Test

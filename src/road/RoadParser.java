@@ -34,18 +34,18 @@ public class RoadParser {
     }
 
     protected static RoadSegment extractRoadSegment(RoadFileLine line) {
-        Position start = AbstractCell.toGlobalPosition(new Position(line.x, line.y));
+        Position start = AbstractCell.toGlobalPosition(new Position(line.getX(), line.getY()));
 
-        int lengthOfSegment = CoordinatesConverter.lengthOfSegment(line.cellsCount);
+        int lengthOfSegment = CoordinatesConverter.lengthOfSegment(line.getCellsCount());
 
-        return new RoadSegment(start, line.direction, lengthOfSegment);
+        return new RoadSegment(start, line.getDirection(), lengthOfSegment);
     }
 
     protected static List<RoadCell> extractRoadCells(RoadFileLine line) {
         List<RoadCell> cells = new LinkedList<>();
-        Position currentCellPosition = new Position(line.x, line.y);
-        for (int i = 0; i < line.cellsCount; i++) {
-            cells.add(new RoadCell(currentCellPosition.move(line.direction, i)));
+        Position currentCellPosition = new Position(line.getX(), line.getY());
+        for (int i = 0; i < line.getCellsCount(); i++) {
+            cells.add(new RoadCell(currentCellPosition.move(line.getDirection(), i)));
         }
         return cells;
     }

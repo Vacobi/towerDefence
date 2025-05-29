@@ -28,7 +28,7 @@ class RoadParserTest {
             );
 
             RoadFileLine rfl = new RoadFileLine(line);
-            List<RoadCell> actualRoadCells = RoadParser.extractRoadCell(rfl);
+            List<RoadCell> actualRoadCells = RoadParser.extractRoadCells(rfl);
 
             assertListsRoadCellsEquals(expectedRoadCells, actualRoadCells);
         }
@@ -42,7 +42,7 @@ class RoadParserTest {
             );
 
             RoadFileLine rfl = new RoadFileLine(line);
-            List<RoadCell> actualRoadCells = RoadParser.extractRoadCell(rfl);
+            List<RoadCell> actualRoadCells = RoadParser.extractRoadCells(rfl);
 
             assertListsRoadCellsEquals(expectedRoadCells, actualRoadCells);
         }
@@ -56,7 +56,7 @@ class RoadParserTest {
             );
 
             RoadFileLine rfl = new RoadFileLine(line);
-            List<RoadCell> actualRoadCells = RoadParser.extractRoadCell(rfl);
+            List<RoadCell> actualRoadCells = RoadParser.extractRoadCells(rfl);
 
             assertListsRoadCellsEquals(expectedRoadCells, actualRoadCells);
         }
@@ -72,7 +72,7 @@ class RoadParserTest {
             );
 
             RoadFileLine rfl = new RoadFileLine(line);
-            List<RoadCell> actualRoadCells = RoadParser.extractRoadCell(rfl);
+            List<RoadCell> actualRoadCells = RoadParser.extractRoadCells(rfl);
 
             assertListsRoadCellsEquals(expectedRoadCells, actualRoadCells);
         }
@@ -88,7 +88,7 @@ class RoadParserTest {
             );
 
             RoadFileLine rfl = new RoadFileLine(line);
-            List<RoadCell> actualRoadCells = RoadParser.extractRoadCell(rfl);
+            List<RoadCell> actualRoadCells = RoadParser.extractRoadCells(rfl);
 
             assertListsRoadCellsEquals(expectedRoadCells, actualRoadCells);
         }
@@ -104,7 +104,7 @@ class RoadParserTest {
             );
 
             RoadFileLine rfl = new RoadFileLine(line);
-            List<RoadCell> actualRoadCells = RoadParser.extractRoadCell(rfl);
+            List<RoadCell> actualRoadCells = RoadParser.extractRoadCells(rfl);
 
             assertListsRoadCellsEquals(expectedRoadCells, actualRoadCells);
         }
@@ -120,7 +120,7 @@ class RoadParserTest {
             );
 
             RoadFileLine rfl = new RoadFileLine(line);
-            List<RoadCell> actualRoadCells = RoadParser.extractRoadCell(rfl);
+            List<RoadCell> actualRoadCells = RoadParser.extractRoadCells(rfl);
 
             assertListsRoadCellsEquals(expectedRoadCells, actualRoadCells);
         }

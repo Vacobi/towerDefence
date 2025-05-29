@@ -5,10 +5,10 @@ import exception.WrongFileArgumentValue;
 import utils.Direction;
 
 class RoadFileLine {
-    int x;
-    int y;
-    int cellsCount;
-    Direction direction;
+    private final int x;
+    private final int y;
+    private final int cellsCount;
+    private final Direction direction;
 
     protected RoadFileLine(String line) {
         final int PARTS_IN_STRING = 4;
@@ -32,5 +32,21 @@ class RoadFileLine {
         if (cellsCount < 0) {
             throw new WrongFileArgumentValue("Number of cells must be greater than zero", line);
         }
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getCellsCount() {
+        return cellsCount;
+    }
+
+    public Direction getDirection() {
+        return direction;
     }
 }
