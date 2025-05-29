@@ -4,6 +4,7 @@ import core.RoadCell;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,10 +42,10 @@ public class Road {
     }
 
     public List<RoadSegment> getRoadSegments() {
-        return road;
+        return new LinkedList<>(road);
     }
 
     public List<RoadCell> getRoadCells() {
-        return roadCells;
+        return new LinkedList<>(roadCells);
     }
 }
