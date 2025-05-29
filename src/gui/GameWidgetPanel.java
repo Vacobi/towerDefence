@@ -57,6 +57,10 @@ public class GameWidgetPanel extends JLayeredPane implements WaveListener {
     }
 
     private void onCellClicked(Position pos) {
+        if (game.getPlayer().frozen()) {
+            return;
+        }
+
         Optional<AbstractCell> optCell = game.getField().cellAt(pos);
         if (optCell.isEmpty()) return;
 
