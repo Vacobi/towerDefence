@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class BankAccount {
-    public int gold;
+    private int gold;
 
     private final List<BankAccountListener> listeners;
 
