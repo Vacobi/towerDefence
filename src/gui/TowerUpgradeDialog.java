@@ -16,24 +16,29 @@ public class TowerUpgradeDialog extends JDialog {
         setLayout(new BorderLayout());
         JPanel upgradesPanel = new JPanel(new GridLayout(0, 1, 5, 5));
 
+        TowersCatalogue catalogue = player.getBuilder().getTowersCatalogue();
         for (TowerUpgradableCharacteristic characteristic : TowerUpgradableCharacteristic.values()) {
-            Optional<Integer> levelOpt = tower.getLevelOfCharacteristic(characteristic);
-            if (levelOpt.isEmpty()) continue;
+            Optional<Integer> optionalLevel = tower.getLevelOfCharacteristic(characteristic);
 
-            int currentLevel = levelOpt.get();
+            int currentLevel = optionalLevel.get();
             int maxLevel = tower.getLevelsUpgradeCount();
-            if (currentLevel >= maxLevel) continue;
 
-            TowersCatalogue catalogue = player.getBuilder().getTowersCatalogue();
-            Optional<Integer> costOpt = catalogue.getUpgradePrice(characteristic, currentLevel + 1);
+            Optional<Integer> optionalCost = catalogue.getUpgradePrice(characteristic, currentLevel + 1);
+            JButton upgradeBtn;
+            if (optionalCost.isPresent()) {
+                int cost = optionalCost.get();
+                upgradeBtn = new JButton(
+                        String.format("%s (уровень %d/%d) - $%d", characteristic, currentLevel, maxLevel, cost)
+                );
+            } else {
+                upgradeBtn = new JButton(
+                        String.format("%s (уровень %d/%d)", characteristic, currentLevel, maxLevel)
+                );
+            }
 
-            if (costOpt.isEmpty()) continue;
-
-            int cost = costOpt.get();
-
-            JButton upgradeBtn = new JButton(
-                String.format("%s (уровень %d/%d) - $%d", characteristic, currentLevel, maxLevel, cost)
-            );
+            if (!player.enoughGoldTUpgrade(tower, characteristic)) {
+                upgradeBtn.setEnabled(false);
+            }
 
             upgradeBtn.addActionListener(e -> {
                 boolean upgraded = player.upgradeTower(tower, characteristic);
