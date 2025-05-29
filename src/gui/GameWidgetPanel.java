@@ -64,7 +64,7 @@ public class GameWidgetPanel extends JLayeredPane implements WaveListener {
 
         if (abstractCell instanceof Cell cell) {
             if (cell.hasTower()) {
-                showUpgradeDialog(cell.getTower(), pos);
+                showUpgradeDialog(cell.getTower());
                 return;
             }
 
@@ -87,7 +87,7 @@ public class GameWidgetPanel extends JLayeredPane implements WaveListener {
         }
     }
 
-    private void showUpgradeDialog(Tower<?> tower, Position pos) {
+    private void showUpgradeDialog(Tower<?> tower) {
         JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
         new TowerUpgradeDialog(topFrame, tower, game.getPlayer()).setVisible(true);
 
