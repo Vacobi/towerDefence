@@ -140,10 +140,6 @@ public class GameWidgetPanel extends JLayeredPane implements WaveListener {
         repaint();
     }
 
-//    public void setCataloguePanel(CataloguePanel cataloguePanel) {
-//        this.cataloguePanel = cataloguePanel;
-//    }
-
     @Override
     public void onMonsterDeath(Monster monster) {
         ;
