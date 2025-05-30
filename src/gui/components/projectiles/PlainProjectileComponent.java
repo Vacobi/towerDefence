@@ -33,7 +33,7 @@ public class PlainProjectileComponent extends GameComponent<PlainProjectile> {
     }
 
     @Override
-    public void paintComponent(Graphics g) {
+    protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g.create();
 
         if (sprite != null) {

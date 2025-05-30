@@ -34,7 +34,7 @@ public class ExplosiveProjectileComponent extends GameComponent<ExplosiveProject
     }
 
     @Override
-    public void paintComponent(Graphics g) {
+    protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g.create();
 
         if (model.isExploded()) {

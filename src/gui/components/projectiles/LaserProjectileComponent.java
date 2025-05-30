@@ -44,7 +44,7 @@ public class LaserProjectileComponent extends GameComponent<LaserProjectile> {
     }
 
     @Override
-    public void paintComponent(Graphics g) {
+    protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g.create();
 
         Hitbox hb = model.getHitbox();

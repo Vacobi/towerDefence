@@ -12,9 +12,5 @@ public abstract class GameComponent<T> extends JComponent {
     }
 
     @Override
-    public abstract void paintComponent(Graphics g);
-
-    public T getModel() {
-        return model;
-    }
+    protected abstract void paintComponent(Graphics g);
 }

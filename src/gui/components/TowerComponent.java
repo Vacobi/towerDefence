@@ -41,7 +41,7 @@ public class TowerComponent extends GameComponent<Tower<?>> {
     }
 
     @Override
-    public void paintComponent(Graphics g) {
+    protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
 
         if (sprite != null) {

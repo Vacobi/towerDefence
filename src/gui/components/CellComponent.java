@@ -20,7 +20,7 @@ public class CellComponent extends GameComponent<Cell> {
     }
 
     @Override
-    public void paintComponent(Graphics g) {
+    protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
         int borderSize = 1;
 

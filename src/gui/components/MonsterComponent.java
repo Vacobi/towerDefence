@@ -32,7 +32,7 @@ public class MonsterComponent extends GameComponent<Monster> {
     }
 
     @Override
-    public void paintComponent(Graphics g) {
+    protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g.create();
 
         if (sprite != null) {
