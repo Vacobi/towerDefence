@@ -37,11 +37,11 @@ public class GameWidgetPanel extends JLayeredPane implements WaveListener {
                 game.getField().getWidth() * cellSize,
                 game.getField().getHeight() * cellSize
         ));
-        initStaticComponents();
+        initField();
         this.cataloguePanel = cataloguePanel;
     }
 
-    private void initStaticComponents() {
+    private void initField() {
         Field field = game.getField();
         for (int i = 0; i < field.getWidth(); i++) {
             for (int j = 0; j < field.getHeight(); j++) {
