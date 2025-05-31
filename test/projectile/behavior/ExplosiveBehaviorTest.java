@@ -271,8 +271,8 @@ class ExplosiveBehaviorTest {
         ExplosiveProjectile expectedProjectile = projectileFactory.createExplosiveProjectile(collisionMonsterPosition, Direction.EAST, field);
 
         Position positionCollidesOnlyAfterExplode = new Position(
-                collisionMonsterPosition.getX() + expectedProjectile.getRadius(),
-                collisionMonsterPosition.getY() + expectedProjectile.getRadius()
+                collisionMonsterPosition.getX() + expectedProjectile.getRadius() - 1,
+                collisionMonsterPosition.getY() + expectedProjectile.getRadius() - 1
         );
         MovingMonsterStrategy collisionAfterExplodeMonsterStrategy = new PlainRoadMoving(
                 positionCollidesOnlyAfterExplode,
@@ -326,8 +326,8 @@ class ExplosiveBehaviorTest {
         ExplosiveProjectile expectedProjectile = projectileFactory.createExplosiveProjectile(collisionMonsterPosition, Direction.EAST, field);
 
         Position positionCollidesOnlyAfterExplodeLeftTop = new Position(
-                collisionMonsterPosition.getX() - expectedProjectile.getRadius(),
-                collisionMonsterPosition.getY() + expectedProjectile.getRadius()
+                collisionMonsterPosition.getX() - expectedProjectile.getRadius() + 1,
+                collisionMonsterPosition.getY() + expectedProjectile.getRadius() - 1
         );
         MovingMonsterStrategy collisionAfterExplodeMonsterStrategyLeftTop = new PlainRoadMoving(
                 positionCollidesOnlyAfterExplodeLeftTop,
@@ -337,8 +337,8 @@ class ExplosiveBehaviorTest {
         monsterQueue.add(monsterFactory.createMonster(collisionAfterExplodeMonsterStrategyLeftTop));
 
         Position positionCollidesOnlyAfterExplodeRightTop = new Position(
-                collisionMonsterPosition.getX() + expectedProjectile.getRadius(),
-                collisionMonsterPosition.getY() + expectedProjectile.getRadius()
+                collisionMonsterPosition.getX() + expectedProjectile.getRadius() - 1,
+                collisionMonsterPosition.getY() + expectedProjectile.getRadius() - 1
         );
         MovingMonsterStrategy collisionAfterExplodeMonsterStrategyRightTop = new PlainRoadMoving(
                 positionCollidesOnlyAfterExplodeRightTop,
@@ -348,8 +348,8 @@ class ExplosiveBehaviorTest {
         monsterQueue.add(monsterFactory.createMonster(collisionAfterExplodeMonsterStrategyRightTop));
 
         Position positionCollidesOnlyAfterExplodeRightBottom = new Position(
-                collisionMonsterPosition.getX() + expectedProjectile.getRadius(),
-                collisionMonsterPosition.getY() - expectedProjectile.getRadius()
+                collisionMonsterPosition.getX() + expectedProjectile.getRadius() - 1,
+                collisionMonsterPosition.getY() - expectedProjectile.getRadius() + 1
         );
         MovingMonsterStrategy collisionAfterExplodeMonsterStrategyRightBottom = new PlainRoadMoving(
                 positionCollidesOnlyAfterExplodeRightBottom,
@@ -359,8 +359,8 @@ class ExplosiveBehaviorTest {
         monsterQueue.add(monsterFactory.createMonster(collisionAfterExplodeMonsterStrategyRightBottom));
 
         Position positionCollidesOnlyAfterExplodeLeftBottom = new Position(
-                collisionMonsterPosition.getX() - expectedProjectile.getRadius(),
-                collisionMonsterPosition.getY() - expectedProjectile.getRadius()
+                collisionMonsterPosition.getX() - expectedProjectile.getRadius() + 1,
+                collisionMonsterPosition.getY() - expectedProjectile.getRadius() + 1
         );
         MovingMonsterStrategy collisionAfterExplodeMonsterStrategyLeftBottom = new PlainRoadMoving(
                 positionCollidesOnlyAfterExplodeLeftBottom,
