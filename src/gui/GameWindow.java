@@ -27,7 +27,7 @@ public class GameWindow extends JFrame implements GameListener {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        TowersCatalogue catalogue = new TowersCatalogue(game.getField());
+        TowersCatalogue catalogue = game.getPlayer().getBuilder().getTowersCatalogue();
         CataloguePanel cataloguePanel = new CataloguePanel(catalogue, game.getPlayer());
 
         gameWidgetPanel = new GameWidgetPanel(game, AbstractCell.getSize(), cataloguePanel);
