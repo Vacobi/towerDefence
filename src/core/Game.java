@@ -61,15 +61,7 @@ public class Game implements WaveListener, UpdateFieldController {
         field.setWave(wave);
         accountant.creditGoldBeforeWave(wave);
 
-    private void processEndOfWave() {
-        if (gameState != GameState.END) {
-            this.gameState = GameState.WAITING_WAVE_START;
-            unfreezePlayer();
-            Wave endedWave = wave;
-            listeners.forEach((GameListener l) -> l.onWaveEnd(endedWave));
-            determineWin();
-            changeWave();
-        }
+        listeners.forEach((GameListener l) -> l.onWaveChange(wave));
     }
 
     private void determineWin() {
@@ -104,7 +96,16 @@ public class Game implements WaveListener, UpdateFieldController {
 
     @Override
     public void onWaveEnd(Wave wave) {
-        processEndOfWave();
+        if (gameState != GameState.END) {
+            listeners.forEach((GameListener l) -> l.onWaveEnd(wave));
+            determineWin();
+        }
+
+        if (gameState != GameState.END) {
+            this.gameState = GameState.WAITING_WAVE_START;
+            unfreezePlayer();
+            changeWave();
+        }
     }
 
     private void determineLose() {
