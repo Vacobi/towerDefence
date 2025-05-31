@@ -33,9 +33,6 @@ public class Monster extends CollisionObject {
     }
 
     public void move(long currentTick) {
-        if (strategy.monsterReachedEnd()) {
-            return;
-        }
 
         strategy.moveMonster(currentTick);
         updateHitboxPosition(strategy.currentPosition());
