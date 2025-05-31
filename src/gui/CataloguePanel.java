@@ -73,7 +73,7 @@ public class CataloguePanel extends JPanel implements PlayerListener, GameListen
         for (Map.Entry<Tower<? extends Projectile>, JButton> entry : buttons.entrySet()) {
             Tower<? extends Projectile> tower = entry.getKey();
             JButton btn = entry.getValue();
-            btn.setEnabled(selectedTower != tower && player.enoughGoldToBuild(tower));
+            btn.setEnabled(selectedTower != tower && player.canBuildTower(tower));
         }
 
         cancelSelectionBtn.setEnabled(selectedTower != null);
