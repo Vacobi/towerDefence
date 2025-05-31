@@ -34,8 +34,7 @@ public class CataloguePanel extends JPanel implements PlayerListener, GameListen
             add(btn);
         });
 
-        cancelSelectionBtn = new JButton("Cancel");
-        cancelSelectionBtn.addActionListener(e -> cancelSelection());
+        cancelSelectionBtn = createCancelBtn();
         add(cancelSelectionBtn);
 
         game.addGameListener(this);
@@ -44,6 +43,12 @@ public class CataloguePanel extends JPanel implements PlayerListener, GameListen
         player.addListener(this);
         this.player = player;
         onChangedPlayerGoldCount(player);
+    }
+
+    private JButton createCancelBtn() {
+        JButton cancelSelectionBtn = new JButton("Cancel");
+        cancelSelectionBtn.addActionListener(e -> cancelSelection());
+        return cancelSelectionBtn;
     }
 
     private void select(Tower<? extends Projectile> proto) {
