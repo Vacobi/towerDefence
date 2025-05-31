@@ -40,7 +40,7 @@ public class LinearMovingProjectileStrategy implements MovingProjectileStrategy 
     }
 
     protected void move(long moveTime, int moveDistance) {
-        if (totalTraveledDistance >= projectile.getDistance()) {
+        if (projectileMovedAllDistance()) {
             projectile.deactivate();
         }
 
@@ -54,6 +54,10 @@ public class LinearMovingProjectileStrategy implements MovingProjectileStrategy 
         projectile.setPosition(positionAfterMove);
         lastMoveTime = moveTime;
         totalTraveledDistance += distanceToMove;
+    }
+
+    private boolean projectileMovedAllDistance() {
+        return totalTraveledDistance >= projectile.getDistance();
     }
 
     @Override
