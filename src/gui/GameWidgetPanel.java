@@ -114,12 +114,10 @@ public class GameWidgetPanel extends JLayeredPane implements WaveListener {
         int delay = 1000 / 60;
         uiUpdateTimer = new Timer(delay, e -> refreshDynamicComponents());
         uiUpdateTimer.start();
-        cataloguePanel.activeButtons(false);
     }
 
     private void stopUpdateTimer() {
         uiUpdateTimer.stop();
-        cataloguePanel.activeButtons(true);
     }
 
     private void refreshDynamicComponents() {

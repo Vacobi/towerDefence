@@ -53,18 +53,6 @@ public class CataloguePanel extends JPanel implements PlayerListener {
         updateButtonStates();
     }
 
-    public void activeButtons(boolean enabled) {
-        if (enabled) {
-            updateButtonStates();
-        } else {
-            cancelSelection();
-
-            for (JButton btn : buttons.values()) {
-                btn.setEnabled(false);
-            }
-        }
-    }
-
     @Override
     public void onPlayerLostLive(Player player) {
         ;
