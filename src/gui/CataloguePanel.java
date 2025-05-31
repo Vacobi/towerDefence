@@ -1,6 +1,7 @@
 package gui;
 
 import core.Player;
+import events.GameListener;
 import events.PlayerListener;
 import projectile.Projectile;
 import tower.Tower;
@@ -11,7 +12,7 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CataloguePanel extends JPanel implements PlayerListener {
+public class CataloguePanel extends JPanel implements PlayerListener, GameListener {
     private final Map<Tower<? extends Projectile>, JButton> buttons = new HashMap<>();
     private final JButton cancelSelectionBtn;
 
@@ -63,7 +64,7 @@ public class CataloguePanel extends JPanel implements PlayerListener {
         updateButtonStates();
     }
 
-    private void updateButtonStates() {
+    public void updateCreateButtonStates() {
         for (Map.Entry<Tower<? extends Projectile>, JButton> entry : buttons.entrySet()) {
             Tower<? extends Projectile> tower = entry.getKey();
             JButton btn = entry.getValue();
@@ -71,5 +72,31 @@ public class CataloguePanel extends JPanel implements PlayerListener {
         }
 
         cancelSelectionBtn.setEnabled(selectedTower != null);
+    }
+
+    @Override
+    public void onPlayerWin(Player player) {
+        ;
+    }
+
+    @Override
+    public void onPlayerLose(Player player) {
+        ;
+    }
+
+    @Override
+    public void onWaveStart(Wave wave) {
+        updateCreateButtonStates();
+        cancelSelection();
+    }
+
+    @Override
+    public void onWaveEnd(Wave wave) {
+        ;
+    }
+
+    @Override
+    public void onWaveChange(Wave wave) {
+        updateCreateButtonStates();
     }
 }
