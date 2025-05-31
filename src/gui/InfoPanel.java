@@ -31,8 +31,20 @@ public class InfoPanel extends JPanel implements GameListener, PlayerListener {
     }
 
     public void updateInfo() {
+        updateGoldLabel();
+        updateWaveLabel();
+        updateLivesLabel();
+    }
+
+    private void updateGoldLabel() {
         goldLabel.setText(String.valueOf(game.getPlayer().getBankAccount().getGold()));
+    }
+
+    private void updateWaveLabel() {
         waveLabel.setText(String.valueOf(game.getCurrentWaveNumber()));
+    }
+
+    private void updateLivesLabel() {
         livesLabel.setText(String.valueOf(game.getPlayer().getLives()));
     }
 
@@ -53,16 +65,21 @@ public class InfoPanel extends JPanel implements GameListener, PlayerListener {
 
     @Override
     public void onWaveEnd(Wave wave) {
-        waveLabel.setText(String.valueOf(game.getCurrentWaveNumber()));
+        ;
+    }
+
+    @Override
+    public void onWaveChange(Wave wave) {
+        updateWaveLabel();
     }
 
     @Override
     public void onPlayerLostLive(Player player) {
-        livesLabel.setText(String.valueOf(game.getPlayer().getLives()));
+        updateLivesLabel();
     }
 
     @Override
     public void onChangedPlayerGoldCount(Player player) {
-        goldLabel.setText(String.valueOf(game.getPlayer().getBankAccount().getGold()));
+        updateGoldLabel();
     }
 }
