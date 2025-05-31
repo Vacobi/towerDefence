@@ -28,7 +28,7 @@ public class GameWindow extends JFrame implements GameListener {
         setLayout(new BorderLayout());
 
         TowersCatalogue catalogue = game.getPlayer().getBuilder().getTowersCatalogue();
-        CataloguePanel cataloguePanel = new CataloguePanel(catalogue, game.getPlayer());
+        CataloguePanel cataloguePanel = new CataloguePanel(catalogue, game);
 
         gameWidgetPanel = new GameWidgetPanel(game, AbstractCell.getSize(), cataloguePanel);
 

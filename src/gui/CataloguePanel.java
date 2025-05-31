@@ -1,6 +1,8 @@
 package gui;
 
+import core.Game;
 import core.Player;
+import core.Wave;
 import events.GameListener;
 import events.PlayerListener;
 import projectile.Projectile;
@@ -19,7 +21,7 @@ public class CataloguePanel extends JPanel implements PlayerListener, GameListen
     private final Player player;
     private Tower<? extends Projectile> selectedTower = null;
 
-    public CataloguePanel(TowersCatalogue catalogue, Player player) {
+    public CataloguePanel(TowersCatalogue catalogue, Game game) {
         setLayout(new GridLayout(0, 1, 5, 5));
         setBorder(BorderFactory.createTitledBorder("Tower Catalogue"));
         catalogue.getAvailableTowersWithPrices().forEach((prototype, price) -> {
@@ -36,6 +38,9 @@ public class CataloguePanel extends JPanel implements PlayerListener, GameListen
         cancelSelectionBtn.addActionListener(e -> cancelSelection());
         add(cancelSelectionBtn);
 
+        game.addGameListener(this);
+
+        Player player = game.getPlayer();
         player.addListener(this);
         this.player = player;
         onChangedPlayerGoldCount(player);
