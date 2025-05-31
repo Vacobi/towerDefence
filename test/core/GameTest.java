@@ -66,4 +66,9 @@ class GameTest implements GameListener {
     public void onWaveEnd(Wave wave) {
 
     }
+
+    @Override
+    public void onWaveChange(Wave wave) {
+
+    }
 }

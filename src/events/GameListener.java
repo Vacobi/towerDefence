@@ -11,4 +11,6 @@ public interface GameListener {
     void onWaveStart(Wave wave);
 
     void onWaveEnd(Wave wave);
+
+    void onWaveChange(Wave wave);
 }

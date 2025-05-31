@@ -77,6 +77,11 @@ public class GameWindow extends JFrame implements GameListener {
         processWaveStartButtonEnable();
     }
 
+    @Override
+    public void onWaveChange(Wave wave) {
+        processWaveStartButtonEnable();
+    }
+
     private void processWaveStartButtonEnable() {
         startButton.setEnabled(game.canStartWave());
     }
