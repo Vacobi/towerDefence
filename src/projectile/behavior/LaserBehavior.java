@@ -38,7 +38,7 @@ public class LaserBehavior implements ProjectileBehavior<LaserProjectile> {
             throw new IllegalStateException("Laser Projectile should be active");
         }
 
-        if (currentTick - startTime > projectile.getActiveTime()) {
+        if (activeTimeOut(currentTick)) {
             projectile.deactivate();
             return;
         }
@@ -56,6 +56,10 @@ public class LaserBehavior implements ProjectileBehavior<LaserProjectile> {
                 }
             }
         }
+    }
+
+    private boolean activeTimeOut(long currentTick) {
+        return currentTick - startTime > projectile.getActiveTime();
     }
 
     private boolean canDamage(Monster monster, long currentTick) {
