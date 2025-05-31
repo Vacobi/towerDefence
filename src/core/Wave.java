@@ -39,12 +39,16 @@ public class Wave implements Iterable<Monster>, MonsterListener {
             return;
         }
 
-        if (currentTick - lastSpawnTime >= spawnDelay) {
+        if (passedSpawnDelayTime(currentTick)) {
             Monster monster = monstersToSpawn.poll();
             monster.addListener(this);
             aliveMonsters.add(monster);
             lastSpawnTime = currentTick;
         }
+    }
+
+    private boolean passedSpawnDelayTime(long currentTick) {
+        return currentTick - lastSpawnTime >= spawnDelay;
     }
 
     public void updateMonsters(long currentTick) {
