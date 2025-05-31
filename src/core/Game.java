@@ -66,11 +66,11 @@ public class Game implements WaveListener, UpdateFieldController {
 
     private void determineWin() {
         if (currentWaveNumber >= WAVES_COUNT) {
+            gameState = GameState.END;
+
             listeners.forEach((GameListener l) -> {
                 l.onPlayerWin(player);
             });
-
-            gameState = GameState.END;
         }
     }
 
