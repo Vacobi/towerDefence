@@ -42,7 +42,8 @@ public class CataloguePanel extends JPanel implements PlayerListener, GameListen
         Player player = game.getPlayer();
         player.addListener(this);
         this.player = player;
-        onChangedPlayerGoldCount(player);
+
+        updateCreateButtonStates();
     }
 
     private JButton createCancelBtn() {
@@ -53,7 +54,7 @@ public class CataloguePanel extends JPanel implements PlayerListener, GameListen
 
     private void select(Tower<? extends Projectile> proto) {
         selectedTower = proto;
-        updateButtonStates();
+        updateCreateButtonStates();
         cancelSelectionBtn.setEnabled(selectedTower != null);
         firePropertyChange("selectedPrototype", null, proto);
     }
@@ -61,7 +62,7 @@ public class CataloguePanel extends JPanel implements PlayerListener, GameListen
     public void cancelSelection() {
         select(null);
         selectedTower = null;
-        updateButtonStates();
+        updateCreateButtonStates();
     }
 
     @Override
@@ -71,7 +72,7 @@ public class CataloguePanel extends JPanel implements PlayerListener, GameListen
 
     @Override
     public void onChangedPlayerGoldCount(Player player) {
-        updateButtonStates();
+        updateCreateButtonStates();
     }
 
     public void updateCreateButtonStates() {
