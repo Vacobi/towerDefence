@@ -36,12 +36,6 @@ public class Game implements WaveListener, UpdateFieldController {
         listeners = new LinkedList<>();
 
         changeWave();
-
-        listeners = new ArrayList<>();
-    }
-
-    private void creditGoldBeforeWave(Wave wave) {
-        accountant.creditGoldBeforeWave(wave);
     }
 
     public void startWave() {
@@ -65,8 +59,7 @@ public class Game implements WaveListener, UpdateFieldController {
         wave = waveFactory.createWave(++currentWaveNumber, field);
         wave.addListener(this);
         field.setWave(wave);
-        creditGoldBeforeWave(wave);
-    }
+        accountant.creditGoldBeforeWave(wave);
 
     private void processEndOfWave() {
         if (gameState != GameState.END) {
