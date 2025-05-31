@@ -7,7 +7,7 @@ import factory.WaveFactory;
 import monster.Monster;
 import utils.GameState;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Game implements WaveListener, UpdateFieldController {
@@ -32,6 +32,8 @@ public class Game implements WaveListener, UpdateFieldController {
         Builder builder = new Builder(field);
         player = new Player(builder);
         accountant = new Accountant(player.getBankAccount());
+
+        listeners = new LinkedList<>();
 
         changeWave();
 
