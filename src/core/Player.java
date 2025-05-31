@@ -56,11 +56,11 @@ public class Player implements BankAccountListener {
     }
 
     public boolean canBuildTower(Tower<? extends Projectile> tower, Cell cell) {
-        return builder.canBuildTower(tower, cell, bankAccount.getGold());
+        return !frozen && builder.canBuildTower(tower, cell, bankAccount.getGold());
     }
 
     public boolean canBuildTower(Tower<? extends Projectile> tower) {
-        return builder.enoughGoldToBuild(tower, bankAccount.getGold());
+        return !frozen && builder.enoughGoldToBuild(tower, bankAccount.getGold());
     }
 
     public boolean enoughGoldToBuild(Tower<? extends Projectile> tower) {
@@ -68,7 +68,7 @@ public class Player implements BankAccountListener {
     }
 
     public boolean canUpgradeTower(Tower<? extends Projectile> tower, TowerUpgradableCharacteristic upgrade) {
-        return builder.canUpgradeTower(tower, upgrade, bankAccount.getGold());
+        return !frozen && builder.canUpgradeTower(tower, upgrade, bankAccount.getGold());
     }
 
     public boolean enoughGoldTUpgrade(Tower<? extends Projectile> tower, TowerUpgradableCharacteristic upgrade) {
