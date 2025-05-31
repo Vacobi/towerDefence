@@ -6,7 +6,7 @@ import events.MonsterListener;
 import utils.CoordinatesConverter;
 import utils.Position;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Monster extends CollisionObject {
@@ -21,7 +21,7 @@ public class Monster extends CollisionObject {
         );
         this.health = health;
         this.strategy = strategy;
-        listeners = new ArrayList<>();
+        listeners = new LinkedList<>();
     }
 
     public void addListener(MonsterListener listener) {
