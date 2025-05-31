@@ -52,7 +52,7 @@ public class Game implements WaveListener, UpdateFieldController {
     }
 
     public boolean canStartWave() {
-        return gameState == GameState.WAITING_WAVE_START && wave.getNumber() <= WAVES_COUNT;
+        return gameState == GameState.WAITING_WAVE_START && wave.getNumber() <= WAVES_COUNT && !player.frozen();
     }
 
     private void changeWave() {
