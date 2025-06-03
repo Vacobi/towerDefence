@@ -46,6 +46,8 @@ public abstract class Projectile extends CollisionObject {
         this.position = startPosition;
     }
 
+    //------------------------------------------------------------------------------------------------------------------
+
     public void update(long currentTick) {
         if (!active) {
             throw new IllegalStateException("Projectile is not active");
@@ -54,22 +56,25 @@ public abstract class Projectile extends CollisionObject {
         projectileBehavior.applyEffect(currentTick);
     }
 
-    public boolean active() {
-        return active;
+    public abstract Projectile clone(int damage, int range);
+
+    public void deactivate() {
+        active = false;
     }
 
-    // - ///////////////////////////////////////////////
-    public void setPosition(Position position) {
-        this.position = position;
-        updateHitboxPosition(position);
+    //------------------------------------------------------------------------------------------------------------------
+
+    public boolean active() {
+        return active;
     }
 
     public Position position() {
         return position;
     }
 
-    public void deactivate() {
-        active = false;
+    public void setPosition(Position position) {
+        this.position = position;
+        updateHitboxPosition(position);
     }
 
     public int getDamage() {
@@ -87,6 +92,4 @@ public abstract class Projectile extends CollisionObject {
     public int getDistance() {
         return distance;
     }
-
-    public abstract Projectile clone(int damage, int range);
 }
