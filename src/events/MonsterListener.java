@@ -1,9 +1,7 @@
 package events;
 
-import monster.Monster;
-
 public interface MonsterListener {
-    void onMonsterDeath(Monster monster);
+    void onMonsterDeath(MonsterEvent event);
 
-    void onMonsterReachedEnd(Monster monster);
+    void onMonsterReachedEnd(MonsterEvent event);
 }

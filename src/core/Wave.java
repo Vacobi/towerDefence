@@ -1,5 +1,6 @@
 package core;
 
+import events.MonsterEvent;
 import events.MonsterListener;
 import events.WaveListener;
 import monster.Monster;
@@ -72,19 +73,19 @@ public class Wave implements Iterable<Monster>, MonsterListener {
     }
 
     @Override
-    public void onMonsterDeath(Monster monster) {
-        listeners.forEach(l -> l.onMonsterDeath(monster));
+    public void onMonsterDeath(MonsterEvent event) {
+        listeners.forEach(l -> l.onMonsterDeath(event.getMonster()));
 
-        aliveMonsters.remove(monster);
+        aliveMonsters.remove(event.getMonster());
 
         processEndOfWave();
     }
 
     @Override
-    public void onMonsterReachedEnd(Monster monster) {
-        listeners.forEach(l -> l.onMonsterReachedEnd(monster));
+    public void onMonsterReachedEnd(MonsterEvent event) {
+        listeners.forEach(l -> l.onMonsterReachedEnd(event.getMonster()));
 
-        aliveMonsters.remove(monster);
+        aliveMonsters.remove(event.getMonster());
 
         processEndOfWave();
     }

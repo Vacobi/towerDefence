@@ -2,6 +2,7 @@ package monster;
 
 import collision.CollisionObject;
 import collision.HitboxParameters;
+import events.MonsterEvent;
 import events.MonsterListener;
 import utils.CoordinatesConverter;
 import utils.Position;
@@ -38,7 +39,7 @@ public class Monster extends CollisionObject {
         updateHitboxPosition(strategy.currentPosition());
 
         if (strategy.monsterReachedEnd()) {
-            monsterReachedEnd();
+            fireMonsterReachedEnd();
         }
     }
 
@@ -46,20 +47,22 @@ public class Monster extends CollisionObject {
         health = Math.max(health - damage, 0);
 
         if (health == 0) {
-            monsterDied();
+            fireMonsterDeath();
         }
     }
 
-    private void monsterDied() {
-        for(MonsterListener listener : listeners) {
-            listener.onMonsterDeath(this);
-        }
+    private void fireMonsterDeath() {
+        MonsterEvent event = new MonsterEvent(this);
+        event.setMonster(this);
+
+        listeners.forEach(l -> l.onMonsterDeath(event));
     }
 
-    private void monsterReachedEnd() {
-        for(MonsterListener listener : listeners) {
-            listener.onMonsterReachedEnd(this);
-        }
+    private void fireMonsterReachedEnd() {
+        MonsterEvent event = new MonsterEvent(this);
+        event.setMonster(this);
+
+        listeners.forEach(l -> l.onMonsterReachedEnd(event));
     }
 
     public boolean stillInWave() {
