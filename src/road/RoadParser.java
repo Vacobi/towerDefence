@@ -33,6 +33,8 @@ public class RoadParser {
         }
     }
 
+    //------------------------------------------------------------------------------------------------------------------
+
     protected static RoadSegment extractRoadSegment(RoadFileLine line) {
         Position start = AbstractCell.toGlobalPosition(new Position(line.getX(), line.getY()));
 
@@ -50,12 +52,14 @@ public class RoadParser {
         return cells;
     }
 
+    //------------------------------------------------------------------------------------------------------------------
+
     public List<RoadSegment> getRoadSegments() {
-        return roadSegments;
+        return new LinkedList<>(roadSegments);
     }
 
     public List<RoadCell> getRoadCells() {
-        return roadCells;
+        return new LinkedList<> (roadCells);
     }
 
     public Road getRoad() {
