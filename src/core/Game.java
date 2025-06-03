@@ -39,6 +39,19 @@ public class Game implements WaveListener, UpdateFieldController {
         changeWave();
     }
 
+    //------------------------------------------------------------------------------------------------------------------
+
+    private void changeWave() {
+        wave = waveFactory.createWave(++currentWaveNumber, field);
+        wave.addListener(this);
+
+        field.setWave(wave);
+
+        accountant.creditGoldBeforeWave(wave);
+
+        fireWaveChange();
+    }
+
     public void startWave() {
         if (!canStartWave()) {
             return;
@@ -52,31 +65,16 @@ public class Game implements WaveListener, UpdateFieldController {
         fireWaveStart();
     }
 
-    private void fireWaveStart() {
-        GameEvent event = new GameEvent(this);
-        event.setWave(wave);
-
-        listeners.forEach(l -> l.onWaveStart(event));
-    }
-
     public boolean canStartWave() {
         return gameState == GameState.WAITING_WAVE_START && wave.getNumber() <= WAVES_COUNT && !player.frozen();
     }
 
-    private void changeWave() {
-        wave = waveFactory.createWave(++currentWaveNumber, field);
-        wave.addListener(this);
-        field.setWave(wave);
-        accountant.creditGoldBeforeWave(wave);
-
-        fireWaveChange();
+    private void freezePlayer() {
+        player.freeze(true);
     }
 
-    private void fireWaveChange() {
-        GameEvent event = new GameEvent(this);
-        event.setWave(wave);
-
-        listeners.forEach(l -> l.onWaveChange(event));
+    private void unfreezePlayer() {
+        player.freeze(false);
     }
 
     private void determineWin() {
@@ -87,20 +85,42 @@ public class Game implements WaveListener, UpdateFieldController {
         }
     }
 
-    private void firePlayerWin() {
-        GameEvent event = new GameEvent(this);
-        event.setPlayer(getPlayer());
+    private void determineLose() {
+        if (player.getLives() <= 0) {
+            gameState = GameState.END;
 
-        listeners.forEach(l -> l.onPlayerWin(event));
+            firePlayerLose();
+        }
     }
 
-    private void freezePlayer() {
-        player.freeze(true);
+    @Override
+    public boolean shouldContinue() {
+        return gameState != GameState.END;
     }
 
-    private void unfreezePlayer() {
-        player.freeze(false);
+    //------------------------------------------------------------------------------------------------------------------
+
+    public Field getField() {
+        return field;
     }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public int getCurrentWaveNumber() {
+        return currentWaveNumber;
+    }
+
+    public void addGameListener(GameListener listener) {
+        listeners.add(listener);
+    }
+
+    public void removeGameListener(GameListener listener) {
+        listeners.remove(listener);
+    }
+
+    //------------------------------------------------------------------------------------------------------------------
 
     @Override
     public void onMonsterDeath(WaveEvent event) {
@@ -128,19 +148,27 @@ public class Game implements WaveListener, UpdateFieldController {
         }
     }
 
+    //------------------------------------------------------------------------------------------------------------------
+
+    private void fireWaveChange() {
+        GameEvent event = new GameEvent(this);
+        event.setWave(wave);
+
+        listeners.forEach(l -> l.onWaveChange(event));
+    }
+
+    private void fireWaveStart() {
+        GameEvent event = new GameEvent(this);
+        event.setWave(wave);
+
+        listeners.forEach(l -> l.onWaveStart(event));
+    }
+
     private void fireWaveEnd() {
         GameEvent event = new GameEvent(this);
         event.setWave(wave);
 
         listeners.forEach(l -> l.onWaveEnd(event));
-    }
-
-    private void determineLose() {
-        if (player.getLives() <= 0) {
-            gameState = GameState.END;
-
-            firePlayerLose();
-        }
     }
 
     private void firePlayerLose() {
@@ -150,28 +178,10 @@ public class Game implements WaveListener, UpdateFieldController {
         listeners.forEach(l -> l.onPlayerLose(event));
     }
 
-    @Override
-    public boolean shouldContinue() {
-        return gameState != GameState.END;
-    }
+    private void firePlayerWin() {
+        GameEvent event = new GameEvent(this);
+        event.setPlayer(getPlayer());
 
-    public void addGameListener(GameListener listener) {
-        listeners.add(listener);
-    }
-
-    public void removeGameListener(GameListener listener) {
-        listeners.remove(listener);
-    }
-
-    public Field getField() {
-        return field;
-    }
-
-    public Player getPlayer() {
-        return player;
-    }
-
-    public int getCurrentWaveNumber() {
-        return currentWaveNumber;
+        listeners.forEach(l -> l.onPlayerWin(event));
     }
 }
