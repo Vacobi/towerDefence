@@ -35,6 +35,8 @@ public class LaserProjectile extends DirectionalProjectile{
         this.damageCooldown = damageCooldown;
     }
 
+    //------------------------------------------------------------------------------------------------------------------
+
     @Override
     public LaserProjectile clone(int damage, int range) {
 
@@ -77,6 +79,8 @@ public class LaserProjectile extends DirectionalProjectile{
 
         return projectile;
     }
+
+    //------------------------------------------------------------------------------------------------------------------
 
     public long getActiveTime() {
         return activeTime;
