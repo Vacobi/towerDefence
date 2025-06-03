@@ -14,6 +14,14 @@ public class RoadSegment {
         this.length = length;
     }
 
+    //------------------------------------------------------------------------------------------------------------------
+
+    public boolean reachedEnd(int moved) {
+        return moved >= length;
+    }
+
+    //------------------------------------------------------------------------------------------------------------------
+
     public Position getStart() {
         return start;
     }
@@ -24,9 +32,5 @@ public class RoadSegment {
 
     public int getLength() {
         return length;
-    }
-
-    public boolean reachedEnd(int moved) {
-        return moved >= length;
     }
 }
