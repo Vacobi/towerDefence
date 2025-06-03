@@ -31,17 +31,12 @@ public class Player implements BankAccountListener {
         listeners = new LinkedList<>();
     }
 
+    //------------------------------------------------------------------------------------------------------------------
+
     public void reduceLives(int lives) {
         this.lives -= lives;
 
         firePlayerLostLive();
-    }
-
-    private void firePlayerLostLive() {
-        PlayerEvent event = new PlayerEvent(this);
-        event.setPlayer(this);
-
-        listeners.forEach(l -> l.onPlayerLostLive(event));
     }
 
     public boolean placeTower(Tower<? extends Projectile> typicalTower, Cell cell) {
@@ -50,16 +45,6 @@ public class Player implements BankAccountListener {
         }
 
         BuildingResponse response = builder.buildTower(typicalTower, cell, bankAccount.getGold());
-        bankAccount.setGold(response.change());
-        return response.built();
-    }
-
-    public boolean upgradeTower(Tower<? extends Projectile> tower, TowerUpgradableCharacteristic towerUpgrade) {
-        if (frozen) {
-            return false;
-        }
-
-        BuildingResponse response = builder.upgradeTower(tower,towerUpgrade, bankAccount.getGold());
         bankAccount.setGold(response.change());
         return response.built();
     }
@@ -76,22 +61,29 @@ public class Player implements BankAccountListener {
         return builder.enoughGoldToBuild(tower, bankAccount.getGold());
     }
 
-    public boolean canUpgradeTower(Tower<? extends Projectile> tower, TowerUpgradableCharacteristic upgrade) {
-        return !frozen && builder.canUpgradeTower(tower, upgrade, bankAccount.getGold());
+    public boolean upgradeTower(Tower<? extends Projectile> tower, TowerUpgradableCharacteristic towerUpgrade) {
+        if (frozen) {
+            return false;
+        }
+
+        BuildingResponse response = builder.upgradeTower(tower,towerUpgrade, bankAccount.getGold());
+        bankAccount.setGold(response.change());
+        return response.built();
     }
 
     public boolean enoughGoldToUpgrade(Tower<? extends Projectile> tower, TowerUpgradableCharacteristic upgrade) {
         return builder.enoughGoldToUpgrade(tower, upgrade, bankAccount.getGold());
     }
 
-    // - /////////////////////////////////////////////////////////////
-    public void addListener(PlayerListener listener) {
-        listeners.add(listener);
+    public boolean canUpgradeTower(Tower<? extends Projectile> tower, TowerUpgradableCharacteristic upgrade) {
+        return !frozen && builder.canUpgradeTower(tower, upgrade, bankAccount.getGold());
     }
 
-    public void removeListener(PlayerListener listener) {
-        listeners.remove(listener);
+    public void freeze(boolean frozen) {
+        this.frozen = frozen;
     }
+
+    //------------------------------------------------------------------------------------------------------------------
 
     public BankAccount getBankAccount() {
         return this.bankAccount;
@@ -101,17 +93,36 @@ public class Player implements BankAccountListener {
         return this.frozen;
     }
 
-    public void freeze(boolean frozen) {
-        this.frozen = frozen;
-    }
-
     public int getLives() {
         return this.lives;
     }
 
+    public Builder getBuilder() {
+        return builder;
+    }
+
+    public void addListener(PlayerListener listener) {
+        listeners.add(listener);
+    }
+
+    public void removeListener(PlayerListener listener) {
+        listeners.remove(listener);
+    }
+
+    //------------------------------------------------------------------------------------------------------------------
+
     @Override
     public void onGoldCountChange(BankAccountEvent event) {
         firePlayerGoldCountChange();
+    }
+
+    //------------------------------------------------------------------------------------------------------------------
+
+    private void firePlayerLostLive() {
+        PlayerEvent event = new PlayerEvent(this);
+        event.setPlayer(this);
+
+        listeners.forEach(l -> l.onPlayerLostLive(event));
     }
 
     private void firePlayerGoldCountChange() {
@@ -119,9 +130,5 @@ public class Player implements BankAccountListener {
         event.setPlayer(this);
 
         listeners.forEach(listener -> listener.onChangedPlayerGoldCount(event));
-    }
-
-    public Builder getBuilder() {
-        return builder;
     }
 }
