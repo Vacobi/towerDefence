@@ -33,6 +33,8 @@ public class ExplosiveProjectile extends MovingProjectile {
         this.exploded = false;
     }
 
+    //------------------------------------------------------------------------------------------------------------------
+
     @Override
     public ExplosiveProjectile clone(Position position, Direction direction) {
 
@@ -74,6 +76,8 @@ public class ExplosiveProjectile extends MovingProjectile {
 
         return projectile;
     }
+
+    //------------------------------------------------------------------------------------------------------------------
 
     public int getRadius() {
         return radius;
