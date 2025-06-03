@@ -20,6 +20,8 @@ public class WaveFactory {
         monsterFactory = new MonsterFactory();
     }
 
+    //------------------------------------------------------------------------------------------------------------------
+
     public Wave createWave(int number, Field field) {
         MovingMonsterStrategy strategy = new PlainRoadMoving(field, 1 + number / 3);
 
