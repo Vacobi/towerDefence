@@ -32,6 +32,8 @@ public class Road {
         this.roadCells = roadParser.getRoadCells();
     }
 
+    //------------------------------------------------------------------------------------------------------------------
+
     public Optional<RoadSegment> getNextRoadSegment(RoadSegment roadSegment) {
         int indexOfCurrent = road.indexOf(roadSegment);
         if (indexOfCurrent == road.size() - 1) {
@@ -40,6 +42,8 @@ public class Road {
 
         return Optional.of(road.get(indexOfCurrent + 1));
     }
+
+    //------------------------------------------------------------------------------------------------------------------
 
     public List<RoadSegment> getRoadSegments() {
         return new LinkedList<>(road);
