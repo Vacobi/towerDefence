@@ -31,11 +31,7 @@ public class GameWindow extends JFrame implements GameListener {
 
         gameWidgetPanel = new GameWidgetPanel(game, AbstractCell.getSize(), cataloguePanel);
 
-        startButton = new JButton("Start Wave");
-        startButton.addActionListener(e -> {
-            game.startWave();
-            gameWidgetPanel.startUpdateTimer();
-        });
+        startButton = createStartButton();
         add(startButton, BorderLayout.NORTH);
 
         infoPanel = new InfoPanel(game);
@@ -45,41 +41,26 @@ public class GameWindow extends JFrame implements GameListener {
             Tower<? extends Projectile> prototype = (Tower<? extends Projectile>) evt.getNewValue();
             gameWidgetPanel.setSelectedPrototype(prototype);
         });
+        add(cataloguePanel, BorderLayout.EAST);
 
         add(new JScrollPane(gameWidgetPanel), BorderLayout.CENTER);
-        add(cataloguePanel, BorderLayout.EAST);
 
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
     }
 
-    @Override
-    public void onPlayerWin(GameEvent event) {
-        showEndDialog("Вы выиграли!");
-        processWaveStartButtonEnable();
+    private JButton createStartButton() {
+        JButton startButton = new JButton("Start Wave");
+        startButton.addActionListener(e -> {
+            game.startWave();
+            gameWidgetPanel.startUpdateTimer();
+        });
+
+        return startButton;
     }
 
-    @Override
-    public void onPlayerLose(GameEvent event) {
-        showEndDialog("Вы проиграли!");
-        processWaveStartButtonEnable();
-    }
-
-    @Override
-    public void onWaveStart(GameEvent event) {
-        processWaveStartButtonEnable();
-    }
-
-    @Override
-    public void onWaveEnd(GameEvent event) {
-        processWaveStartButtonEnable();
-    }
-
-    @Override
-    public void onWaveChange(GameEvent event) {
-        processWaveStartButtonEnable();
-    }
+    //------------------------------------------------------------------------------------------------------------------
 
     private void processWaveStartButtonEnable() {
         startButton.setEnabled(game.canStartWave());
@@ -116,5 +97,34 @@ public class GameWindow extends JFrame implements GameListener {
             Game newGame = new Game();
             new GameWindow(newGame);
         });
+    }
+
+    //------------------------------------------------------------------------------------------------------------------
+
+    @Override
+    public void onPlayerWin(GameEvent event) {
+        showEndDialog("Вы выиграли!");
+        processWaveStartButtonEnable();
+    }
+
+    @Override
+    public void onPlayerLose(GameEvent event) {
+        showEndDialog("Вы проиграли!");
+        processWaveStartButtonEnable();
+    }
+
+    @Override
+    public void onWaveStart(GameEvent event) {
+        processWaveStartButtonEnable();
+    }
+
+    @Override
+    public void onWaveEnd(GameEvent event) {
+        processWaveStartButtonEnable();
+    }
+
+    @Override
+    public void onWaveChange(GameEvent event) {
+        processWaveStartButtonEnable();
     }
 }
