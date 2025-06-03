@@ -15,8 +15,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static asserts.TestAsserts.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static tower.TowerTestAsserts.assertTowersAfterUpgradeEquals;
+import static tower.TowerTestAsserts.assertTowersEquals;
 
 class TowerTest {
     private final Position cellPosition = new Position(100, 100);
