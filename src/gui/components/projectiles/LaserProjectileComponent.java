@@ -20,6 +20,8 @@ public class LaserProjectileComponent extends GameComponent<LaserProjectile> {
         setOpaque(false);
     }
 
+    //------------------------------------------------------------------------------------------------------------------
+
     private void setBoundingRectangle() {
         Point2D.Double[] vertices = model.getHitbox().getVertices();
 
