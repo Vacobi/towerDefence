@@ -28,6 +28,8 @@ public class LinearMovingProjectileStrategy implements MovingProjectileStrategy 
         this(null, speed);
     }
 
+    //------------------------------------------------------------------------------------------------------------------
+
     @Override
     public void move(long currentTick) {
         if (projectile == null) {
@@ -61,6 +63,13 @@ public class LinearMovingProjectileStrategy implements MovingProjectileStrategy 
     }
 
     @Override
+    public MovingProjectileStrategy clone() {
+        return new LinearMovingProjectileStrategy(speed);
+    }
+
+    //------------------------------------------------------------------------------------------------------------------
+
+    @Override
     public void setProjectile(MovingProjectile projectile) {
         if (this.projectile != null) {
             throw new IllegalStateException("Projectile already set");
@@ -74,20 +83,15 @@ public class LinearMovingProjectileStrategy implements MovingProjectileStrategy 
         return projectile;
     }
 
-    @Override
-    public MovingProjectileStrategy clone() {
-        return new LinearMovingProjectileStrategy(speed);
-    }
-
-    public long getLastMoveTime() {
+    long getLastMoveTime() {
         return lastMoveTime;
     }
 
-    protected int getTotalTraveledDistance() {
+    int getTotalTraveledDistance() {
         return totalTraveledDistance;
     }
 
-    public static int getSpeedCoeff() {
+    static int getSpeedCoeff() {
         return SPEED_COEFF;
     }
 }
