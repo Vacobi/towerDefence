@@ -80,7 +80,7 @@ public class Player implements BankAccountListener {
         return !frozen && builder.canUpgradeTower(tower, upgrade, bankAccount.getGold());
     }
 
-    public boolean enoughGoldTUpgrade(Tower<? extends Projectile> tower, TowerUpgradableCharacteristic upgrade) {
+    public boolean enoughGoldToUpgrade(Tower<? extends Projectile> tower, TowerUpgradableCharacteristic upgrade) {
         return builder.enoughGoldToUpgrade(tower, upgrade, bankAccount.getGold());
     }
 

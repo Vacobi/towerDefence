@@ -54,7 +54,7 @@ public class TowerUpgradeDialog extends JDialog {
             );
         }
 
-        if (!player.enoughGoldTUpgrade(tower, characteristic)) {
+        if (!player.enoughGoldToUpgrade(tower, characteristic)) {
             upgradeBtn.setEnabled(false);
         }
 
