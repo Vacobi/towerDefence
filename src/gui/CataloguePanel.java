@@ -53,6 +53,8 @@ public class CataloguePanel extends JPanel implements PlayerListener, GameListen
         return cancelSelectionBtn;
     }
 
+    //------------------------------------------------------------------------------------------------------------------
+
     private void select(Tower<? extends Projectile> proto) {
         selectedTower = proto;
         updateCreateButtonStates();
@@ -66,16 +68,6 @@ public class CataloguePanel extends JPanel implements PlayerListener, GameListen
         updateCreateButtonStates();
     }
 
-    @Override
-    public void onPlayerLostLive(PlayerEvent event) {
-        ;
-    }
-
-    @Override
-    public void onChangedPlayerGoldCount(PlayerEvent event) {
-        updateCreateButtonStates();
-    }
-
     public void updateCreateButtonStates() {
         for (Map.Entry<Tower<? extends Projectile>, JButton> entry : buttons.entrySet()) {
             Tower<? extends Projectile> tower = entry.getKey();
@@ -84,6 +76,18 @@ public class CataloguePanel extends JPanel implements PlayerListener, GameListen
         }
 
         cancelSelectionBtn.setEnabled(selectedTower != null);
+    }
+
+    //------------------------------------------------------------------------------------------------------------------
+
+    @Override
+    public void onPlayerLostLive(PlayerEvent event) {
+        ;
+    }
+
+    @Override
+    public void onChangedPlayerGoldCount(PlayerEvent event) {
+        updateCreateButtonStates();
     }
 
     @Override
