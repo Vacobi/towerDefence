@@ -38,6 +38,8 @@ public class ComponentFactory {
                 (Function<Tower<?>, GameComponent<?>>) t -> new TowerComponent(t, towerSize, towerSize));
     }
 
+    //------------------------------------------------------------------------------------------------------------------
+
     @SuppressWarnings("unchecked")
     public static <M> GameComponent<M> create(M model) {
         @SuppressWarnings("unchecked")
