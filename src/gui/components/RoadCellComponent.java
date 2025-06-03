@@ -19,6 +19,8 @@ public class RoadCellComponent extends GameComponent<RoadCell> {
         super(model, width, height);
     }
 
+    //------------------------------------------------------------------------------------------------------------------
+
     @Override
     protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
