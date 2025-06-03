@@ -21,6 +21,8 @@ public class PlainRoadMoving extends MovingMonsterStrategy{
         switchRoadSegmentIfNecessary();
     }
 
+    //------------------------------------------------------------------------------------------------------------------
+
     @Override
     public void moveMonster(long currentTick) {
         if (monsterReachedEnd()) {
@@ -51,11 +53,6 @@ public class PlainRoadMoving extends MovingMonsterStrategy{
         setLastMovingTime(currentTick);
     }
 
-    @Override
-    public MovingMonsterStrategy clone() {
-        return new PlainRoadMoving(currentPosition(), field(), speed());
-    }
-
     private void switchRoadSegmentIfNecessary() {
         if (monsterReachedEnd()) {
             return;
@@ -71,6 +68,13 @@ public class PlainRoadMoving extends MovingMonsterStrategy{
             }
         }
     }
+
+    @Override
+    public MovingMonsterStrategy clone() {
+        return new PlainRoadMoving(currentPosition(), field(), speed());
+    }
+
+    //------------------------------------------------------------------------------------------------------------------
 
     public static int getSpeedCoeff() {
         return SPEED_COEFF;
