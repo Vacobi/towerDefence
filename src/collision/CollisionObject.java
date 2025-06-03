@@ -3,6 +3,7 @@ package collision;
 import utils.Position;
 
 public class CollisionObject {
+
     private Hitbox hitbox;
 
     public CollisionObject(Hitbox hitbox) {
@@ -13,9 +14,7 @@ public class CollisionObject {
         this.hitbox = new Hitbox(center, parameters);
     }
 
-    public Hitbox getHitbox() {
-        return hitbox;
-    }
+    //------------------------------------------------------------------------------------------------------------------
 
     public boolean collidesWith(CollisionObject other) {
         return hitbox.intersects(other.hitbox);
@@ -27,5 +26,11 @@ public class CollisionObject {
 
     public void updateHitboxParameters(HitboxParameters newHitboxParameters) {
         hitbox = new Hitbox(hitbox.getCenter(), newHitboxParameters);
+    }
+
+    //------------------------------------------------------------------------------------------------------------------
+
+    public Hitbox getHitbox() {
+        return hitbox;
     }
 }
