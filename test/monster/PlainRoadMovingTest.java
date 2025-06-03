@@ -24,7 +24,7 @@ class PlainRoadMovingTest {
                 .toAbsolutePath()
                 .normalize();
         Field field = new Field(path.toString());
-        MovingMonsterStrategy strategy = new PlainRoadMoving(field, 2);
+        MovingMonsterStrategy strategy = new PlainRoadMoving(field, 20);
         // To initialize lastMovingTime
         strategy.moveMonster(System.currentTimeMillis());
 
@@ -47,7 +47,7 @@ class PlainRoadMovingTest {
                 .toAbsolutePath()
                 .normalize();
         Field field = new Field(path.toString());
-        MovingMonsterStrategy strategy = new PlainRoadMoving(field, 2);
+        MovingMonsterStrategy strategy = new PlainRoadMoving(field, 20);
         // To initialize lastMovingTimestrategy.moveMonster(System.currentTimeMillis());
         strategy.moveMonster(System.currentTimeMillis());
 
@@ -55,7 +55,7 @@ class PlainRoadMovingTest {
         long tickTime = strategy.lastMovingTime() + delta;
         Position positionOfFirstSegment = field.getRoad().getRoadSegments().get(0).getStart();
 
-        Position expectedPosition = positionOfFirstSegment.move(Direction.EAST, (int) (delta / SPEED_COEFF) * strategy.speed());
+        Position expectedPosition = positionOfFirstSegment.move(Direction.EAST, (int) (delta * strategy.speed()) / SPEED_COEFF);
 
         strategy.moveMonster(tickTime);
 
@@ -70,7 +70,7 @@ class PlainRoadMovingTest {
                 .toAbsolutePath()
                 .normalize();
         Field field = new Field(path.toString());
-        MovingMonsterStrategy strategy = new PlainRoadMoving(field, 1);
+        MovingMonsterStrategy strategy = new PlainRoadMoving(field, 10);
         strategy.moveMonster(System.currentTimeMillis());
 
         long delta = TimeUnit.SECONDS.toMillis(2);
@@ -79,7 +79,7 @@ class PlainRoadMovingTest {
         RoadSegment secondRoadSegment = field.getRoad().getRoadSegments().get(1);
         Position positionOfSecondSegment = secondRoadSegment.getStart();
 
-        int traveledDistance = (int) (delta / SPEED_COEFF) * strategy.speed() - firstRoadSegment.getLength();
+        int traveledDistance = (int) (delta * strategy.speed()) / SPEED_COEFF - firstRoadSegment.getLength();
         Position expectedPosition = positionOfSecondSegment.move(secondRoadSegment.getDirection(), traveledDistance);
 
         strategy.moveMonster(tickTime);
