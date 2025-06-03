@@ -28,9 +28,7 @@ public class Wave implements Iterable<Monster>, MonsterListener {
         lastSpawnTime = System.currentTimeMillis() - spawnDelay;
     }
 
-    public int getNumber() {
-        return number;
-    }
+    //------------------------------------------------------------------------------------------------------------------
 
     public boolean hasEnded() {
         return aliveMonsters.isEmpty() && monstersToSpawn.isEmpty();
@@ -59,11 +57,31 @@ public class Wave implements Iterable<Monster>, MonsterListener {
         }
     }
 
-    public Set<Monster> getAliveMonsters() {
-        return aliveMonsters;
+    private void processEndOfWave() {
+        if (hasEnded()) {
+            fireWaveEnd();
+        }
     }
 
-    // - /////////////////////////////////////////////////////////////
+    @Override
+    public Iterator<Monster> iterator() {
+        return aliveMonsters.iterator();
+    }
+
+    @Override
+    public void forEach(Consumer<? super Monster> action) {
+        Iterable.super.forEach(action);
+    }
+
+    //------------------------------------------------------------------------------------------------------------------
+
+    public int getNumber() {
+        return number;
+    }
+
+    public Set<Monster> getAliveMonsters() {
+        return new HashSet<>(aliveMonsters);
+    }
 
     public void addListener(WaveListener listener) {
         listeners.add(listener);
@@ -73,6 +91,8 @@ public class Wave implements Iterable<Monster>, MonsterListener {
         listeners.remove(listener);
     }
 
+    //------------------------------------------------------------------------------------------------------------------
+
     @Override
     public void onMonsterDeath(MonsterEvent event) {
         aliveMonsters.remove(event.getMonster());
@@ -80,13 +100,6 @@ public class Wave implements Iterable<Monster>, MonsterListener {
         fireMonsterDeath(event);
 
         processEndOfWave();
-    }
-
-    public void fireMonsterDeath(MonsterEvent event) {
-        WaveEvent waveEvent = new WaveEvent(event.getMonster());
-        waveEvent.setMonster(event.getMonster());
-
-        listeners.forEach(l -> l.onMonsterDeath(waveEvent));
     }
 
     @Override
@@ -98,6 +111,8 @@ public class Wave implements Iterable<Monster>, MonsterListener {
         processEndOfWave();
     }
 
+    //------------------------------------------------------------------------------------------------------------------
+
     private void fireMonsterReachedEnd(MonsterEvent event) {
         WaveEvent waveEvent = new WaveEvent(event.getMonster());
         waveEvent.setMonster(event.getMonster());
@@ -105,10 +120,11 @@ public class Wave implements Iterable<Monster>, MonsterListener {
         listeners.forEach(l -> l.onMonsterReachedEnd(waveEvent));
     }
 
-    private void processEndOfWave() {
-        if (hasEnded()) {
-            fireWaveEnd();
-        }
+    public void fireMonsterDeath(MonsterEvent event) {
+        WaveEvent waveEvent = new WaveEvent(event.getMonster());
+        waveEvent.setMonster(event.getMonster());
+
+        listeners.forEach(l -> l.onMonsterDeath(waveEvent));
     }
 
     public void fireWaveEnd() {
@@ -116,15 +132,5 @@ public class Wave implements Iterable<Monster>, MonsterListener {
         waveEvent.setWave(this);
 
         listeners.forEach(l -> l.onWaveEnd(waveEvent));
-    }
-
-    @Override
-    public Iterator<Monster> iterator() {
-        return aliveMonsters.iterator();
-    }
-
-    @Override
-    public void forEach(Consumer<? super Monster> action) {
-        Iterable.super.forEach(action);
     }
 }
