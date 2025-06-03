@@ -4,6 +4,7 @@ import core.Game;
 import core.Player;
 import events.GameEvent;
 import events.GameListener;
+import events.PlayerEvent;
 import events.PlayerListener;
 import projectile.Projectile;
 import tower.Tower;
@@ -66,12 +67,12 @@ public class CataloguePanel extends JPanel implements PlayerListener, GameListen
     }
 
     @Override
-    public void onPlayerLostLive(Player player) {
+    public void onPlayerLostLive(PlayerEvent event) {
         ;
     }
 
     @Override
-    public void onChangedPlayerGoldCount(Player player) {
+    public void onChangedPlayerGoldCount(PlayerEvent event) {
         updateCreateButtonStates();
     }
 

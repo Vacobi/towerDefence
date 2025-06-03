@@ -3,6 +3,7 @@ package core;
 import economic.BankAccount;
 import events.BankAccountEvent;
 import events.BankAccountListener;
+import events.PlayerEvent;
 import events.PlayerListener;
 import projectile.Projectile;
 import tower.Tower;
@@ -33,7 +34,14 @@ public class Player implements BankAccountListener {
     public void reduceLives(int lives) {
         this.lives -= lives;
 
-        listeners.forEach(listener -> listener.onPlayerLostLive(this));
+        firePlayerLostLive();
+    }
+
+    private void firePlayerLostLive() {
+        PlayerEvent event = new PlayerEvent(this);
+        event.setPlayer(this);
+
+        listeners.forEach(l -> l.onPlayerLostLive(event));
     }
 
     public boolean placeTower(Tower<? extends Projectile> typicalTower, Cell cell) {
@@ -103,7 +111,14 @@ public class Player implements BankAccountListener {
 
     @Override
     public void onGoldCountChange(BankAccountEvent event) {
-        listeners.forEach(listener -> listener.onChangedPlayerGoldCount(this));
+        firePlayerGoldCountChange();
+    }
+
+    private void firePlayerGoldCountChange() {
+        PlayerEvent event = new PlayerEvent(this);
+        event.setPlayer(this);
+
+        listeners.forEach(listener -> listener.onChangedPlayerGoldCount(event));
     }
 
     public Builder getBuilder() {

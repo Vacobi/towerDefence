@@ -1,9 +1,9 @@
 package gui;
 
 import core.Game;
-import core.Player;
 import events.GameEvent;
 import events.GameListener;
+import events.PlayerEvent;
 import events.PlayerListener;
 
 import javax.swing.*;
@@ -74,12 +74,12 @@ public class InfoPanel extends JPanel implements GameListener, PlayerListener {
     }
 
     @Override
-    public void onPlayerLostLive(Player player) {
+    public void onPlayerLostLive(PlayerEvent event) {
         updateLivesLabel();
     }
 
     @Override
-    public void onChangedPlayerGoldCount(Player player) {
+    public void onChangedPlayerGoldCount(PlayerEvent event) {
         updateGoldLabel();
     }
 }
