@@ -10,17 +10,7 @@ public class ProjectilesContainer implements Iterable<Projectile> {
         projectiles = new LinkedList<>();
     }
 
-    public void addProjectile(Projectile projectile) {
-        projectiles.add(projectile);
-    }
-
-    public void addProjectiles(List<Projectile> projectiles) {
-        this.projectiles.addAll(projectiles);
-    }
-
-    public void removeProjectile(Projectile projectile) {
-        projectiles.remove(projectile);
-    }
+    //------------------------------------------------------------------------------------------------------------------
 
     @Override
     public Iterator<Projectile> iterator() {
@@ -32,11 +22,25 @@ public class ProjectilesContainer implements Iterable<Projectile> {
         Iterable.super.forEach(action);
     }
 
+    //------------------------------------------------------------------------------------------------------------------
+
     public List<Projectile> getProjectiles() {
-        return projectiles;
+        return new LinkedList<>(projectiles);
     }
 
     public void clearProjectiles() {
         projectiles.clear();
+    }
+
+    public void addProjectile(Projectile projectile) {
+        projectiles.add(projectile);
+    }
+
+    public void addProjectiles(List<Projectile> projectiles) {
+        this.projectiles.addAll(projectiles);
+    }
+
+    public void removeProjectile(Projectile projectile) {
+        projectiles.remove(projectile);
     }
 }
