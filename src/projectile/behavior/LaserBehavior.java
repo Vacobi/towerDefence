@@ -24,6 +24,8 @@ public class LaserBehavior implements ProjectileBehavior<LaserProjectile> {
         lastDamageTimes = new HashMap<>();
     }
 
+    //------------------------------------------------------------------------------------------------------------------
+
     public LaserBehavior() {
         this(null);
     }
@@ -71,6 +73,8 @@ public class LaserBehavior implements ProjectileBehavior<LaserProjectile> {
     public LaserBehavior clone() {
         return new LaserBehavior();
     }
+
+    //------------------------------------------------------------------------------------------------------------------
 
     @Override
     public void setProjectile(LaserProjectile projectile) {
