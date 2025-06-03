@@ -30,11 +30,13 @@ public class InfoPanel extends JPanel implements GameListener, PlayerListener {
         updateInfo();
     }
 
-    public void updateInfo() {
+    private void updateInfo() {
         updateGoldLabel();
         updateWaveLabel();
         updateLivesLabel();
     }
+
+    //------------------------------------------------------------------------------------------------------------------
 
     private void updateGoldLabel() {
         goldLabel.setText(String.valueOf(game.getPlayer().getBankAccount().getGold()));
@@ -47,6 +49,8 @@ public class InfoPanel extends JPanel implements GameListener, PlayerListener {
     private void updateLivesLabel() {
         livesLabel.setText(String.valueOf(game.getPlayer().getLives()));
     }
+
+    //------------------------------------------------------------------------------------------------------------------
 
     @Override
     public void onPlayerWin(GameEvent event) {
