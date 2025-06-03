@@ -11,6 +11,8 @@ public abstract class GameComponent<T> extends JComponent {
         setSize(width, height);
     }
 
+    //------------------------------------------------------------------------------------------------------------------
+
     @Override
     protected abstract void paintComponent(Graphics g);
 }
