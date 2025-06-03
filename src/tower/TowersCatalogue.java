@@ -229,7 +229,7 @@ public class TowersCatalogue {
     }
 
     public Map<Tower<? extends Projectile>, Integer> getAvailableTowersWithPrices() {
-        return new HashMap<>(availableTowersWithPrices);
+        return new LinkedHashMap<>(availableTowersWithPrices);
     }
 
     public Optional<Integer> getPrice(Tower<? extends Projectile> tower) {
