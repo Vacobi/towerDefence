@@ -25,13 +25,7 @@ public class Monster extends CollisionObject {
         listeners = new LinkedList<>();
     }
 
-    public void addListener(MonsterListener listener) {
-        listeners.add(listener);
-    }
-
-    public void removeListener(MonsterListener listener) {
-        listeners.remove(listener);
-    }
+    //------------------------------------------------------------------------------------------------------------------
 
     public void move(long currentTick) {
 
@@ -51,20 +45,6 @@ public class Monster extends CollisionObject {
         }
     }
 
-    private void fireMonsterDeath() {
-        MonsterEvent event = new MonsterEvent(this);
-        event.setMonster(this);
-
-        listeners.forEach(l -> l.onMonsterDeath(event));
-    }
-
-    private void fireMonsterReachedEnd() {
-        MonsterEvent event = new MonsterEvent(this);
-        event.setMonster(this);
-
-        listeners.forEach(l -> l.onMonsterReachedEnd(event));
-    }
-
     public boolean stillInWave() {
         return isAlive() && !hasReachedEnd();
     }
@@ -77,6 +57,12 @@ public class Monster extends CollisionObject {
         return health > 0;
     }
 
+    public boolean alive() {
+        return health > 0;
+    }
+
+    //------------------------------------------------------------------------------------------------------------------
+
     public Position getPosition() {
         return strategy.currentPosition();
     }
@@ -85,7 +71,27 @@ public class Monster extends CollisionObject {
         return health;
     }
 
-    public boolean alive() {
-        return health > 0;
+    public void addListener(MonsterListener listener) {
+        listeners.add(listener);
+    }
+
+    public void removeListener(MonsterListener listener) {
+        listeners.remove(listener);
+    }
+
+    //------------------------------------------------------------------------------------------------------------------
+
+    private void fireMonsterDeath() {
+        MonsterEvent event = new MonsterEvent(this);
+        event.setMonster(this);
+
+        listeners.forEach(l -> l.onMonsterDeath(event));
+    }
+
+    private void fireMonsterReachedEnd() {
+        MonsterEvent event = new MonsterEvent(this);
+        event.setMonster(this);
+
+        listeners.forEach(l -> l.onMonsterReachedEnd(event));
     }
 }
