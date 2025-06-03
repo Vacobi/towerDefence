@@ -5,7 +5,7 @@ import projectile.Projectile;
 public interface ProjectileBehavior<T extends Projectile> extends Cloneable {
     void applyEffect(long currentTick);
 
-    ProjectileBehavior clone();
+    ProjectileBehavior<T> clone();
 
     void setProjectile(T projectile);
 
