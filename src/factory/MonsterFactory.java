@@ -20,6 +20,8 @@ public class MonsterFactory {
         defaultHealth = 100;
     }
 
+    //------------------------------------------------------------------------------------------------------------------
+
     public Monster createMonster(MovingMonsterStrategy strategy) {
         return new Monster(defaultHitboxParameters, strategy, defaultHealth);
     }
