@@ -7,7 +7,6 @@ import projectile.strategy.MovingProjectileStrategy;
 import utils.Direction;
 import utils.Position;
 
-
 public abstract class MovingProjectile extends DirectionalProjectile {
     private final MovingProjectileStrategy strategy;
 
@@ -27,12 +26,16 @@ public abstract class MovingProjectile extends DirectionalProjectile {
         strategy.setProjectile(this);
     }
 
+    //------------------------------------------------------------------------------------------------------------------
+
     @Override
     public void update(long currentTick) {
         super.update(currentTick);
 
         strategy.move(currentTick);
     }
+
+    //------------------------------------------------------------------------------------------------------------------
 
     public MovingProjectileStrategy getMovingStrategy() {
         return strategy;
