@@ -1,6 +1,7 @@
 package core;
 
 import economic.BankAccount;
+import events.BankAccountEvent;
 import events.BankAccountListener;
 import events.PlayerListener;
 import projectile.Projectile;
@@ -101,7 +102,7 @@ public class Player implements BankAccountListener {
     }
 
     @Override
-    public void onGoldCountChange(int gold) {
+    public void onGoldCountChange(BankAccountEvent event) {
         listeners.forEach(listener -> listener.onChangedPlayerGoldCount(this));
     }
 

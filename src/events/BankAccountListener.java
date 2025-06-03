@@ -1,5 +1,5 @@
 package events;
 
 public interface BankAccountListener {
-    void onGoldCountChange(int gold);
+    void onGoldCountChange(BankAccountEvent event);
 }

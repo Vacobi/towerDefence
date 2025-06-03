@@ -1,5 +1,6 @@
 package economic;
 
+import events.BankAccountEvent;
 import events.BankAccountListener;
 
 import java.util.LinkedList;
@@ -31,7 +32,7 @@ public class BankAccount {
 
         this.gold += count;
 
-        noticeGoldCountChanged();
+        fireGoldCountChanged();
     }
 
     public void writeOffGold(int count) {
@@ -45,13 +46,13 @@ public class BankAccount {
 
         this.gold -= count;
 
-        noticeGoldCountChanged();
+        fireGoldCountChanged();
     }
 
     public void setGold(int gold) {
         this.gold = gold;
 
-        noticeGoldCountChanged();
+        fireGoldCountChanged();
     }
 
     public int getGold() {
@@ -66,9 +67,12 @@ public class BankAccount {
         listeners.remove(listener);
     }
 
-    private void noticeGoldCountChanged() {
+    private void fireGoldCountChanged() {
+        BankAccountEvent event = new BankAccountEvent(this);
+        event.setGold(gold);
+
         for (BankAccountListener listener : listeners) {
-            listener.onGoldCountChange(gold);
+            listener.onGoldCountChange(event);
         }
     }
 }
