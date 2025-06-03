@@ -15,6 +15,7 @@ import java.util.Map;
 public class TowerComponent extends GameComponent<Tower<?>> {
 
     protected static Map<Class<? extends Projectile>, BufferedImage> sprites;
+    protected BufferedImage sprite;
 
     static {
         sprites = new HashMap<>();
@@ -29,8 +30,6 @@ public class TowerComponent extends GameComponent<Tower<?>> {
         sprites.put(ExplosiveProjectile.class, SpriteLoader.getSprite(pathToExplosiveTowerSprite));
     }
 
-    protected BufferedImage sprite;
-
     public TowerComponent(Tower<?> model, int width, int height) {
         super(model,
                 width,
@@ -39,6 +38,8 @@ public class TowerComponent extends GameComponent<Tower<?>> {
 
         sprite = sprites.get(model.getTypicalProjectile().getClass());
     }
+
+    //------------------------------------------------------------------------------------------------------------------
 
     @Override
     protected void paintComponent(Graphics g) {
