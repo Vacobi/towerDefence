@@ -1,5 +1,6 @@
 package core;
 
+import events.GameEvent;
 import events.GameListener;
 import org.junit.jupiter.api.Test;
 
@@ -48,27 +49,27 @@ class GameTest implements GameListener {
 
 
     @Override
-    public void onPlayerWin(Player player) {
+    public void onPlayerWin(GameEvent event) {
         win++;
     }
 
     @Override
-    public void onPlayerLose(Player player) {
+    public void onPlayerLose(GameEvent event) {
         lose++;
     }
 
     @Override
-    public void onWaveStart(Wave wave) {
+    public void onWaveStart(GameEvent event) {
 
     }
 
     @Override
-    public void onWaveEnd(Wave wave) {
+    public void onWaveEnd(GameEvent event) {
 
     }
 
     @Override
-    public void onWaveChange(Wave wave) {
+    public void onWaveChange(GameEvent event) {
 
     }
 }

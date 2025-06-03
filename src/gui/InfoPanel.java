@@ -2,7 +2,7 @@ package gui;
 
 import core.Game;
 import core.Player;
-import core.Wave;
+import events.GameEvent;
 import events.GameListener;
 import events.PlayerListener;
 
@@ -49,27 +49,27 @@ public class InfoPanel extends JPanel implements GameListener, PlayerListener {
     }
 
     @Override
-    public void onPlayerWin(Player player) {
+    public void onPlayerWin(GameEvent event) {
         ;
     }
 
     @Override
-    public void onPlayerLose(Player player) {
+    public void onPlayerLose(GameEvent event) {
         ;
     }
 
     @Override
-    public void onWaveStart(Wave wave) {
+    public void onWaveStart(GameEvent event) {
 
     }
 
     @Override
-    public void onWaveEnd(Wave wave) {
+    public void onWaveEnd(GameEvent event) {
         ;
     }
 
     @Override
-    public void onWaveChange(Wave wave) {
+    public void onWaveChange(GameEvent event) {
         updateWaveLabel();
     }
 

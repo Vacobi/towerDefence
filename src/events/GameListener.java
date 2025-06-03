@@ -1,16 +1,13 @@
 package events;
 
-import core.Player;
-import core.Wave;
-
 public interface GameListener {
-    void onPlayerWin(Player player);
+    void onPlayerWin(GameEvent event);
 
-    void onPlayerLose(Player player);
+    void onPlayerLose(GameEvent event);
 
-    void onWaveStart(Wave wave);
+    void onWaveStart(GameEvent event);
 
-    void onWaveEnd(Wave wave);
+    void onWaveEnd(GameEvent event);
 
-    void onWaveChange(Wave wave);
+    void onWaveChange(GameEvent event);
 }

@@ -2,8 +2,7 @@ package gui;
 
 import core.AbstractCell;
 import core.Game;
-import core.Player;
-import core.Wave;
+import events.GameEvent;
 import events.GameListener;
 import tower.Tower;
 import projectile.Projectile;
@@ -56,29 +55,29 @@ public class GameWindow extends JFrame implements GameListener {
     }
 
     @Override
-    public void onPlayerWin(Player player) {
+    public void onPlayerWin(GameEvent event) {
         showEndDialog("Вы выиграли!");
         processWaveStartButtonEnable();
     }
 
     @Override
-    public void onPlayerLose(Player player) {
+    public void onPlayerLose(GameEvent event) {
         showEndDialog("Вы проиграли!");
         processWaveStartButtonEnable();
     }
 
     @Override
-    public void onWaveStart(Wave wave) {
+    public void onWaveStart(GameEvent event) {
         processWaveStartButtonEnable();
     }
 
     @Override
-    public void onWaveEnd(Wave wave) {
+    public void onWaveEnd(GameEvent event) {
         processWaveStartButtonEnable();
     }
 
     @Override
-    public void onWaveChange(Wave wave) {
+    public void onWaveChange(GameEvent event) {
         processWaveStartButtonEnable();
     }
 

@@ -1,6 +1,7 @@
 package core;
 
 import economic.Accountant;
+import events.GameEvent;
 import events.GameListener;
 import events.WaveEvent;
 import events.WaveListener;
@@ -48,7 +49,14 @@ public class Game implements WaveListener, UpdateFieldController {
         this.gameState = GameState.WAVE_IN_PROGRESS;
         field.startUpdates(this);
 
-        listeners.forEach((GameListener l) -> l.onWaveStart(wave));
+        fireWaveStart();
+    }
+
+    private void fireWaveStart() {
+        GameEvent event = new GameEvent(this);
+        event.setWave(wave);
+
+        listeners.forEach(l -> l.onWaveStart(event));
     }
 
     public boolean canStartWave() {
@@ -61,17 +69,29 @@ public class Game implements WaveListener, UpdateFieldController {
         field.setWave(wave);
         accountant.creditGoldBeforeWave(wave);
 
-        listeners.forEach((GameListener l) -> l.onWaveChange(wave));
+        fireWaveChange();
+    }
+
+    private void fireWaveChange() {
+        GameEvent event = new GameEvent(this);
+        event.setWave(wave);
+
+        listeners.forEach(l -> l.onWaveChange(event));
     }
 
     private void determineWin() {
         if (currentWaveNumber >= WAVES_COUNT) {
             gameState = GameState.END;
 
-            listeners.forEach((GameListener l) -> {
-                l.onPlayerWin(player);
-            });
+            firePlayerWin();
         }
+    }
+
+    private void firePlayerWin() {
+        GameEvent event = new GameEvent(this);
+        event.setPlayer(getPlayer());
+
+        listeners.forEach(l -> l.onPlayerWin(event));
     }
 
     private void freezePlayer() {
@@ -97,7 +117,7 @@ public class Game implements WaveListener, UpdateFieldController {
     @Override
     public void onWaveEnd(WaveEvent event) {
         if (gameState != GameState.END) {
-            listeners.forEach((GameListener l) -> l.onWaveEnd(event.getWave()));
+            fireWaveEnd();
             determineWin();
         }
 
@@ -108,12 +128,26 @@ public class Game implements WaveListener, UpdateFieldController {
         }
     }
 
+    private void fireWaveEnd() {
+        GameEvent event = new GameEvent(this);
+        event.setWave(wave);
+
+        listeners.forEach(l -> l.onWaveEnd(event));
+    }
+
     private void determineLose() {
         if (player.getLives() <= 0) {
             gameState = GameState.END;
 
-            listeners.forEach((GameListener l) -> l.onPlayerLose(player));
+            firePlayerLose();
         }
+    }
+
+    private void firePlayerLose() {
+        GameEvent event = new GameEvent(this);
+        event.setPlayer(getPlayer());
+
+        listeners.forEach(l -> l.onPlayerLose(event));
     }
 
     @Override
