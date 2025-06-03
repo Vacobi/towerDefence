@@ -28,12 +28,6 @@ public class TowerUpgradeDialog extends JDialog {
         setLocationRelativeTo(parent);
     }
 
-    private void setCloseButton() {
-        JButton closeBtn = new JButton("Закрыть");
-        closeBtn.addActionListener(e -> dispose());
-        add(closeBtn, BorderLayout.SOUTH);
-    }
-
     private JButton createUpgradeButton(Tower<? extends Projectile> tower, Player player, TowerUpgradableCharacteristic characteristic) {
         Optional<Integer> optionalLevel = tower.getLevelOfCharacteristic(characteristic);
 
@@ -69,5 +63,11 @@ public class TowerUpgradeDialog extends JDialog {
         });
 
         return upgradeBtn;
+    }
+
+    private void setCloseButton() {
+        JButton closeBtn = new JButton("Закрыть");
+        closeBtn.addActionListener(e -> dispose());
+        add(closeBtn, BorderLayout.SOUTH);
     }
 }
