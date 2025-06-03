@@ -1,6 +1,5 @@
 package events;
 
-import core.Cell;
 import projectile.Projectile;
 import tower.Tower;
 
