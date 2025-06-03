@@ -66,6 +66,8 @@ public class Tower<T extends Projectile> {
         }
     }
 
+    //------------------------------------------------------------------------------------------------------------------
+
     public List<T> shoot(long currentTick) {
         return shootingStrategy.shoot(currentTick);
     }
@@ -132,41 +134,41 @@ public class Tower<T extends Projectile> {
                 );
     }
 
-    public Optional<Integer> getLevelOfCharacteristic(TowerUpgradableCharacteristic characteristic) {
-        return characteristicLevels.containsKey(characteristic) ? Optional.of(characteristicLevels.get(characteristic)) : Optional.empty();
-    }
+    //------------------------------------------------------------------------------------------------------------------
 
-    //--/////////////////////////////////////////////////////////////////////////
-
-    public ShootingStrategy<T> getStrategy() {
+    ShootingStrategy<T> getStrategy() {
         return shootingStrategy;
     }
 
-    public Cell getCell() {
+    Cell getCell() {
         return cell;
     }
 
-    public Field getField() {
+    Field getField() {
         return field;
     }
 
-    public Map<TowerUpgradableCharacteristic, Integer> getCharacteristicLevels() {
-        return characteristicLevels;
+    Map<TowerUpgradableCharacteristic, Integer> getCharacteristicLevels() {
+        return new HashMap<>(characteristicLevels);
     }
 
     public int getLevelsUpgradeCount() {
         return levelsUpgradeCount;
     }
 
-    public TowerCharacteristicsValues getCharacteristicValues() {
+    TowerCharacteristicsValues getCharacteristicValues() {
         return actualCharacteristicValues;
     }
 
-    public List<Direction> getShotDirections() {
+    List<Direction> getShotDirections() {
         return shotDirections;
     }
 
     public T getTypicalProjectile() {
         return typicalProjectile;
+    }
+
+    public Optional<Integer> getLevelOfCharacteristic(TowerUpgradableCharacteristic characteristic) {
+        return characteristicLevels.containsKey(characteristic) ? Optional.of(characteristicLevels.get(characteristic)) : Optional.empty();
     }
 }
