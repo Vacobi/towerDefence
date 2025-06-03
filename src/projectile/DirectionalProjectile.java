@@ -6,7 +6,6 @@ import projectile.behavior.ProjectileBehavior;
 import utils.Direction;
 import utils.Position;
 
-
 public abstract class DirectionalProjectile extends Projectile {
     private Direction direction;
 
@@ -24,7 +23,11 @@ public abstract class DirectionalProjectile extends Projectile {
         this.direction = direction;
     }
 
+    //------------------------------------------------------------------------------------------------------------------
+
     public abstract DirectionalProjectile clone(Position position, Direction direction);
+
+    //------------------------------------------------------------------------------------------------------------------
 
     public Direction getDirection() {
         return direction;
