@@ -23,7 +23,9 @@ import java.util.concurrent.TimeUnit;
 public class TowersCatalogue {
 
     private static Map<Tower<? extends Projectile>, Integer> availableTowersWithPrices;
+    private static Map<Tower<? extends Projectile>, String> namesOfTowers;
 
+    private static Map<TowerUpgradableCharacteristic, String> upgradeNames;
     private static Map<TowerUpgradableCharacteristic, List<Integer>> upgradePrices;
 
     private static Map<Class<? extends ShootingStrategy>, ShootingStrategy> towerShootingStrategies;
@@ -46,9 +48,12 @@ public class TowersCatalogue {
         projectileBehaviors = new HashMap<>();
         initializeProjectileBehaviors();
 
+        namesOfTowers = new HashMap<>();
         availableTowersWithPrices = new LinkedHashMap<>();
         initializeTowersWithPrices(field);
 
+        upgradeNames = new HashMap<>();
+        initializeUpgradeNames();
         upgradePrices = new HashMap<>();
         initializeUpgradePrices();
     }
@@ -93,6 +98,12 @@ public class TowersCatalogue {
         upgradePrices.put(TowerUpgradableCharacteristic.SHOOTING_DELAY, delayUpgradesPrices);
     }
 
+    private static void initializeUpgradeNames() {
+        upgradeNames.put(TowerUpgradableCharacteristic.SHOOTING_DELAY, "Задержка выстрела");
+        upgradeNames.put(TowerUpgradableCharacteristic.RANGE, "Расстояние выстрела");
+        upgradeNames.put(TowerUpgradableCharacteristic.DAMAGE, "Урон");
+    }
+
     //------------------------------------------------------------------------------------------------------------------
 
     private void addTowerWithPlainProjectile(Field field) {
@@ -129,6 +140,7 @@ public class TowersCatalogue {
 
         int price = 20;
         availableTowersWithPrices.put(tower, price);
+        namesOfTowers.put(tower, "Башня с обычным снарядом");
     }
 
     private void addTowerWithLaser(Field field) {
@@ -167,6 +179,7 @@ public class TowersCatalogue {
 
         int price = 30;
         availableTowersWithPrices.put(tower, price);
+        namesOfTowers.put(tower, "Башня с Лазером");
     }
 
     private void addTowerWithExplosiveProjectile(Field field) {
@@ -205,6 +218,7 @@ public class TowersCatalogue {
 
         int price = 50;
         availableTowersWithPrices.put(tower, price);
+        namesOfTowers.put(tower, "Башня с Бомбами");
     }
 
     //------------------------------------------------------------------------------------------------------------------
@@ -236,5 +250,13 @@ public class TowersCatalogue {
         Integer buildPrice = availableTowersWithPrices.get(tower);
 
         return buildPrice == null ? Optional.empty() : Optional.of(buildPrice);
+    }
+
+    public String getNameOfTower(Tower<? extends Projectile> tower) {
+        return namesOfTowers.get(tower);
+    }
+
+    public static String getNameOfUpgrade(TowerUpgradableCharacteristic characteristic) {
+        return upgradeNames.get(characteristic);
     }
 }

@@ -40,11 +40,11 @@ public class TowerUpgradeDialog extends JDialog {
         if (optionalCost.isPresent()) {
             int cost = optionalCost.get();
             upgradeBtn = new JButton(
-                    String.format("%s (уровень %d/%d) - $%d", characteristic, currentLevel, maxLevel, cost)
+                    String.format("%s (уровень %d/%d) - $%d", TowersCatalogue.getNameOfUpgrade(characteristic), currentLevel, maxLevel, cost)
             );
         } else {
             upgradeBtn = new JButton(
-                    String.format("%s (уровень %d/%d)", characteristic, currentLevel, maxLevel)
+                    String.format("%s (уровень %d/%d)", TowersCatalogue.getNameOfUpgrade(characteristic), currentLevel, maxLevel)
             );
         }
 

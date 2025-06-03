@@ -23,7 +23,7 @@ public class WaveFactory {
     //------------------------------------------------------------------------------------------------------------------
 
     public Wave createWave(int number, Field field) {
-        MovingMonsterStrategy strategy = new PlainRoadMoving(field, 1 + number / 3);
+        MovingMonsterStrategy strategy = new PlainRoadMoving(field, 10 + number * 2 / 3);
 
         Queue<Monster> monstersToSpawn = monsterFactory.createMonsters(defaultMonstersCount * number / 4, strategy);
 

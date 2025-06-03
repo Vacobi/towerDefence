@@ -26,7 +26,7 @@ public class CataloguePanel extends JPanel implements PlayerListener, GameListen
         setLayout(new GridLayout(0, 1, 5, 5));
         setBorder(BorderFactory.createTitledBorder("Tower Catalogue"));
         catalogue.getAvailableTowersWithPrices().forEach((prototype, price) -> {
-            String label = prototype.getClass().getSimpleName() + " ($" + price + ")";
+            String label = catalogue.getNameOfTower(prototype) + " ($" + price + ")";
             JButton btn = new JButton(label);
 
             btn.addActionListener(e -> select(prototype));
