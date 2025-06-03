@@ -2,8 +2,8 @@ package core;
 
 import events.CellEvent;
 import events.CellListener;
+import events.WaveEvent;
 import events.WaveListener;
-import monster.Monster;
 import projectile.Projectile;
 import projectile.ProjectilesContainer;
 import road.Road;
@@ -156,17 +156,17 @@ public class Field implements WaveListener, CellListener {
     }
 
     @Override
-    public void onMonsterDeath(Monster monster) {
+    public void onMonsterDeath(WaveEvent event) {
         ;
     }
 
     @Override
-    public void onMonsterReachedEnd(Monster monster) {
+    public void onMonsterReachedEnd(WaveEvent event) {
         ;
     }
 
     @Override
-    public void onWaveEnd(Wave wave) {
+    public void onWaveEnd(WaveEvent event) {
 
         projectiles.clearProjectiles();
         stopUpdates();

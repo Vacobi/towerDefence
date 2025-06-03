@@ -1,12 +1,9 @@
 package events;
 
-import core.Wave;
-import monster.Monster;
-
 public interface WaveListener {
-    void onMonsterDeath(Monster monster);
+    void onMonsterDeath(WaveEvent event);
 
-    void onMonsterReachedEnd(Monster monster);
+    void onMonsterReachedEnd(WaveEvent event);
 
-    void onWaveEnd(Wave wave);
+    void onWaveEnd(WaveEvent event);
 }

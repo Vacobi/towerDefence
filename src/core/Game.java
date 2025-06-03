@@ -2,9 +2,9 @@ package core;
 
 import economic.Accountant;
 import events.GameListener;
+import events.WaveEvent;
 import events.WaveListener;
 import factory.WaveFactory;
-import monster.Monster;
 import utils.GameState;
 
 import java.util.LinkedList;
@@ -83,21 +83,21 @@ public class Game implements WaveListener, UpdateFieldController {
     }
 
     @Override
-    public void onMonsterDeath(Monster monster) {
+    public void onMonsterDeath(WaveEvent event) {
         accountant.creditGoldForMonsterKill();
     }
 
     @Override
-    public void onMonsterReachedEnd(Monster monster) {
+    public void onMonsterReachedEnd(WaveEvent event) {
         player.reduceLives(1);
 
         determineLose();
     }
 
     @Override
-    public void onWaveEnd(Wave wave) {
+    public void onWaveEnd(WaveEvent event) {
         if (gameState != GameState.END) {
-            listeners.forEach((GameListener l) -> l.onWaveEnd(wave));
+            listeners.forEach((GameListener l) -> l.onWaveEnd(event.getWave()));
             determineWin();
         }
 

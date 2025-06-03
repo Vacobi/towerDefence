@@ -1,11 +1,11 @@
 package gui;
 
 import core.*;
+import events.WaveEvent;
 import events.WaveListener;
 import gui.components.ComponentFactory;
 import gui.components.GameComponent;
 import gui.components.MonsterComponent;
-import monster.Monster;
 import projectile.Projectile;
 import tower.Tower;
 import utils.Position;
@@ -139,17 +139,17 @@ public class GameWidgetPanel extends JLayeredPane implements WaveListener {
     }
 
     @Override
-    public void onMonsterDeath(Monster monster) {
+    public void onMonsterDeath(WaveEvent event) {
         ;
     }
 
     @Override
-    public void onMonsterReachedEnd(Monster monster) {
+    public void onMonsterReachedEnd(WaveEvent event) {
         ;
     }
 
     @Override
-    public void onWaveEnd(Wave wave) {
+    public void onWaveEnd(WaveEvent event) {
         try {
             Thread.sleep(100);
         } catch (Exception ignored) {}

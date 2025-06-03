@@ -1,5 +1,6 @@
 package core;
 
+import events.WaveEvent;
 import events.WaveListener;
 import factory.MonsterFactory;
 import factory.WaveFactory;
@@ -125,17 +126,17 @@ class WaveTest implements WaveListener {
     }
 
     @Override
-    public void onMonsterDeath(Monster monster) {
+    public void onMonsterDeath(WaveEvent event) {
         monsterDeaths++;
     }
 
     @Override
-    public void onMonsterReachedEnd(Monster monster) {
+    public void onMonsterReachedEnd(WaveEvent event) {
         monsterReachedEnd++;
     }
 
     @Override
-    public void onWaveEnd(Wave wave) {
+    public void onWaveEnd(WaveEvent event) {
         ;
     }
 }
