@@ -83,6 +83,18 @@ public class TowersCatalogue {
         addTowerWithExplosiveProjectile(field);
     }
 
+    private void initializeUpgradePrices() {
+        List<Integer> damageUpgradesPrices = List.of(0, 20, 30);
+        List<Integer> delayUpgradesPrices = List.of(0, 20, 30);
+        List<Integer> rangeUpgradesPrices = List.of(0, 20, 30);
+
+        upgradePrices.put(TowerUpgradableCharacteristic.DAMAGE, damageUpgradesPrices);
+        upgradePrices.put(TowerUpgradableCharacteristic.RANGE, rangeUpgradesPrices);
+        upgradePrices.put(TowerUpgradableCharacteristic.SHOOTING_DELAY, delayUpgradesPrices);
+    }
+
+    //------------------------------------------------------------------------------------------------------------------
+
     private void addTowerWithPlainProjectile(Field field) {
         int maxDistance =  (int) (AbstractCell.getSize() * 2.5);
         int damage = 50;
@@ -195,25 +207,7 @@ public class TowersCatalogue {
         availableTowersWithPrices.put(tower, price);
     }
 
-    public Map<Tower<? extends Projectile>, Integer> getAvailableTowersWithPrices() {
-        return availableTowersWithPrices;
-    }
-
-    public Optional<Integer> getPrice(Tower<? extends Projectile> tower) {
-        Integer buildPrice = availableTowersWithPrices.get(tower);
-
-        return buildPrice == null ? Optional.empty() : Optional.of(buildPrice);
-    }
-
-    private void initializeUpgradePrices() {
-        List<Integer> damageUpgradesPrices = List.of(0, 20, 30);
-        List<Integer> delayUpgradesPrices = List.of(0, 20, 30);
-        List<Integer> rangeUpgradesPrices = List.of(0, 20, 30);
-
-        upgradePrices.put(TowerUpgradableCharacteristic.DAMAGE, damageUpgradesPrices);
-        upgradePrices.put(TowerUpgradableCharacteristic.RANGE, rangeUpgradesPrices);
-        upgradePrices.put(TowerUpgradableCharacteristic.SHOOTING_DELAY, delayUpgradesPrices);
-    }
+    //------------------------------------------------------------------------------------------------------------------
 
     public Optional<Integer> getUpgradePrice(TowerUpgradableCharacteristic characteristic, int upgradeLevel) {
         if (upgradePrices.get(characteristic).size() < upgradeLevel) {
@@ -227,10 +221,20 @@ public class TowersCatalogue {
     }
 
     public Map<TowerUpgradableCharacteristic, List<Integer>> getUpgradePrices() {
-        return upgradePrices;
+        return new HashMap<>(upgradePrices);
     }
 
     public List<Integer> getCharacteristicUpgradePrices(TowerUpgradableCharacteristic characteristic) {
-        return upgradePrices.get(characteristic);
+        return new ArrayList<>(upgradePrices.get(characteristic));
+    }
+
+    public Map<Tower<? extends Projectile>, Integer> getAvailableTowersWithPrices() {
+        return new HashMap<>(availableTowersWithPrices);
+    }
+
+    public Optional<Integer> getPrice(Tower<? extends Projectile> tower) {
+        Integer buildPrice = availableTowersWithPrices.get(tower);
+
+        return buildPrice == null ? Optional.empty() : Optional.of(buildPrice);
     }
 }
