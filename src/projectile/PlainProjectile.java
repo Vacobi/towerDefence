@@ -22,6 +22,8 @@ public class PlainProjectile extends MovingProjectile {
         super(parameters, damage, distance, startPosition, behavior, field, direction, strategy);
     }
 
+    //------------------------------------------------------------------------------------------------------------------
+
     @Override
     public PlainProjectile clone(int damage, int range) {
 
