@@ -16,6 +16,8 @@ public class Builder {
         towersCatalogue = new TowersCatalogue(field);
     }
 
+    //------------------------------------------------------------------------------------------------------------------
+
     public BuildingResponse buildTower(Tower<? extends Projectile> towerFromCatalogue, Cell cell, int gold) {
         BuildingResponse buildingResponse = new BuildingResponse(gold, false);
 
@@ -44,10 +46,6 @@ public class Builder {
         tower.upgrade(towerUpgrade);
 
         return new BuildingResponse(gold - upgradePrice, true);
-    }
-
-    public TowersCatalogue getTowersCatalogue() {
-        return towersCatalogue;
     }
 
     public boolean canBuildTower(Tower<? extends Projectile> tower, Cell cell, int gold) {
@@ -85,5 +83,11 @@ public class Builder {
         int upgradePrice = optionalUpgradePrice.get();
 
         return upgradePrice <= gold;
+    }
+
+    //------------------------------------------------------------------------------------------------------------------
+
+    public TowersCatalogue getTowersCatalogue() {
+        return towersCatalogue;
     }
 }
