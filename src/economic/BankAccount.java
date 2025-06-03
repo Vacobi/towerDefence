@@ -25,6 +25,8 @@ public class BankAccount {
         listeners = new LinkedList<>();
     }
 
+    //------------------------------------------------------------------------------------------------------------------
+
     public void creditGold(int count) {
         if (count < 0) {
             throw new IllegalArgumentException("Credit count cannot be negative");
@@ -49,6 +51,8 @@ public class BankAccount {
         fireGoldCountChanged();
     }
 
+    //------------------------------------------------------------------------------------------------------------------
+
     public void setGold(int gold) {
         this.gold = gold;
 
@@ -66,6 +70,8 @@ public class BankAccount {
     public void removeListener(BankAccountListener listener) {
         listeners.remove(listener);
     }
+
+    //------------------------------------------------------------------------------------------------------------------
 
     private void fireGoldCountChanged() {
         BankAccountEvent event = new BankAccountEvent(this);
