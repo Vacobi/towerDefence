@@ -15,10 +15,7 @@ public abstract class AbstractCell {
     }
 
     public Position getGlobalPosition() {
-        return new Position(
-                CoordinatesConverter.toGlobalCoordinate(position.getX()) + getSize() / 2,
-                CoordinatesConverter.toGlobalCoordinate(position.getY()) + getSize() / 2
-        );
+        return toGlobalPosition(position);
     }
 
     public abstract boolean canPlaceTower();
