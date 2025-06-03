@@ -60,6 +60,8 @@ public class GameWidgetPanel extends JLayeredPane implements WaveListener {
         }
     }
 
+    //------------------------------------------------------------------------------------------------------------------
+
     private void onCellClicked(Position pos) {
         if (game.getPlayer().frozen()) {
             return;
@@ -137,6 +139,8 @@ public class GameWidgetPanel extends JLayeredPane implements WaveListener {
         revalidate();
         repaint();
     }
+
+    //------------------------------------------------------------------------------------------------------------------
 
     @Override
     public void onMonsterDeath(WaveEvent event) {
