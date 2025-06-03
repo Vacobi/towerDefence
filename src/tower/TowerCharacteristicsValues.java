@@ -11,15 +11,17 @@ public class TowerCharacteristicsValues implements Cloneable{
         this.shootingDelay = delay;
     }
 
-    public void setDamage(int damage) {
+    //------------------------------------------------------------------------------------------------------------------
+
+    void setDamage(int damage) {
         this.damage = damage;
     }
 
-    public void setRange(int range) {
+    void setRange(int range) {
         this.range = range;
     }
 
-    public void setShootingDelay(Long delay) {
+    void setShootingDelay(Long delay) {
         this.shootingDelay = delay;
     }
 
