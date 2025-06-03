@@ -10,8 +10,13 @@ public abstract class AbstractCell {
         this.position = position;
     }
 
-    public Position position() {
-        return position;
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static Position toGlobalPosition(Position position) {
+        return new Position(
+                CoordinatesConverter.toGlobalCoordinate(position.getX()) + getSize() / 2,
+                CoordinatesConverter.toGlobalCoordinate(position.getY()) + getSize() / 2
+        );
     }
 
     public Position getGlobalPosition() {
@@ -24,10 +29,9 @@ public abstract class AbstractCell {
         return 40;
     }
 
-    public static Position toGlobalPosition(Position position) {
-        return new Position(
-                CoordinatesConverter.toGlobalCoordinate(position.getX()) + getSize() / 2,
-                CoordinatesConverter.toGlobalCoordinate(position.getY()) + getSize() / 2
-        );
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public Position position() {
+        return position;
     }
 }
