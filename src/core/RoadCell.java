@@ -8,6 +8,8 @@ public class RoadCell extends AbstractCell{
         super(position);
     }
 
+    //------------------------------------------------------------------------------------------------------------------
+
     @Override
     public boolean canPlaceTower() {
         return false;
