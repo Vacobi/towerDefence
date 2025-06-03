@@ -15,19 +15,7 @@ public class HitOneTargetBehavior implements ProjectileBehavior {
         this(null);
     }
 
-    @Override
-    public void setProjectile(Projectile projectile) {
-        if (this.projectile != null) {
-            throw new IllegalStateException("Projectile already set");
-        }
-
-        this.projectile = projectile;
-    }
-
-    @Override
-    public Projectile getProjectile() {
-        return projectile;
-    }
+    //------------------------------------------------------------------------------------------------------------------
 
     @Override
     public void applyEffect(long currentTick) {
@@ -59,5 +47,21 @@ public class HitOneTargetBehavior implements ProjectileBehavior {
     @Override
     public HitOneTargetBehavior clone() {
         return new HitOneTargetBehavior();
+    }
+
+    //------------------------------------------------------------------------------------------------------------------
+
+    @Override
+    public void setProjectile(Projectile projectile) {
+        if (this.projectile != null) {
+            throw new IllegalStateException("Projectile already set");
+        }
+
+        this.projectile = projectile;
+    }
+
+    @Override
+    public Projectile getProjectile() {
+        return projectile;
     }
 }
