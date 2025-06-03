@@ -10,24 +10,26 @@ public class HitboxParameters {
         this.angle = angle;
     }
 
+    //------------------------------------------------------------------------------------------------------------------
+
     public int width() {
         return width;
-    }
-
-    public int height() {
-        return height;
-    }
-
-    public double angle() {
-        return angle;
     }
 
     public void setWidth(int width) {
         this.width = width;
     }
 
+    public int height() {
+        return height;
+    }
+
     public void setHeight(int height) {
         this.height = height;
+    }
+
+    public double angle() {
+        return angle;
     }
 
     public void setAngle(double angle) {
