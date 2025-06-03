@@ -8,7 +8,7 @@ public class LinearMovingProjectileStrategy implements MovingProjectileStrategy 
     private int totalTraveledDistance;
 
     private final int speed;
-    private static final int SPEED_COEFF = 25;
+    private static final int SPEED_COEFF = 250;
 
     private MovingProjectile projectile;
 
@@ -36,7 +36,8 @@ public class LinearMovingProjectileStrategy implements MovingProjectileStrategy 
             throw new IllegalStateException("No projectile found");
         }
 
-        int moveDistance = (int) ((currentTick - lastMoveTime) / SPEED_COEFF) * speed;
+        int delta = (int)(currentTick - lastMoveTime);
+        int moveDistance = (delta * speed) / SPEED_COEFF;
 
         move(currentTick, moveDistance);
     }
@@ -47,6 +48,10 @@ public class LinearMovingProjectileStrategy implements MovingProjectileStrategy 
         }
 
         if (!projectile.active()) {
+            return;
+        }
+
+        if (moveDistance == 0) {
             return;
         }
 

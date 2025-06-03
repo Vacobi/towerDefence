@@ -48,7 +48,7 @@ class LinearMovingProjectileStrategyTest {
         long delta = TimeUnit.SECONDS.toMillis(2);
         long movingTime = now + delta;
 
-        int expectedTotalTraveled = (int) (delta / SPEED_COEFF) * speed;
+        int expectedTotalTraveled = (int) (delta * speed) / SPEED_COEFF;
         Position expectedPosition = projectile.position().move(direction, expectedTotalTraveled);
         boolean expActive = true;
 
@@ -121,7 +121,7 @@ class LinearMovingProjectileStrategyTest {
         long delta = TimeUnit.SECONDS.toMillis(1);
         long movingTime = now + delta;
 
-        int expectedTotalTraveled = (int) (delta / SPEED_COEFF) * speed;
+        int expectedTotalTraveled = (int) (delta * speed) / SPEED_COEFF;
         Position expectedPosition = projectile.position().move(direction, expectedTotalTraveled);
         boolean expActive = true;
 
@@ -156,7 +156,7 @@ class LinearMovingProjectileStrategyTest {
         long delta = TimeUnit.SECONDS.toMillis(2);
         long movingTime = now + delta;
 
-        int expectedTotalTraveled = (int) (delta / SPEED_COEFF) * speed;
+        int expectedTotalTraveled = (int) (delta * speed) / SPEED_COEFF;
         Position expectedPosition = projectile.position().move(direction, expectedTotalTraveled);
         boolean expActive = true;
 
@@ -191,7 +191,7 @@ class LinearMovingProjectileStrategyTest {
         long delta = TimeUnit.SECONDS.toMillis(2);
         long movingTime = now + delta;
 
-        int expectedTotalTraveled = (int) (delta / SPEED_COEFF) * speed;
+        int expectedTotalTraveled = (int) (delta * speed) / SPEED_COEFF;
         Position expectedPosition = projectile.position().move(direction, expectedTotalTraveled);
         boolean expActive = true;
 
@@ -226,7 +226,7 @@ class LinearMovingProjectileStrategyTest {
         long delta = TimeUnit.SECONDS.toMillis(2);
         long movingTime = now + delta;
 
-        int expectedTotalTraveled = (int) (delta / SPEED_COEFF) * speed;
+        int expectedTotalTraveled = (int) (delta * speed) / SPEED_COEFF;
         Position expectedPosition = projectile.position().move(direction, expectedTotalTraveled);
         boolean expActive = true;
 
@@ -243,7 +243,7 @@ class LinearMovingProjectileStrategyTest {
         int speed = 1;
         int damage = 15;
         long delta = TimeUnit.SECONDS.toMillis(10);
-        int maxDistance = (int) (delta / SPEED_COEFF) * speed;
+        int maxDistance = (int) (delta * speed) / SPEED_COEFF;
         Direction direction = Direction.EAST;
         Position startPosition = new Position(1, 1);
         HitOneTargetBehavior behavior = new HitOneTargetBehavior();
@@ -261,7 +261,7 @@ class LinearMovingProjectileStrategyTest {
         );
         long movingTime = now + delta;
 
-        int expectedTotalTraveled = (int) (delta / SPEED_COEFF) * speed;
+        int expectedTotalTraveled = (int) (delta * speed) / SPEED_COEFF;
         Position expectedPosition = projectile.position().move(direction, expectedTotalTraveled);
         boolean expActive = true;
 
@@ -278,7 +278,7 @@ class LinearMovingProjectileStrategyTest {
         int speed = 1;
         int damage = 15;
         long delta = TimeUnit.SECONDS.toMillis(10);
-        int maxDistance = (int) (delta / SPEED_COEFF) * speed;
+        int maxDistance = (int) (delta * speed) / SPEED_COEFF;
         Direction direction = Direction.NORTH;
         Position startPosition = new Position(1, 1);
         HitOneTargetBehavior behavior = new HitOneTargetBehavior();
