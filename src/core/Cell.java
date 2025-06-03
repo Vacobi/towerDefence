@@ -30,7 +30,14 @@ public class Cell extends AbstractCell implements Cloneable {
 
         this.tower = tower;
 
-        listeners.forEach(l -> l.onTowerBuilt(this));
+        fireTowerBuilt(tower);
+    }
+
+    private void fireTowerBuilt(Tower<? extends Projectile> tower) {
+        CellEvent event = new CellEvent(this);
+        event.setTower(tower);
+
+        listeners.forEach(l -> l.onTowerBuilt(event));
     }
 
     public boolean canPlaceTower() {

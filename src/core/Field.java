@@ -1,5 +1,6 @@
 package core;
 
+import events.CellEvent;
 import events.CellListener;
 import events.WaveListener;
 import monster.Monster;
@@ -172,7 +173,7 @@ public class Field implements WaveListener, CellListener {
     }
 
     @Override
-    public void onTowerBuilt(Cell cell) {
-        towers.addTower(cell.getTower());
+    public void onTowerBuilt(CellEvent event) {
+        towers.addTower(event.getTower());
     }
 }
