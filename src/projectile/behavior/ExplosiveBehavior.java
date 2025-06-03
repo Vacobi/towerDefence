@@ -19,6 +19,8 @@ public class ExplosiveBehavior implements ProjectileBehavior<ExplosiveProjectile
         this(null);
     }
 
+    //------------------------------------------------------------------------------------------------------------------
+
     @Override
     public void applyEffect(long currentTick) {
         if (projectile == null) {
@@ -73,6 +75,8 @@ public class ExplosiveBehavior implements ProjectileBehavior<ExplosiveProjectile
     public ExplosiveBehavior clone() {
         return new ExplosiveBehavior();
     }
+
+    //------------------------------------------------------------------------------------------------------------------
 
     @Override
     public void setProjectile(ExplosiveProjectile projectile) {
