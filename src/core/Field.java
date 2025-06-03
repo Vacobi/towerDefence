@@ -31,7 +31,7 @@ public class Field implements WaveListener, CellListener {
         cells = new HashSet<>();
         initializeCells();
 
-        towers = new TowersContainer(this);
+        towers = new TowersContainer();
         projectiles = new ProjectilesContainer();
         wave = null;
     }
@@ -41,7 +41,7 @@ public class Field implements WaveListener, CellListener {
         cells = new HashSet<>();
         initializeCells();
 
-        towers = new TowersContainer(this);
+        towers = new TowersContainer();
         projectiles = new ProjectilesContainer();
         wave = null;
     }
@@ -61,6 +61,8 @@ public class Field implements WaveListener, CellListener {
             }
         }
     }
+
+    //------------------------------------------------------------------------------------------------------------------
 
     public void startUpdates(UpdateFieldController controller) {
         updateTimer = new Timer("FieldUpdateTimer", true);
@@ -87,23 +89,6 @@ public class Field implements WaveListener, CellListener {
         updateTimer.purge();
     }
 
-    public Road getRoad() {
-        return road;
-    }
-
-    public void setWave(Wave wave) {
-        if (wave == null) {
-            throw new IllegalArgumentException("Wave can not be null");
-        }
-
-        this.wave = wave;
-        wave.addListener(this);
-    }
-
-    public Wave getWave() {
-        return wave;
-    }
-
     protected void towersShoot(long currentTick) {
         towers.forEach((Tower tower) -> {
             List<Projectile> shots = tower.shoot(currentTick);
@@ -123,22 +108,6 @@ public class Field implements WaveListener, CellListener {
         }
     }
 
-    public Set<Cell> getCells() {
-        return new HashSet<>(cells);
-    }
-
-    public int getWidth() {
-        return WIDTH;
-    }
-
-    public int getHeight() {
-        return HEIGHT;
-    }
-
-    public List<Projectile> getProjectiles() {
-        return new LinkedList<>(projectiles.getProjectiles());
-    }
-
     public Optional<AbstractCell> cellAt(Position position) {
         for (Cell cell : cells) {
             if (cell.position().equals(position)) {
@@ -155,6 +124,43 @@ public class Field implements WaveListener, CellListener {
         return Optional.empty();
     }
 
+    //------------------------------------------------------------------------------------------------------------------
+
+    public void setWave(Wave wave) {
+        if (wave == null) {
+            throw new IllegalArgumentException("Wave can not be null");
+        }
+
+        this.wave = wave;
+        wave.addListener(this);
+    }
+
+    public Wave getWave() {
+        return wave;
+    }
+
+    public List<Projectile> getProjectiles() {
+        return new LinkedList<>(projectiles.getProjectiles());
+    }
+
+    public Road getRoad() {
+        return road;
+    }
+
+    public Set<Cell> getCells() {
+        return new HashSet<>(cells);
+    }
+
+    public int getWidth() {
+        return WIDTH;
+    }
+
+    public int getHeight() {
+        return HEIGHT;
+    }
+
+    //------------------------------------------------------------------------------------------------------------------
+
     @Override
     public void onMonsterDeath(WaveEvent event) {
         ;
@@ -167,7 +173,6 @@ public class Field implements WaveListener, CellListener {
 
     @Override
     public void onWaveEnd(WaveEvent event) {
-
         projectiles.clearProjectiles();
         stopUpdates();
     }
