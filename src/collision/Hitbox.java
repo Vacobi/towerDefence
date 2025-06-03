@@ -23,6 +23,8 @@ public class Hitbox {
         this.hitboxParameters = hitboxParameters;
     }
 
+    //------------------------------------------------------------------------------------------------------------------
+
     public Point2D.Double[] getVertices() {
         Point2D.Double[] vertices = new Point2D.Double[4];
 
@@ -69,6 +71,8 @@ public class Hitbox {
         path.closePath();
         return new Area(path);
     }
+
+    //------------------------------------------------------------------------------------------------------------------
 
     public int getX() {
         return x;
