@@ -15,6 +15,8 @@ public class Accountant {
         defaultCreditForMonsterKillChance = 0.15;
     }
 
+    //------------------------------------------------------------------------------------------------------------------
+
     public void creditGoldBeforeWave(Wave wave) {
         int gold;
         if (wave.getNumber() == 1) {
