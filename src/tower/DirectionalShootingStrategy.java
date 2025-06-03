@@ -21,15 +21,7 @@ public class DirectionalShootingStrategy implements ShootingStrategy<Directional
         this(null);
     }
 
-    @Override
-    public void setTower(Tower<DirectionalProjectile> tower) {
-        if (this.tower != null) {
-            throw new IllegalArgumentException("Tower already assigned to this shooting strategy");
-        }
-
-        this.tower = tower;
-        lastShootTime -= tower.getCharacteristicValues().shootingDelay();
-    }
+    //------------------------------------------------------------------------------------------------------------------
 
     @Override
     public List<DirectionalProjectile> shoot(long currentTick) {
@@ -61,5 +53,17 @@ public class DirectionalShootingStrategy implements ShootingStrategy<Directional
     @Override
     public ShootingStrategy<DirectionalProjectile> clone() {
         return new DirectionalShootingStrategy();
+    }
+
+    //------------------------------------------------------------------------------------------------------------------
+
+    @Override
+    public void setTower(Tower<DirectionalProjectile> tower) {
+        if (this.tower != null) {
+            throw new IllegalArgumentException("Tower already assigned to this shooting strategy");
+        }
+
+        this.tower = tower;
+        lastShootTime -= tower.getCharacteristicValues().shootingDelay();
     }
 }
