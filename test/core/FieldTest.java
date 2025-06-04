@@ -34,7 +34,7 @@ class FieldTest {
     }
 
     @Test
-    void waveEnds() {
+    void waveStarts() throws InterruptedException {
         Field field = new Field(path.toString());
         UpdateFieldControllerImpl controller = new UpdateFieldControllerImpl();
 
@@ -42,11 +42,15 @@ class FieldTest {
         MovingMonsterStrategy strategy = new PlainRoadMoving(field, 1000);
         Queue<Monster> monstersToSpawn = factory.createMonsters(1, strategy);
 
-        Wave wave = new Wave(monstersToSpawn, 1L, 1);
+        long spawnDelay = 1L;
+        Wave wave = new Wave(monstersToSpawn, spawnDelay, 1);
 
         field.setWave(wave);
 
         assertDoesNotThrow(() -> field.startUpdates(controller));
+
+        Thread.sleep(spawnDelay);
+        assertEquals(1, wave.getAliveMonsters().size());
     }
 
     public class UpdateFieldControllerImpl implements UpdateFieldController {
