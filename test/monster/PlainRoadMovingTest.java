@@ -48,7 +48,6 @@ class PlainRoadMovingTest {
                 .normalize();
         Field field = new Field(path.toString());
         MovingMonsterStrategy strategy = new PlainRoadMoving(field, 20);
-        // To initialize lastMovingTimestrategy.moveMonster(System.currentTimeMillis());
         strategy.moveMonster(System.currentTimeMillis());
 
         long delta = TimeUnit.MILLISECONDS.toMillis(200);
@@ -65,7 +64,7 @@ class PlainRoadMovingTest {
     }
 
     @Test
-    void moveInTwoSegments() {
+    void moveWithSwitchOfSegment() {
         Path path = Paths.get("test", "monster", "resources", "several_segments.txt")
                 .toAbsolutePath()
                 .normalize();
@@ -88,5 +87,84 @@ class PlainRoadMovingTest {
         assertRoadSegmentsEquals(secondRoadSegment, strategy.currentRoadSegment());
         assertFalse(strategy.monsterReachedEnd());
         assertEquals(tickTime, strategy.lastMovingTime());
+    }
+
+    @Test
+    void moveOnZeroDistance() {
+        Path path = Paths.get("test", "monster", "resources", "one_segment_road.txt")
+                .toAbsolutePath()
+                .normalize();
+        Field field = new Field(path.toString());
+        MovingMonsterStrategy strategy = new PlainRoadMoving(field, 0);
+        // To initialize lastMovingTime
+        long initialMovingTime = System.currentTimeMillis();
+        strategy.moveMonster(initialMovingTime);
+
+        long delta = TimeUnit.SECONDS.toMillis(2);
+        long tickTime = strategy.lastMovingTime() + delta;
+        Position positionOfFirstSegment = field.getRoad().getRoadSegments().get(0).getStart();
+
+        Position expectedPosition = positionOfFirstSegment;
+
+        strategy.moveMonster(tickTime);
+
+        assertEquals(expectedPosition, strategy.currentPosition());
+        assertFalse(strategy.monsterReachedEnd());
+        assertEquals(initialMovingTime, strategy.lastMovingTime());
+    }
+
+    @Test
+    void moveAfterReachedEnd() {
+        Path path = Paths.get("test", "monster", "resources", "one_segment_road.txt")
+                .toAbsolutePath()
+                .normalize();
+        Field field = new Field(path.toString());
+        MovingMonsterStrategy strategy = new PlainRoadMoving(field, 20);
+        // To initialize lastMovingTime
+        long lastMoveTime = System.currentTimeMillis();
+        strategy.moveMonster(lastMoveTime);
+
+        //--------------------------------------------------------------------------------------------------------------
+
+        long delta = TimeUnit.SECONDS.toMillis(2);
+        lastMoveTime += delta;
+        Position positionOfFirstSegment = field.getRoad().getRoadSegments().get(0).getStart();
+
+        Position expectedPosition = positionOfFirstSegment.move(Direction.EAST, AbstractCell.getSize());
+
+        strategy.moveMonster(lastMoveTime);
+
+        delta = TimeUnit.SECONDS.toMillis(2);
+        long tickTime = lastMoveTime + delta;
+        strategy.moveMonster(tickTime);
+
+        //--------------------------------------------------------------------------------------------------------------
+
+        assertEquals(expectedPosition, strategy.currentPosition());
+        assertTrue(strategy.monsterReachedEnd());
+        assertEquals(lastMoveTime, strategy.lastMovingTime());
+    }
+
+    @Test
+    void cloneWithSameCharacteristics() {
+        Path path = Paths.get("test", "monster", "resources", "one_segment_road.txt")
+                .toAbsolutePath()
+                .normalize();
+        Field field = new Field(path.toString());
+        PlainRoadMoving strategy = new PlainRoadMoving(field, 20);
+        // To initialize lastMovingTime
+        strategy.moveMonster(System.currentTimeMillis());
+
+        PlainRoadMoving actualCloned = strategy.clone();
+
+        assertNotEquals(strategy, actualCloned);
+        assertEquals(strategy.currentPosition(), actualCloned.currentPosition());
+        assertEquals(strategy.speed(), actualCloned.speed());
+        assertEquals(strategy.field(), actualCloned.field());
+
+        assertNull(actualCloned.lastMovingTime());
+        assertFalse(actualCloned.monsterReachedEnd());
+        assertEquals(strategy.currentRoadSegment(), actualCloned.currentRoadSegment());
+        assertEquals(0, actualCloned.traveledInCurrentSegment());
     }
 }
