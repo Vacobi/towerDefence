@@ -78,6 +78,10 @@ public class LaserBehavior implements ProjectileBehavior<LaserProjectile> {
 
     @Override
     public void setProjectile(LaserProjectile projectile) {
+        if (this.projectile != null) {
+            throw new IllegalStateException("Projectile already set");
+        }
+
         this.projectile = projectile;
     }
 
