@@ -121,7 +121,7 @@ class TowerTest {
                 movingStrategy.clone()
         );
         TowerCharacteristicsValues expectedCharacteristicsValues = new TowerCharacteristicsValues(
-                (int) (characteristics.getDamage() * 1.5),
+                (int) (characteristics.getDamage() * 1.25),
                 characteristics.getRange(),
                 characteristics.shootingDelay()
         );
@@ -186,7 +186,7 @@ class TowerTest {
         );
         TowerCharacteristicsValues expectedCharacteristicsValues = new TowerCharacteristicsValues(
                 characteristics.getDamage(),
-                (int) (characteristics.getRange() * 1.5),
+                (int) (characteristics.getRange() * 1.25),
                 characteristics.shootingDelay()
         );
         Tower expectedTower = new Tower(
@@ -251,7 +251,7 @@ class TowerTest {
         TowerCharacteristicsValues expectedCharacteristicsValues = new TowerCharacteristicsValues(
                 characteristics.getDamage(),
                 characteristics.getRange(),
-                (long) (characteristics.shootingDelay() / 1.5)
+                (long) (characteristics.shootingDelay() / 1.15)
         );
         Tower expectedTower = new Tower(
                 expectedCell,
@@ -313,7 +313,7 @@ class TowerTest {
                 movingStrategy.clone()
         );
         TowerCharacteristicsValues expectedCharacteristicsValues = new TowerCharacteristicsValues(
-                (int) (characteristics.getDamage() * 1.5 * 1.5),
+                (int) ((int) (characteristics.getDamage() * 1.25) * 1.25),
                 characteristics.getRange(),
                 characteristics.shootingDelay()
         );
@@ -378,9 +378,9 @@ class TowerTest {
                 movingStrategy.clone()
         );
         TowerCharacteristicsValues expectedCharacteristicsValues = new TowerCharacteristicsValues(
-                (int) (characteristics.getDamage() * 1.5 * 1.5),
-                (int) (characteristics.getRange() * 1.5 * 1.5),
-                (long) (characteristics.shootingDelay() / 1.5 / 1.5)
+                (int) ((int) (characteristics.getDamage() * 1.25) * 1.25),
+                (int) ((int) (characteristics.getRange() * 1.25) * 1.25),
+                (long) ((long) (characteristics.shootingDelay() / 1.15) / 1.15)
         );
         Tower expectedTower = new Tower(
                 expectedCell,

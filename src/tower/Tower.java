@@ -99,17 +99,17 @@ public class Tower<T extends Projectile> {
     }
 
     private void upgradeDamage() {
-        actualCharacteristicValues.setDamage((int) (actualCharacteristicValues.getDamage() * 1.5));
+        actualCharacteristicValues.setDamage((int) (actualCharacteristicValues.getDamage() * 1.25));
         this.typicalProjectile = (T) typicalProjectile.clone(actualCharacteristicValues.getDamage(), actualCharacteristicValues.getRange());
     }
 
     private void upgradeRange() {
-        actualCharacteristicValues.setRange((int) (actualCharacteristicValues.getRange() * 1.5));
+        actualCharacteristicValues.setRange((int) (actualCharacteristicValues.getRange() * 1.25));
         this.typicalProjectile = (T) typicalProjectile.clone(actualCharacteristicValues.getDamage(), actualCharacteristicValues.getRange());
     }
 
     private void upgradeShootingDelay() {
-        long reduced = (long) (actualCharacteristicValues.shootingDelay() / 1.5);
+        long reduced = (long) (actualCharacteristicValues.shootingDelay() / 1.15);
 
         actualCharacteristicValues.setShootingDelay(reduced);
     }
