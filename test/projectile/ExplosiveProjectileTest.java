@@ -2,11 +2,20 @@ package projectile;
 
 import collision.HitboxParameters;
 import core.Field;
+import core.Wave;
+import factory.MonsterFactory;
+import factory.WaveFactory;
+import monster.Monster;
+import monster.MovingMonsterStrategy;
+import monster.PlainRoadMoving;
 import org.junit.jupiter.api.Test;
 import projectile.behavior.ExplosiveBehavior;
 import projectile.strategy.LinearMovingProjectileStrategy;
 import utils.Direction;
 import utils.Position;
+
+import java.util.Queue;
+import java.util.concurrent.TimeUnit;
 
 import static asserts.TestAsserts.assertProjectilesEquals;
 import static org.junit.jupiter.api.Assertions.*;
@@ -262,5 +271,234 @@ class ExplosiveProjectileTest {
                 movingStrategy,
                 radius
         ));
+    }
+
+
+    @Test
+    void updateWithReachedEnd() {
+        Field field = new Field();
+        WaveFactory waveFactory = new WaveFactory();
+        field.setWave(waveFactory.createWave(1, 1, field));
+
+        Position position = new Position(34, 34);
+        Direction direction = Direction.WEST;
+
+        LinearMovingProjectileStrategy movingStrategy = new LinearMovingProjectileStrategy(speed);
+        ExplosiveBehavior behavior = new ExplosiveBehavior();
+        ExplosiveProjectile projectile = new ExplosiveProjectile(
+                hitboxParameters,
+                damage,
+                maxDistance,
+                position,
+                behavior,
+                field,
+                direction,
+                movingStrategy,
+                radius
+        );
+
+        //--------------------------------------------------------------------------------------------------------------
+
+        Position expectedPosition = position.move(direction, maxDistance);
+
+        long tick = System.currentTimeMillis();
+        projectile.update(tick);
+
+        tick += TimeUnit.SECONDS.toMillis(50);
+
+        //--------------------------------------------------------------------------------------------------------------
+
+        projectile.update(tick);
+
+        //--------------------------------------------------------------------------------------------------------------
+
+        assertEquals(expectedPosition, projectile.position());
+        assertFalse(projectile.isExploded());
+        assertTrue(projectile.active());
+    }
+
+    @Test
+    void updateWithReachedEndAndDeactivates() {
+        Field field = new Field();
+        WaveFactory waveFactory = new WaveFactory();
+        field.setWave(waveFactory.createWave(1, 1, field));
+
+        Position position = new Position(34, 34);
+        Direction direction = Direction.WEST;
+
+        LinearMovingProjectileStrategy movingStrategy = new LinearMovingProjectileStrategy(speed);
+        ExplosiveBehavior behavior = new ExplosiveBehavior();
+        ExplosiveProjectile projectile = new ExplosiveProjectile(
+                hitboxParameters,
+                damage,
+                maxDistance,
+                position,
+                behavior,
+                field,
+                direction,
+                movingStrategy,
+                radius
+        );
+
+        //--------------------------------------------------------------------------------------------------------------
+
+        Position expectedPosition = position.move(direction, maxDistance);
+
+        long tick = System.currentTimeMillis();
+        projectile.update(tick);
+
+        tick += TimeUnit.SECONDS.toMillis(50);
+
+        //--------------------------------------------------------------------------------------------------------------
+
+        projectile.update(tick);
+        projectile.update(tick); // To deactivate
+
+        //--------------------------------------------------------------------------------------------------------------
+
+        assertEquals(expectedPosition, projectile.position());
+        assertFalse(projectile.isExploded());
+        assertFalse(projectile.active());
+    }
+
+    @Test
+    void explodeAfterUpdate() {
+        Field field = new Field();
+        WaveFactory waveFactory = new WaveFactory();
+        field.setWave(waveFactory.createWave(1, 1, field));
+
+        long tick = System.currentTimeMillis();
+        field.getWave().spawnMonsters(tick);
+        Position position = field.getWave().getAliveMonsters().iterator().next().getPosition();
+        Direction direction = Direction.WEST;
+
+        LinearMovingProjectileStrategy movingStrategy = new LinearMovingProjectileStrategy(0);
+        ExplosiveBehavior behavior = new ExplosiveBehavior();
+        ExplosiveProjectile projectile = new ExplosiveProjectile(
+                hitboxParameters,
+                damage,
+                maxDistance,
+                position,
+                behavior,
+                field,
+                direction,
+                movingStrategy,
+                radius
+        );
+
+        //--------------------------------------------------------------------------------------------------------------
+
+        Position expectedPosition = position;
+
+        //--------------------------------------------------------------------------------------------------------------
+
+        projectile.update(tick);
+
+        //--------------------------------------------------------------------------------------------------------------
+
+        assertEquals(expectedPosition, projectile.position());
+        assertTrue(projectile.isExploded());
+        assertFalse(projectile.active());
+    }
+
+    @Test
+    void collidesInTheEndOfTick() {
+        Field field = new Field();
+        MonsterFactory monsterFactory = new MonsterFactory();
+        MovingMonsterStrategy strategy = new PlainRoadMoving(field, 1);
+        Queue<Monster> monstersToSpawn = monsterFactory.createMonsters(1, strategy);
+        Monster monster = monstersToSpawn.element();
+        Wave wave = new Wave(monstersToSpawn, 10, 1);
+        field.setWave(wave);
+
+        long tick = System.currentTimeMillis();
+        field.getWave().spawnMonsters(tick);
+
+        Direction direction = Direction.WEST;
+        Direction oppositeDirection = Direction.EAST;
+        int maxDistance = 400;
+        Position positionOfStart = monster.getPosition().move(oppositeDirection, maxDistance);
+
+        LinearMovingProjectileStrategy movingStrategy = new LinearMovingProjectileStrategy(10);
+        ExplosiveBehavior behavior = new ExplosiveBehavior();
+        ExplosiveProjectile projectile = new ExplosiveProjectile(
+                hitboxParameters,
+                damage,
+                maxDistance,
+                positionOfStart,
+                behavior,
+                field,
+                direction,
+                movingStrategy,
+                radius
+        );
+        projectile.update(tick);
+
+        //--------------------------------------------------------------------------------------------------------------
+
+        Position expectedPosition = monster.getPosition();
+
+        tick += TimeUnit.MINUTES.toMillis(5);
+
+        //--------------------------------------------------------------------------------------------------------------
+
+        projectile.update(tick);
+
+        //--------------------------------------------------------------------------------------------------------------
+
+        assertEquals(expectedPosition, projectile.position());
+        assertFalse(projectile.isExploded());
+        assertTrue(projectile.active());
+    }
+
+    @Test
+    void collidesInTheStartOfTick() {
+        Field field = new Field();
+        MonsterFactory monsterFactory = new MonsterFactory();
+        MovingMonsterStrategy strategy = new PlainRoadMoving(field, 1);
+        Queue<Monster> monstersToSpawn = monsterFactory.createMonsters(1, strategy);
+        Monster monster = monstersToSpawn.element();
+        Wave wave = new Wave(monstersToSpawn, 10, 1);
+        field.setWave(wave);
+
+        long tick = System.currentTimeMillis();
+        field.getWave().spawnMonsters(tick);
+
+        Direction direction = Direction.WEST;
+        Direction oppositeDirection = Direction.EAST;
+        int maxDistance = 400;
+        Position positionOfStart = monster.getPosition().move(oppositeDirection, maxDistance);
+
+        LinearMovingProjectileStrategy movingStrategy = new LinearMovingProjectileStrategy(10);
+        ExplosiveBehavior behavior = new ExplosiveBehavior();
+        ExplosiveProjectile projectile = new ExplosiveProjectile(
+                hitboxParameters,
+                damage,
+                maxDistance,
+                positionOfStart,
+                behavior,
+                field,
+                direction,
+                movingStrategy,
+                radius
+        );
+        projectile.update(tick);
+
+        //--------------------------------------------------------------------------------------------------------------
+
+        Position expectedPosition = monster.getPosition();
+
+        tick += TimeUnit.MINUTES.toMillis(5);
+
+        //--------------------------------------------------------------------------------------------------------------
+
+        projectile.update(tick);
+        projectile.update(tick);
+
+        //--------------------------------------------------------------------------------------------------------------
+
+        assertEquals(expectedPosition, projectile.position());
+        assertTrue(projectile.isExploded());
+        assertFalse(projectile.active());
     }
 }
