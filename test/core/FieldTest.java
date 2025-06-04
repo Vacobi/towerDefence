@@ -1,10 +1,14 @@
 package core;
 
+import factory.MonsterFactory;
+import monster.Monster;
+import monster.MovingMonsterStrategy;
+import monster.PlainRoadMoving;
 import org.junit.jupiter.api.Test;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.PriorityQueue;
+import java.util.Queue;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -33,7 +37,12 @@ class FieldTest {
     void waveEnds() {
         Field field = new Field(path.toString());
         UpdateFieldControllerImpl controller = new UpdateFieldControllerImpl();
-        Wave wave = new Wave(new PriorityQueue<>(), 100L, 1);
+
+        MonsterFactory factory = new MonsterFactory();
+        MovingMonsterStrategy strategy = new PlainRoadMoving(field, 1000);
+        Queue<Monster> monstersToSpawn = factory.createMonsters(1, strategy);
+
+        Wave wave = new Wave(monstersToSpawn, 1L, 1);
 
         field.setWave(wave);
 
