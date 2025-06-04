@@ -1,5 +1,7 @@
 package monster;
 
+import collision.HitboxParameters;
+import core.AbstractCell;
 import core.Field;
 import events.MonsterEvent;
 import events.MonsterListener;
@@ -219,5 +221,31 @@ class MonsterTest {
         public void onMonsterReachedEnd(MonsterEvent event) {
             monsterReachedEnd++;
         }
+    }
+
+    @Test
+    void creatingZeroHealthMonster() {
+        int speed = 10;
+        PlainRoadMoving movingStrategy = new PlainRoadMoving(field, speed);
+
+        int width = (int) (AbstractCell.getSize() * 0.7);
+        int height = (int) (AbstractCell.getSize() * 0.7);
+        HitboxParameters hitboxParameters = new HitboxParameters(width, height, Math.toRadians(0));
+        int health = 0;
+
+        assertThrows(IllegalArgumentException.class, () -> new Monster(hitboxParameters, movingStrategy, health));
+    }
+
+    @Test
+    void creatingNegativeHealthMonster() {
+        int speed = 10;
+        PlainRoadMoving movingStrategy = new PlainRoadMoving(field, speed);
+
+        int width = (int) (AbstractCell.getSize() * 0.7);
+        int height = (int) (AbstractCell.getSize() * 0.7);
+        HitboxParameters hitboxParameters = new HitboxParameters(width, height, Math.toRadians(0));
+        int health = -1;
+
+        assertThrows(IllegalArgumentException.class, () -> new Monster(hitboxParameters, movingStrategy, health));
     }
 }

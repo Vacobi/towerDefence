@@ -20,6 +20,10 @@ public class Monster extends CollisionObject {
                 CoordinatesConverter.centerToLeftTop(strategy.currentPosition(), parameters.width(), parameters.height()),
                 parameters
         );
+
+        if (health <= 0) {
+            throw new IllegalArgumentException("Health must be greater than 0");
+        }
         this.health = health;
 
         strategy.setMonster(this);
