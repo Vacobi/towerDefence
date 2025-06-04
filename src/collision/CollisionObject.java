@@ -31,6 +31,6 @@ public class CollisionObject {
     //------------------------------------------------------------------------------------------------------------------
 
     public Hitbox getHitbox() {
-        return hitbox;
+        return hitbox.clone();
     }
 }

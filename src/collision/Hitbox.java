@@ -72,6 +72,10 @@ public class Hitbox {
         return new Area(path);
     }
 
+    public Hitbox clone() {
+        return new Hitbox(this.x, this.y, this.hitboxParameters);
+    }
+
     //------------------------------------------------------------------------------------------------------------------
 
     public int getX() {
