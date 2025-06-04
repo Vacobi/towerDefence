@@ -14,6 +14,7 @@ import utils.Position;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.TimeUnit;
 
@@ -44,20 +45,22 @@ class WaveTest implements WaveListener {
     }
 
     @Test
-    void monsterDieWaveEnd() throws InterruptedException {
+    void monsterDieWaveEnd() {
         Queue<Monster> monsterQueue = new LinkedList<>();
         Monster monster = monsterFactory.createMonster(zeroSpeedStrategy.clone());
         monsterQueue.add(monster);
-        int monstersCount = monsterQueue.size();
+
         Wave wave = waveFactory.createWave(1, monsterQueue, 1, field);
         wave.addListener(this);
         field.setWave(wave);
+
+        int monstersCount = monsterQueue.size();
+        long lastSpawnTime = System.currentTimeMillis();
         for (int i = 0; i < monstersCount; i++) {
-            Thread.sleep(1);
-            wave.spawnMonsters(System.currentTimeMillis());
+            lastSpawnTime += TimeUnit.MILLISECONDS.toMillis(1);
+            wave.spawnMonsters(lastSpawnTime);
         }
         wave.removeListener(field);
-        wave.updateMonsters(System.currentTimeMillis()); // initial update
 
         int expectedAliveMonsters = monstersCount - 1;
 
@@ -73,20 +76,22 @@ class WaveTest implements WaveListener {
     }
 
     @Test
-    void monsterReachedEndWaveEnd() throws InterruptedException {
+    void monsterReachedEndWaveEnd() {
         Queue<Monster> monsterQueue = new LinkedList<>();
         Monster monster = monsterFactory.createMonster(strategy.clone());
         monsterQueue.add(monster);
-        int monstersCount = monsterQueue.size();
+
         Wave wave = waveFactory.createWave(1, monsterQueue, 1, field);
         wave.addListener(this);
         field.setWave(wave);
+
+        int monstersCount = monsterQueue.size();
+        long lastSpawnTime = System.currentTimeMillis();
         for (int i = 0; i < monstersCount; i++) {
-            Thread.sleep(1);
-            wave.spawnMonsters(System.currentTimeMillis());
+            lastSpawnTime += TimeUnit.MILLISECONDS.toMillis(1);
+            wave.spawnMonsters(lastSpawnTime);
         }
         wave.removeListener(field);
-        wave.updateMonsters(System.currentTimeMillis()); // initial update
 
         int expectedAliveMonsters = monstersCount - 1;
 
@@ -102,21 +107,23 @@ class WaveTest implements WaveListener {
     }
 
     @Test
-    void severalMonstersAllReachedEnd() throws InterruptedException {
+    void severalMonstersAllReachedEnd() {
+        int monstersCount = 4;
         Queue<Monster> monsterQueue = new LinkedList<>();
-        int MONSTERS_COUNT = 4;
-        for (int i = 0; i < MONSTERS_COUNT; i++) {
+        for (int i = 0; i < monstersCount; i++) {
             monsterQueue.add(monsterFactory.createMonster(strategy.clone()));
         }
+
         Wave wave = waveFactory.createWave(1, monsterQueue, 1, field);
         wave.addListener(this);
         field.setWave(wave);
-        for (int i = 0; i < MONSTERS_COUNT; i++) {
-            Thread.sleep(1);
-            wave.spawnMonsters(System.currentTimeMillis());
+
+        long lastSpawnTime = System.currentTimeMillis();
+        for (int i = 0; i < monstersCount; i++) {
+            lastSpawnTime += TimeUnit.MILLISECONDS.toMillis(1);
+            wave.spawnMonsters(lastSpawnTime);
         }
         wave.removeListener(field);
-        wave.updateMonsters(System.currentTimeMillis()); // initial update
 
         int expectedAliveMonsters = 0;
 
