@@ -344,4 +344,36 @@ class LinearMovingProjectileStrategyTest {
         assertEquals(expectedTotalTraveled, movingStrategy.getTotalTraveledDistance());
         assertEquals(movingTime, movingStrategy.getLastMoveTime());
     }
+
+    @Test
+    void setTwoProjectilesToOneStrategy() {
+        int speed = 1;
+        int damage = 15;
+        int maxDistance = Integer.MAX_VALUE;
+        Direction direction = Direction.NORTH;
+        Position startPosition = new Position(10, 10);
+        HitOneTargetBehavior behavior = new HitOneTargetBehavior();
+        LinearMovingProjectileStrategy movingStrategy = new LinearMovingProjectileStrategy(speed);
+        new PlainProjectile(
+                hitboxParameters,
+                damage,
+                maxDistance,
+                startPosition,
+                behavior,
+                field,
+                direction,
+                movingStrategy
+        );
+
+        assertThrows(IllegalStateException.class, () -> new PlainProjectile(
+                hitboxParameters,
+                damage,
+                maxDistance,
+                startPosition,
+                behavior,
+                field,
+                direction,
+                movingStrategy
+        ));
+    }
 }
