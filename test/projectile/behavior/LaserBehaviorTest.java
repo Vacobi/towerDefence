@@ -1,5 +1,6 @@
 package projectile.behavior;
 
+import collision.HitboxParameters;
 import core.Field;
 import core.Wave;
 import factory.MonsterFactory;
@@ -17,6 +18,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -510,5 +512,43 @@ class LaserBehaviorTest {
         });
         assertEquals(expectedDamagedMonstersCount, actualDamagedMonsters.get());
         assertFalse(projectile.active());
+    }
+
+    @Test
+    void setTwoProjectilesToLaserBehavior() {
+        LaserBehavior behavior = new LaserBehavior();
+
+        Direction direction = Direction.EAST;
+        int length = 180;
+        int damage = 20;
+        int height = 30;
+        HitboxParameters hitboxParameters = new HitboxParameters(length, height, direction.toRadians());
+        long activeTime = TimeUnit.SECONDS.toMillis(3);
+        long damageCooldown = TimeUnit.MILLISECONDS.toMillis(500);
+        Position position = new Position(Integer.MAX_VALUE, Integer.MAX_VALUE);
+
+        new LaserProjectile(
+                hitboxParameters,
+                damage,
+                length,
+                position,
+                behavior,
+                field,
+                direction,
+                activeTime,
+                damageCooldown
+        );
+
+        assertThrows(IllegalStateException.class, () -> new LaserProjectile(
+                hitboxParameters,
+                damage,
+                length,
+                position,
+                behavior,
+                field,
+                direction,
+                activeTime,
+                damageCooldown
+        ));
     }
 }
