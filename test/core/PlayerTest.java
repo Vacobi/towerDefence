@@ -1,11 +1,11 @@
 package core;
 
 import economic.BankAccount;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import projectile.Projectile;
 import tower.Tower;
 import tower.TowersCatalogue;
-import utils.BuildingResponse;
 import utils.Position;
 
 import java.nio.file.Path;
@@ -13,7 +13,6 @@ import java.nio.file.Paths;
 import java.util.Map;
 import java.util.Optional;
 
-import static asserts.TestAsserts.assertBuildingResponsesEquals;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
@@ -24,46 +23,73 @@ class PlayerTest {
 
     Builder builder = new Builder(field);
 
-    @Test
-    void towerBuilt() {
-        Player player = new Player(builder);
-        int balance = 50;
-        BankAccount bankAccount = player.getBankAccount();
-        bankAccount.setGold(balance);
+    @Nested
+    class Build {
+        @Test
+        void towerBuilt() {
+            Player player = new Player(builder);
+            int balance = 50;
+            BankAccount bankAccount = player.getBankAccount();
+            bankAccount.setGold(balance);
 
-        TowersCatalogue towersCatalogue = builder.getTowersCatalogue();
-        Position cellPosition = new Position(0, 0);
-        Cell cell = new Cell(cellPosition);
-        Map<Tower<? extends Projectile>, Integer> towers = towersCatalogue.getAvailableTowersWithPrices();
-        Tower typicalTower = towers.keySet().iterator().next();
-        Optional<Integer> optionalTowerCost = towersCatalogue.getPrice(typicalTower);
-        int towerCost = optionalTowerCost.get();
-        int expectedBalance = balance - towerCost;
-        boolean expectedBuilt = true;
+            TowersCatalogue towersCatalogue = builder.getTowersCatalogue();
+            Position cellPosition = new Position(0, 0);
+            Cell cell = new Cell(cellPosition);
+            Map<Tower<? extends Projectile>, Integer> towers = towersCatalogue.getAvailableTowersWithPrices();
+            Tower typicalTower = towers.keySet().iterator().next();
+            Optional<Integer> optionalTowerCost = towersCatalogue.getPrice(typicalTower);
+            int towerCost = optionalTowerCost.get();
 
-        boolean actualBuilt = player.placeTower(typicalTower, cell);
+            int expectedBalance = balance - towerCost;
+            boolean expectedBuilt = true;
 
-        assertEquals(expectedBuilt, actualBuilt);
-        assertEquals(expectedBalance, player.getBankAccount().getGold());
-    }
+            boolean actualBuilt = player.placeTower(typicalTower, cell);
 
-    @Test
-    void towerWasNotBuilt() {
-        Player player = new Player(builder);
-        int initialBalance = 5;
-        BankAccount bankAccount = player.getBankAccount();
-        bankAccount.setGold(initialBalance);
+            assertEquals(expectedBuilt, actualBuilt);
+            assertEquals(expectedBalance, player.getBankAccount().getGold());
+        }
 
-        TowersCatalogue towersCatalogue = builder.getTowersCatalogue();
-        Position cellPosition = new Position(0, 0);
-        Cell cell = new Cell(cellPosition);
-        Map<Tower<? extends Projectile>, Integer> towers = towersCatalogue.getAvailableTowersWithPrices();
-        Tower typicalTower = towers.keySet().iterator().next();
-        boolean expectedBuilt = false;
+        @Test
+        void notEnoughGoldToBuild() {
+            Player player = new Player(builder);
+            int initialBalance = 5;
+            BankAccount bankAccount = player.getBankAccount();
+            bankAccount.setGold(initialBalance);
 
-        boolean actualBuilt = player.placeTower(typicalTower, cell);
+            TowersCatalogue towersCatalogue = builder.getTowersCatalogue();
+            Position cellPosition = new Position(0, 0);
+            Cell cell = new Cell(cellPosition);
+            Map<Tower<? extends Projectile>, Integer> towers = towersCatalogue.getAvailableTowersWithPrices();
+            Tower typicalTower = towers.keySet().iterator().next();
+            boolean expectedBuilt = false;
 
-        assertEquals(expectedBuilt, actualBuilt);
-        assertEquals(initialBalance, player.getBankAccount().getGold());
+            boolean actualBuilt = player.placeTower(typicalTower, cell);
+
+            assertEquals(expectedBuilt, actualBuilt);
+            assertEquals(initialBalance, player.getBankAccount().getGold());
+        }
+
+        @Test
+        void buildWhenPlayerFrozen() {
+            Player player = new Player(builder);
+            int balance = 50;
+            BankAccount bankAccount = player.getBankAccount();
+            bankAccount.setGold(balance);
+            player.freeze(true);
+
+            TowersCatalogue towersCatalogue = builder.getTowersCatalogue();
+            Position cellPosition = new Position(0, 0);
+            Cell cell = new Cell(cellPosition);
+            Map<Tower<? extends Projectile>, Integer> towers = towersCatalogue.getAvailableTowersWithPrices();
+            Tower typicalTower = towers.keySet().iterator().next();
+
+            int expectedBalance = balance;
+            boolean expectedBuilt = false;
+
+            boolean actualBuilt = player.placeTower(typicalTower, cell);
+
+            assertEquals(expectedBuilt, actualBuilt);
+            assertEquals(expectedBalance, player.getBankAccount().getGold());
+        }
     }
 }
