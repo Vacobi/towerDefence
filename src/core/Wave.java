@@ -132,14 +132,14 @@ public class Wave implements Iterable<Monster>, MonsterListener {
         listeners.forEach(l -> l.onMonsterReachedEnd(waveEvent));
     }
 
-    public void fireMonsterDeath(MonsterEvent event) {
+    private void fireMonsterDeath(MonsterEvent event) {
         WaveEvent waveEvent = new WaveEvent(event.getMonster());
         waveEvent.setMonster(event.getMonster());
 
         listeners.forEach(l -> l.onMonsterDeath(waveEvent));
     }
 
-    public void fireWaveEnd() {
+    private void fireWaveEnd() {
         WaveEvent waveEvent = new WaveEvent(this);
         waveEvent.setWave(this);
 
