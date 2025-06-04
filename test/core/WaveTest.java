@@ -35,10 +35,12 @@ class WaveTest implements WaveListener {
 
     int monsterDeaths;
     int monsterReachedEnd;
+    int waveEnd;
     @BeforeEach
-    void tearDown() {
+    void setUp() {
         monsterDeaths = 0;
         monsterReachedEnd = 0;
+        waveEnd = 0;
     }
 
     @Test
@@ -66,6 +68,7 @@ class WaveTest implements WaveListener {
         assertEquals(expectedAliveMonsters, actualAliveMonsters);
         assertEquals(1, monsterDeaths);
         assertEquals(0, monsterReachedEnd);
+        assertEquals(1, waveEnd);
         assertTrue(wave.hasEnded());
     }
 
@@ -94,6 +97,7 @@ class WaveTest implements WaveListener {
         assertEquals(expectedAliveMonsters, actualAliveMonsters);
         assertEquals(0, monsterDeaths);
         assertEquals(1, monsterReachedEnd);
+        assertEquals(1, waveEnd);
         assertTrue(wave.hasEnded());
     }
 
@@ -122,6 +126,7 @@ class WaveTest implements WaveListener {
         assertEquals(expectedAliveMonsters, actualAliveMonsters);
         assertEquals(0, monsterDeaths);
         assertEquals(4, monsterReachedEnd);
+        assertEquals(1, waveEnd);
         assertTrue(wave.hasEnded());
     }
 
@@ -137,6 +142,6 @@ class WaveTest implements WaveListener {
 
     @Override
     public void onWaveEnd(WaveEvent event) {
-        ;
+        waveEnd++;
     }
 }
