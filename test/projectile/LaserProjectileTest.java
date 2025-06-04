@@ -2,11 +2,19 @@ package projectile;
 
 import collision.HitboxParameters;
 import core.Field;
+import core.Wave;
+import factory.MonsterFactory;
+import factory.WaveFactory;
+import monster.Monster;
+import monster.MovingMonsterStrategy;
+import monster.PlainRoadMoving;
 import org.junit.jupiter.api.Test;
 import projectile.behavior.LaserBehavior;
+import projectile.strategy.LinearMovingProjectileStrategy;
 import utils.Direction;
 import utils.Position;
 
+import java.util.Queue;
 import java.util.concurrent.TimeUnit;
 
 import static asserts.TestAsserts.assertProjectilesEquals;
@@ -286,5 +294,138 @@ class LaserProjectileTest {
         projectile.deactivate();
 
         assertThrows(IllegalStateException.class, () -> projectile.update(System.currentTimeMillis()));
+    }
+
+
+    @Test
+    void updateWithPassActiveTime() {
+        Field field = new Field();
+        WaveFactory waveFactory = new WaveFactory();
+        field.setWave(waveFactory.createWave(1, 1, field));
+
+        Position position = new Position(34, 34);
+        Direction direction = Direction.WEST;
+
+        LaserBehavior behavior = new LaserBehavior();
+        LaserProjectile projectile = new LaserProjectile(
+                hitboxParameters,
+                damage,
+                range,
+                position,
+                behavior,
+                field,
+                direction,
+                activeTime,
+                damageCooldown
+        );
+
+        //--------------------------------------------------------------------------------------------------------------
+
+        Position expectedPosition = position;
+
+        long tick = System.currentTimeMillis();
+        projectile.update(tick);
+
+        tick += TimeUnit.SECONDS.toMillis(50);
+
+        //--------------------------------------------------------------------------------------------------------------
+
+        projectile.update(tick);
+
+        //--------------------------------------------------------------------------------------------------------------
+
+        assertEquals(expectedPosition, projectile.position());
+        assertFalse(projectile.active());
+    }
+
+    @Test
+    void updateWithDoNotPassActiveTime() {
+        Field field = new Field();
+        WaveFactory waveFactory = new WaveFactory();
+        field.setWave(waveFactory.createWave(1, 1, field));
+
+        Position position = new Position(34, 34);
+        Direction direction = Direction.WEST;
+
+        LaserBehavior behavior = new LaserBehavior();
+        LaserProjectile projectile = new LaserProjectile(
+                hitboxParameters,
+                damage,
+                range,
+                position,
+                behavior,
+                field,
+                direction,
+                activeTime,
+                damageCooldown
+        );
+
+        //--------------------------------------------------------------------------------------------------------------
+
+        Position expectedPosition = position;
+
+        long tick = System.currentTimeMillis();
+        projectile.update(tick);
+
+        tick += activeTime / 2;
+
+        //--------------------------------------------------------------------------------------------------------------
+
+        projectile.update(tick);
+
+        //--------------------------------------------------------------------------------------------------------------
+
+        assertEquals(expectedPosition, projectile.position());
+        assertTrue(projectile.active());
+    }
+
+    @Test
+    void hitAfterUpdate() {
+        Field field = new Field();
+        MonsterFactory monsterFactory = new MonsterFactory();
+        MovingMonsterStrategy strategy = new PlainRoadMoving(field, 1);
+        Queue<Monster> monstersToSpawn = monsterFactory.createMonsters(1, strategy);
+        Monster monster = monstersToSpawn.element();
+        int monsterHealthBeforeHit = monster.getHealth();
+
+        Wave wave = new Wave(monstersToSpawn, 10, 1);
+        field.setWave(wave);
+
+        long tick = System.currentTimeMillis();
+        Position position = monster.getPosition();
+        Direction direction = Direction.WEST;
+
+        LaserBehavior behavior = new LaserBehavior();
+        LaserProjectile projectile = new LaserProjectile(
+                hitboxParameters,
+                damage,
+                range,
+                position,
+                behavior,
+                field,
+                direction,
+                activeTime,
+                damageCooldown
+        );
+
+        //--------------------------------------------------------------------------------------------------------------
+
+        Position expectedPosition = position;
+
+        //--------------------------------------------------------------------------------------------------------------
+
+        projectile.update(tick);
+        field.getWave().spawnMonsters(tick);
+        tick += TimeUnit.MILLISECONDS.toMillis(50);
+
+        projectile.update(tick);
+
+        int monsterHealthAfterHit = monster.getHealth();
+
+        //--------------------------------------------------------------------------------------------------------------
+
+        assertEquals(expectedPosition, projectile.position());
+        assertEquals(monsterHealthBeforeHit - projectile.getDamage(), monsterHealthAfterHit);
+        assertTrue(projectile.active());
     }
 }
