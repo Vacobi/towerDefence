@@ -57,10 +57,6 @@ public class Monster extends CollisionObject {
         return health > 0;
     }
 
-    public boolean alive() {
-        return health > 0;
-    }
-
     //------------------------------------------------------------------------------------------------------------------
 
     public Position getPosition() {
