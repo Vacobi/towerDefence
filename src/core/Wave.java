@@ -56,6 +56,7 @@ public class Wave implements Iterable<Monster>, MonsterListener {
             monster.addListener(this);
             aliveMonsters.add(monster);
             lastSpawnTime = currentTick;
+            monster.move(currentTick);
         }
     }
 
