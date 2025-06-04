@@ -74,7 +74,7 @@ public class PlainRoadMoving extends MovingMonsterStrategy{
     }
 
     @Override
-    public MovingMonsterStrategy clone() {
+    public PlainRoadMoving clone() {
         return new PlainRoadMoving(currentPosition(), field(), speed());
     }
 
