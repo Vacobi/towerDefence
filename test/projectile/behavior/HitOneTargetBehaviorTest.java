@@ -1,8 +1,11 @@
 package projectile.behavior;
 
+import collision.HitboxParameters;
 import core.Field;
 import core.Wave;
 import factory.MonsterFactory;
+import projectile.PlainProjectile;
+import projectile.strategy.LinearMovingProjectileStrategy;
 import testutils.ProjectileFactory;
 import factory.WaveFactory;
 import monster.Monster;
@@ -276,5 +279,46 @@ class HitOneTargetBehaviorTest {
             assertEquals(expectedDamagedMonstersCount, actualDamagedMonsters.get());
             assertFalse(projectile.active());
         }
+    }
+
+    @Test
+    void setTwoProjectilesToHitOneTargetBehavior() {
+        int speed = 1;
+        int maxDistance = 100;
+        int damage = 20;
+        int width = 10;
+        int height = 10;
+
+        LinearMovingProjectileStrategy movingStrategy = new LinearMovingProjectileStrategy(speed);
+        HitOneTargetBehavior behavior = new HitOneTargetBehavior();
+
+        HitboxParameters hitboxParameters = new HitboxParameters(
+                width,
+                height,
+                0
+        );
+        Direction direction = Direction.EAST;
+        Position position = new Position(Integer.MAX_VALUE, Integer.MAX_VALUE);
+        new PlainProjectile(
+                hitboxParameters,
+                damage,
+                maxDistance,
+                position,
+                behavior,
+                field,
+                direction,
+                movingStrategy
+        );
+
+        assertThrows(IllegalStateException.class, () ->  new PlainProjectile(
+                hitboxParameters,
+                damage,
+                maxDistance,
+                position,
+                behavior,
+                field,
+                direction,
+                movingStrategy
+        ));
     }
 }
