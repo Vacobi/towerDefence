@@ -38,6 +38,10 @@ public class Monster extends CollisionObject {
     }
 
     public void applyDamage(int damage) {
+        if (damage < 0) {
+            throw new IllegalArgumentException("Damage cannot be negative");
+        }
+
         health = Math.max(health - damage, 0);
 
         if (health == 0) {
