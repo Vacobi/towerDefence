@@ -20,9 +20,21 @@ public class Wave implements Iterable<Monster>, MonsterListener {
     private long lastSpawnTime;
 
     public Wave(Queue<Monster> monstersToSpawn, long spawnDelay, int number) {
-        this.number = number;
+        if (monstersToSpawn.isEmpty()) {
+            throw new IllegalArgumentException("Wave must have at least one monster");
+        }
         this.monstersToSpawn = monstersToSpawn;
+
+        if (number <= 0) {
+            throw new IllegalArgumentException("Wave number must be positive");
+        }
+        this.number = number;
+
+        if (spawnDelay < 0) {
+            throw new IllegalArgumentException("Spawn delay must be non negative");
+        }
         this.spawnDelay = spawnDelay;
+
         aliveMonsters = new HashSet<>();
         listeners = new LinkedList<>();
         lastSpawnTime = System.currentTimeMillis() - spawnDelay;
