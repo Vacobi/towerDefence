@@ -14,6 +14,8 @@ public abstract class MovingMonsterStrategy {
     private final int speed;
     private boolean reachedEnd;
 
+    private Monster monster;
+
     public MovingMonsterStrategy(Position initialPosition, Field field, int speed) {
         this.currentPosition = initialPosition;
         this.speed = speed;
@@ -26,11 +28,31 @@ public abstract class MovingMonsterStrategy {
 
     //------------------------------------------------------------------------------------------------------------------
 
-    public abstract void moveMonster(long currentTick);
+    public final void moveMonster(long currentTick) {
+        if (monster == null) {
+            throw new IllegalStateException("Monster has not been set");
+        }
+
+        move(currentTick);
+    }
+
+    public abstract void move(long currentTick);
 
     public abstract MovingMonsterStrategy clone();
 
     //------------------------------------------------------------------------------------------------------------------
+
+    public void setMonster(Monster monster) {
+        if (this.monster != null) {
+            throw new IllegalStateException("Monster is already set");
+        }
+
+        this.monster = monster;
+    }
+
+    public Monster getMonster() {
+        return monster;
+    }
 
     public Long lastMovingTime() {
         return lastMovingTime;

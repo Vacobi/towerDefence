@@ -78,7 +78,7 @@ class HitOneTargetBehaviorTest {
 
         @Test
         void monsterDies() {
-            Monster monster = monsterFactory.createMonster(strategy);
+            Monster monster = monsterFactory.createMonster(strategy.clone());
             Projectile projectile = projectileFactory.createLinearMovingHitOneTargetProjectile(monster.getPosition(), Direction.NORTH, field);
             HitOneTargetBehavior behavior = (HitOneTargetBehavior) projectile.getBehavior();
 
@@ -100,7 +100,7 @@ class HitOneTargetBehaviorTest {
         @Test
         void onlyOneMonsterAndCollision() throws InterruptedException {
             Queue<Monster> monsterQueue = new LinkedList<>();
-            monsterQueue.add(monsterFactory.createMonster(strategy));
+            monsterQueue.add(monsterFactory.createMonster(strategy.clone()));
             int monstersCount = monsterQueue.size();
             Wave wave = waveFactory.createWave(1, monsterQueue, 1, field);
             for (int i = 0; i < monstersCount; i++) {
@@ -133,10 +133,10 @@ class HitOneTargetBehaviorTest {
         @Test
         void severalMonstersAndCollisionWithEach() throws InterruptedException {
             Queue<Monster> monsterQueue = new LinkedList<>();
-            monsterQueue.add(monsterFactory.createMonster(strategy));
-            monsterQueue.add(monsterFactory.createMonster(strategy));
-            monsterQueue.add(monsterFactory.createMonster(strategy));
-            monsterQueue.add(monsterFactory.createMonster(strategy));
+            monsterQueue.add(monsterFactory.createMonster(strategy.clone()));
+            monsterQueue.add(monsterFactory.createMonster(strategy.clone()));
+            monsterQueue.add(monsterFactory.createMonster(strategy.clone()));
+            monsterQueue.add(monsterFactory.createMonster(strategy.clone()));
             int monstersCount = monsterQueue.size();
             Wave wave = waveFactory.createWave(1, monsterQueue, 1, field);
             for (int i = 0; i < monstersCount; i++) {
@@ -170,12 +170,12 @@ class HitOneTargetBehaviorTest {
         void severalMonstersAndCollisionWithOne() throws InterruptedException {
             Position positionWithoutCollision = new Position(1000,  1000);
             MovingMonsterStrategy strategyWithoutCollision = new PlainRoadMoving(positionWithoutCollision, field, 10);
-            Monster collisionedMonster = monsterFactory.createMonster(strategy);
+            Monster collisionedMonster = monsterFactory.createMonster(strategy.clone());
             Queue<Monster> monsterQueue = new LinkedList<>();
-            monsterQueue.add(monsterFactory.createMonster(strategyWithoutCollision));
-            monsterQueue.add(monsterFactory.createMonster(strategyWithoutCollision));
+            monsterQueue.add(monsterFactory.createMonster(strategyWithoutCollision.clone()));
+            monsterQueue.add(monsterFactory.createMonster(strategyWithoutCollision.clone()));
             monsterQueue.add(collisionedMonster);
-            monsterQueue.add(monsterFactory.createMonster(strategyWithoutCollision));
+            monsterQueue.add(monsterFactory.createMonster(strategyWithoutCollision.clone()));
             int monstersCount = monsterQueue.size();
             Wave wave = waveFactory.createWave(1, monsterQueue, 1, field);
             for (int i = 0; i < monstersCount; i++) {
@@ -211,10 +211,10 @@ class HitOneTargetBehaviorTest {
             Position positionWithoutCollision = new Position(1000,  1000);
             MovingMonsterStrategy strategyWithoutCollision = new PlainRoadMoving(positionWithoutCollision, field, 10);
             Queue<Monster> monsterQueue = new LinkedList<>();
-            monsterQueue.add(monsterFactory.createMonster(strategyWithoutCollision));
-            monsterQueue.add(monsterFactory.createMonster(strategyWithoutCollision));
-            monsterQueue.add(monsterFactory.createMonster(strategyWithoutCollision));
-            monsterQueue.add(monsterFactory.createMonster(strategyWithoutCollision));
+            monsterQueue.add(monsterFactory.createMonster(strategyWithoutCollision.clone()));
+            monsterQueue.add(monsterFactory.createMonster(strategyWithoutCollision.clone()));
+            monsterQueue.add(monsterFactory.createMonster(strategyWithoutCollision.clone()));
+            monsterQueue.add(monsterFactory.createMonster(strategyWithoutCollision.clone()));
             int monstersCount = monsterQueue.size();
             Wave wave = waveFactory.createWave(1, monsterQueue, 1, field);
             for (int i = 0; i < monstersCount; i++) {
@@ -246,7 +246,7 @@ class HitOneTargetBehaviorTest {
         @Test
         void applyEffectToDeactivatedProjectile() throws InterruptedException {
             Queue<Monster> monsterQueue = new LinkedList<>();
-            monsterQueue.add(monsterFactory.createMonster(strategy));
+            monsterQueue.add(monsterFactory.createMonster(strategy.clone()));
             int monstersCount = monsterQueue.size();
             Wave wave = waveFactory.createWave(1, monsterQueue, 1, field);
             for (int i = 0; i < monstersCount; i++) {

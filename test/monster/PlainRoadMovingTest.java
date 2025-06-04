@@ -2,6 +2,7 @@ package monster;
 
 import core.AbstractCell;
 import core.Field;
+import factory.MonsterFactory;
 import org.junit.jupiter.api.Test;
 import road.RoadSegment;
 import utils.Direction;
@@ -18,6 +19,8 @@ class PlainRoadMovingTest {
 
     private final int SPEED_COEFF = PlainRoadMoving.getSpeedCoeff();
 
+    private final MonsterFactory monsterFactory = new MonsterFactory();
+
     @Test
     void moveInOneSegmentContainsOneCell() {
         Path path = Paths.get("test", "monster", "resources", "one_segment_road.txt")
@@ -25,6 +28,7 @@ class PlainRoadMovingTest {
                 .normalize();
         Field field = new Field(path.toString());
         MovingMonsterStrategy strategy = new PlainRoadMoving(field, 20);
+        strategy.setMonster(monsterFactory.createMonster(strategy.clone()));
         // To initialize lastMovingTime
         strategy.moveMonster(System.currentTimeMillis());
 
@@ -48,6 +52,7 @@ class PlainRoadMovingTest {
                 .normalize();
         Field field = new Field(path.toString());
         MovingMonsterStrategy strategy = new PlainRoadMoving(field, 20);
+        strategy.setMonster(monsterFactory.createMonster(strategy.clone()));
         strategy.moveMonster(System.currentTimeMillis());
 
         long delta = TimeUnit.MILLISECONDS.toMillis(200);
@@ -70,6 +75,7 @@ class PlainRoadMovingTest {
                 .normalize();
         Field field = new Field(path.toString());
         MovingMonsterStrategy strategy = new PlainRoadMoving(field, 10);
+        strategy.setMonster(monsterFactory.createMonster(strategy.clone()));
         strategy.moveMonster(System.currentTimeMillis());
 
         long delta = TimeUnit.SECONDS.toMillis(2);
@@ -96,6 +102,7 @@ class PlainRoadMovingTest {
                 .normalize();
         Field field = new Field(path.toString());
         MovingMonsterStrategy strategy = new PlainRoadMoving(field, 0);
+        strategy.setMonster(monsterFactory.createMonster(strategy.clone()));
         // To initialize lastMovingTime
         long initialMovingTime = System.currentTimeMillis();
         strategy.moveMonster(initialMovingTime);
@@ -120,6 +127,7 @@ class PlainRoadMovingTest {
                 .normalize();
         Field field = new Field(path.toString());
         MovingMonsterStrategy strategy = new PlainRoadMoving(field, 20);
+        strategy.setMonster(monsterFactory.createMonster(strategy.clone()));
         // To initialize lastMovingTime
         long lastMoveTime = System.currentTimeMillis();
         strategy.moveMonster(lastMoveTime);
@@ -152,6 +160,7 @@ class PlainRoadMovingTest {
                 .normalize();
         Field field = new Field(path.toString());
         PlainRoadMoving strategy = new PlainRoadMoving(field, 20);
+        strategy.setMonster(monsterFactory.createMonster(strategy.clone()));
         // To initialize lastMovingTime
         strategy.moveMonster(System.currentTimeMillis());
 

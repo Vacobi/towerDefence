@@ -24,7 +24,7 @@ public class PlainRoadMoving extends MovingMonsterStrategy{
     //------------------------------------------------------------------------------------------------------------------
 
     @Override
-    public void moveMonster(long currentTick) {
+    public void move(long currentTick) {
         if (monsterReachedEnd()) {
             return;
         }

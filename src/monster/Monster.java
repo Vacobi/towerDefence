@@ -21,7 +21,10 @@ public class Monster extends CollisionObject {
                 parameters
         );
         this.health = health;
+
+        strategy.setMonster(this);
         this.strategy = strategy;
+
         listeners = new LinkedList<>();
     }
 
