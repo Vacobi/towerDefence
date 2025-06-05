@@ -81,11 +81,10 @@ public class GameWidgetPanel extends JLayeredPane implements WaveListener {
             if (selectedPrototype != null) {
                 boolean built = game.getPlayer().placeTower(selectedPrototype, cell);
                 if (built) {
-                    if (cell.hasTower()) {
-                        GameComponent<Tower<?>> towerComponent = ComponentFactory.create(cell.getTower());
-                        towerComponent.setBounds(pos.getX() * cellSize, pos.getY() * cellSize, cellSize, cellSize);
-                        add(towerComponent, TOWER_LAYER);
-                    }
+                    GameComponent<Tower<?>> towerComponent = ComponentFactory.create(cell.getTower());
+                    towerComponent.setBounds(pos.getX() * cellSize, pos.getY() * cellSize, cellSize, cellSize);
+                    add(towerComponent, TOWER_LAYER);
+
                     revalidate();
                     repaint();
                     selectedPrototype = null;
