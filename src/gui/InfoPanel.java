@@ -17,9 +17,12 @@ public class InfoPanel extends JPanel implements GameListener, PlayerListener {
     private final Game game;
 
     public InfoPanel(Game game) {
-        status.add(new JLabel("Gold: ")); status.add(goldLabel);
-        status.add(new JLabel("Wave: ")); status.add(waveLabel);
-        status.add(new JLabel("Lives: ")); status.add(livesLabel);
+        status.add(new JLabel("Золото: ")); status.add(goldLabel);
+
+        status.add(new JLabel("Волна: "));status.add(waveLabel);
+
+        status.add(new JLabel("Жизни: ")); status.add(livesLabel);
+
         add(status);
 
         this.game = game;
