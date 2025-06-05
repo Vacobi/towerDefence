@@ -51,7 +51,7 @@ public class GameWindow extends JFrame implements GameListener {
     }
 
     private JButton createStartButton() {
-        JButton startButton = new JButton("Start Wave");
+        JButton startButton = new JButton("Начать Волну");
         startButton.addActionListener(e -> {
             game.startWave();
             gameWidgetPanel.startUpdateTimer();
