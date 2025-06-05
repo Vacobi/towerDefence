@@ -48,7 +48,7 @@ public class CataloguePanel extends JPanel implements PlayerListener, GameListen
     }
 
     private JButton createCancelBtn() {
-        JButton cancelSelectionBtn = new JButton("Cancel");
+        JButton cancelSelectionBtn = new JButton("Отменить выбор");
         cancelSelectionBtn.addActionListener(e -> cancelSelection());
         return cancelSelectionBtn;
     }
