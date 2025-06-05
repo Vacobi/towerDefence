@@ -87,7 +87,6 @@ public class GameWidgetPanel extends JLayeredPane implements WaveListener {
 
                     revalidate();
                     repaint();
-                    selectedPrototype = null;
                     cataloguePanel.cancelSelection();
                 } else {
                     JOptionPane.showMessageDialog(this, "Не удалось построить башню: недостаточно золота или ячейка недоступна.");
