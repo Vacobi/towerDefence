@@ -148,6 +148,10 @@ public class Game implements WaveListener, UpdateFieldController {
         }
     }
 
+    public int getTotalWavesCount() {
+        return WAVES_COUNT;
+    }
+
     //------------------------------------------------------------------------------------------------------------------
 
     private void fireWaveChange() {
