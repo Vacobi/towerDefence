@@ -20,6 +20,7 @@ public class InfoPanel extends JPanel implements GameListener, PlayerListener {
         status.add(new JLabel("Золото: ")); status.add(goldLabel);
 
         status.add(new JLabel("Волна: "));status.add(waveLabel);
+        status.add(new JLabel(String.format(" из %d", game.getTotalWavesCount())));
 
         status.add(new JLabel("Жизни: ")); status.add(livesLabel);
 
