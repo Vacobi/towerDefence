@@ -59,7 +59,6 @@ class TowersCatalogueTest {
 
     @Test
     void towersCatalogueContainsTowerWithLaserProjectile() {
-
         Class<? extends DirectionalShootingStrategy> expectedShootingStrategy = DirectionalShootingStrategy.class;
         Class<? extends Projectile> expectedProjectile = LaserProjectile.class;
         Class<? extends ProjectileBehavior> expectedProjectileBehavior = LaserBehavior.class;
