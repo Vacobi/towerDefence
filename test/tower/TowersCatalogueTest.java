@@ -9,6 +9,7 @@ import projectile.behavior.LaserBehavior;
 import projectile.behavior.ProjectileBehavior;
 import projectile.strategy.LinearMovingProjectileStrategy;
 import projectile.strategy.MovingProjectileStrategy;
+import projectile.strategy.RandomMovingProjectileStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +25,7 @@ class TowersCatalogueTest {
 
     @Test
     void towersCatalogueContainsAllNecessaryTowers() {
-        int expectedTowers = 3;
+        int expectedTowers = 5;
 
         int actualTowers = towersCatalogue.getAvailableTowersWithPrices().size();
 
@@ -32,7 +33,7 @@ class TowersCatalogueTest {
     }
 
     @Test
-    void towersCatalogueContainsTowerWithPlainProjectile() {
+    void towersCatalogueContainsTowerWithPlainProjectileAndLinearMovingProjectileStrategy() {
 
         Class<? extends DirectionalShootingStrategy> expectedShootingStrategy = DirectionalShootingStrategy.class;
         Class<? extends MovingProjectile> expectedProjectile = PlainProjectile.class;
@@ -43,7 +44,35 @@ class TowersCatalogueTest {
         Map<Tower<? extends Projectile>, Integer> towers = towersCatalogue.getAvailableTowersWithPrices();
         Tower<? extends Projectile> actualTowerWithThisProjectile = null;
         for (Tower<? extends Projectile> tower : towers.keySet()) {
-            if (tower.getTypicalProjectile().getClass() == expectedProjectile) {
+            if (tower.getTypicalProjectile().getClass() == expectedProjectile &&
+                    ((MovingProjectile) tower.getTypicalProjectile()).getMovingStrategy().getClass() == expectedMovingStrategy) {
+                actualTowerWithThisProjectile = tower;
+            }
+        }
+
+        assertNotNull(actualTowerWithThisProjectile);
+        assertEquals(expectedShootingStrategy, actualTowerWithThisProjectile.getStrategy().getClass());
+        assertEquals(expectedProjectile, actualTowerWithThisProjectile.getTypicalProjectile().getClass());
+        assertEquals(expectedMovingStrategy, ((MovingProjectile)actualTowerWithThisProjectile.getTypicalProjectile()).getMovingStrategy().getClass());
+        assertEquals(expectedProjectileBehavior, actualTowerWithThisProjectile.getTypicalProjectile().getBehavior().getClass());
+        assertTrue(towersCatalogue.getPrice(actualTowerWithThisProjectile).isPresent());
+        assertEquals(expectedPrice, towersCatalogue.getPrice(actualTowerWithThisProjectile).get());
+    }
+
+    @Test
+    void towersCatalogueContainsTowerWithPlainProjectileAndRandomMovingProjectileStrategy() {
+
+        Class<? extends DirectionalShootingStrategy> expectedShootingStrategy = DirectionalShootingStrategy.class;
+        Class<? extends MovingProjectile> expectedProjectile = PlainProjectile.class;
+        Class<? extends MovingProjectileStrategy> expectedMovingStrategy = RandomMovingProjectileStrategy.class;
+        Class<? extends ProjectileBehavior> expectedProjectileBehavior = HitOneTargetBehavior.class;
+        int expectedPrice = 10;
+
+        Map<Tower<? extends Projectile>, Integer> towers = towersCatalogue.getAvailableTowersWithPrices();
+        Tower<? extends Projectile> actualTowerWithThisProjectile = null;
+        for (Tower<? extends Projectile> tower : towers.keySet()) {
+            if (tower.getTypicalProjectile().getClass() == expectedProjectile &&
+                    ((MovingProjectile) tower.getTypicalProjectile()).getMovingStrategy().getClass() == expectedMovingStrategy) {
                 actualTowerWithThisProjectile = tower;
             }
         }
@@ -92,7 +121,35 @@ class TowersCatalogueTest {
         Map<Tower<? extends Projectile>, Integer> towers = towersCatalogue.getAvailableTowersWithPrices();
         Tower<? extends Projectile> actualTowerWithThisProjectile = null;
         for (Tower<? extends Projectile> tower : towers.keySet()) {
-            if (tower.getTypicalProjectile().getClass() == expectedProjectile) {
+            if (tower.getTypicalProjectile().getClass() == expectedProjectile &&
+                    ((MovingProjectile) tower.getTypicalProjectile()).getMovingStrategy().getClass() == expectedMovingStrategy) {
+                actualTowerWithThisProjectile = tower;
+            }
+        }
+
+        assertNotNull(actualTowerWithThisProjectile);
+        assertEquals(expectedShootingStrategy, actualTowerWithThisProjectile.getStrategy().getClass());
+        assertEquals(expectedProjectile, actualTowerWithThisProjectile.getTypicalProjectile().getClass());
+        assertEquals(expectedMovingStrategy, ((MovingProjectile)actualTowerWithThisProjectile.getTypicalProjectile()).getMovingStrategy().getClass());
+        assertEquals(expectedProjectileBehavior, actualTowerWithThisProjectile.getTypicalProjectile().getBehavior().getClass());
+        assertTrue(towersCatalogue.getPrice(actualTowerWithThisProjectile).isPresent());
+        assertEquals(expectedPrice, towersCatalogue.getPrice(actualTowerWithThisProjectile).get());
+    }
+
+    @Test
+    void towersCatalogueContainsTowerWithRandomMovingExplosiveProjectile() {
+
+        Class<? extends DirectionalShootingStrategy> expectedShootingStrategy = DirectionalShootingStrategy.class;
+        Class<? extends MovingProjectile> expectedProjectile = ExplosiveProjectile.class;
+        Class<? extends MovingProjectileStrategy> expectedMovingStrategy = RandomMovingProjectileStrategy.class;
+        Class<? extends ProjectileBehavior> expectedProjectileBehavior = ExplosiveBehavior.class;
+        int expectedPrice = 40;
+
+        Map<Tower<? extends Projectile>, Integer> towers = towersCatalogue.getAvailableTowersWithPrices();
+        Tower<? extends Projectile> actualTowerWithThisProjectile = null;
+        for (Tower<? extends Projectile> tower : towers.keySet()) {
+            if (tower.getTypicalProjectile().getClass() == expectedProjectile &&
+                    ((MovingProjectile) tower.getTypicalProjectile()).getMovingStrategy().getClass() == expectedMovingStrategy) {
                 actualTowerWithThisProjectile = tower;
             }
         }

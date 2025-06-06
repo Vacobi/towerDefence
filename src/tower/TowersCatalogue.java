@@ -14,6 +14,7 @@ import projectile.behavior.LaserBehavior;
 import projectile.behavior.ProjectileBehavior;
 import projectile.strategy.LinearMovingProjectileStrategy;
 import projectile.strategy.MovingProjectileStrategy;
+import projectile.strategy.RandomMovingProjectileStrategy;
 import utils.Direction;
 import utils.Position;
 
@@ -68,8 +69,10 @@ public class TowersCatalogue {
         int defaultSpeed = 10;
 
         LinearMovingProjectileStrategy lmps = new LinearMovingProjectileStrategy(defaultSpeed);
+        RandomMovingProjectileStrategy rmps = new RandomMovingProjectileStrategy(defaultSpeed);
 
         movingProjectileStrategies.put(lmps.getClass(), lmps);
+        movingProjectileStrategies.put(rmps.getClass(), rmps);
     }
 
     private void initializeProjectileBehaviors() {
@@ -86,6 +89,8 @@ public class TowersCatalogue {
         addTowerWithPlainProjectile(field);
         addTowerWithLaser(field);
         addTowerWithExplosiveProjectile(field);
+        addTowerWithRandomProjectile(field);
+        addTowerWithRandomExplosiveProjectile(field);
     }
 
     private void initializeUpgradePrices() {
@@ -219,6 +224,82 @@ public class TowersCatalogue {
         int price = 50;
         availableTowersWithPrices.put(tower, price);
         namesOfTowers.put(tower, "Башня с Бомбами");
+    }
+
+    private void addTowerWithRandomProjectile(Field field) {
+        int maxDistance =  (int) (AbstractCell.getSize() * 2.5);
+        int damage = 100;
+        Position mockPosition = new Position(Integer.MAX_VALUE, Integer.MAX_VALUE);
+        Direction mockDirection = Direction.NORTH;
+        int width = (int) (AbstractCell.getSize() * 0.4);
+        int height = (int) (AbstractCell.getSize() * 0.4);
+        HitboxParameters hitboxParameters = new HitboxParameters(width, height, 0);
+        long shootingDelay = TimeUnit.SECONDS.toMillis(3);
+
+        PlainProjectile plainProjectile = new PlainProjectile(
+                hitboxParameters,
+                damage,
+                maxDistance,
+                mockPosition,
+                projectileBehaviors.get(HitOneTargetBehavior.class).clone(),
+                field,
+                mockDirection,
+                movingProjectileStrategies.get(RandomMovingProjectileStrategy.class).clone()
+        );
+
+        Cell cell = new Cell(mockPosition);
+        Tower<PlainProjectile> tower = new Tower<PlainProjectile>(
+                cell,
+                field,
+                towerShootingStrategies.get(DirectionalShootingStrategy.class).clone(),
+                shotDirections,
+                levelsCount,
+                new TowerCharacteristicsValues(damage, maxDistance, shootingDelay),
+                plainProjectile
+        );
+
+        int price = 10;
+        availableTowersWithPrices.put(tower, price);
+        namesOfTowers.put(tower, "Башня с рандомным снарядом. Сам не знаю, как это работает");
+    }
+
+    private void addTowerWithRandomExplosiveProjectile(Field field) {
+        int maxDistance =  (int) (AbstractCell.getSize() * 2.5);
+        int damage = 100;
+        Position mockPosition = new Position(Integer.MAX_VALUE, Integer.MAX_VALUE);
+        Direction mockDirection = Direction.NORTH;
+        int width = (int) (AbstractCell.getSize() * 0.3);
+        int height = (int) (AbstractCell.getSize() * 0.3);
+        HitboxParameters hitboxParameters = new HitboxParameters(width, height, 0);
+        long shootingDelay = TimeUnit.SECONDS.toMillis(3);
+        int radius = (int) (AbstractCell.getSize() * 1.5);
+
+        ExplosiveProjectile plainProjectile = new ExplosiveProjectile(
+                hitboxParameters,
+                damage,
+                maxDistance,
+                mockPosition,
+                projectileBehaviors.get(ExplosiveBehavior.class).clone(),
+                field,
+                mockDirection,
+                movingProjectileStrategies.get(RandomMovingProjectileStrategy.class).clone(),
+                radius
+        );
+
+        Cell cell = new Cell(mockPosition);
+        Tower<ExplosiveProjectile> tower = new Tower<ExplosiveProjectile>(
+                cell,
+                field,
+                towerShootingStrategies.get(DirectionalShootingStrategy.class).clone(),
+                shotDirections,
+                levelsCount,
+                new TowerCharacteristicsValues(damage, maxDistance, shootingDelay),
+                plainProjectile
+        );
+
+        int price = 40;
+        availableTowersWithPrices.put(tower, price);
+        namesOfTowers.put(tower, "Башня с взрывающимся рандомным снарядом");
     }
 
     //------------------------------------------------------------------------------------------------------------------
